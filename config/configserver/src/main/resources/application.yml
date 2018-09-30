@@ -1,0 +1,23 @@
+
+spring:
+  application:
+    name: configserver
+
+  profiles: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: ../ghost/config/configserver/configs
+
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          uri: https://github.com/forezp/SpringcloudConfig/
+#          search-paths: respo
+#          username:
+#          password:
+#      label: master
+server:
+  port: 9000
