@@ -13,6 +13,7 @@
         <module>control</module>
         <module>config</module>
         <module>control/discovery</module>
+        <module>utility</module>
     </modules>
 
     <packaging>pom</packaging>
