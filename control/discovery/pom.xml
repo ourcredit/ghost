@@ -7,11 +7,14 @@
         <groupId>com.monkey</groupId>
         <version>1.0.0</version>
     </parent>
+
     <name>discovery</name>
     <description>服务发现中心</description>
+
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.monkey</groupId>
+
     <artifactId>discovery</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+
 </project>
