@@ -12,7 +12,6 @@
         <module>core</module>
         <module>control</module>
         <module>config</module>
-        <module>utility</module>
     </modules>
 
     <packaging>pom</packaging>
