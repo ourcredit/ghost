@@ -12,6 +12,7 @@
     <modules>
         <module>authcustomer</module>
     </modules>
+
     <artifactId>application</artifactId>
     <packaging>pom</packaging>
 

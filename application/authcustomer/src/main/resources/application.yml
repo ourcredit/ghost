@@ -1,0 +1,13 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eureka/
+server:
+  port: 6002
+spring:
+  application:
+    name: auth-customer
+
+feign:
+  hystrix:
+    enabled: true
