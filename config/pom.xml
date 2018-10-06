@@ -10,11 +10,9 @@
     <packaging>pom</packaging>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>config</artifactId>
-
     <modules>
         <module>configserver</module>
     </modules>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

@@ -2,22 +2,21 @@
 spring:
   application:
     name: configserver
-
-  profiles: native
   cloud:
     config:
       server:
-        native:
-          search-locations: ../ghost/config/configserver/configs
+        git:
+          uri: https://github.com/zhaohejing/ghostconfig/
+          search-paths: configs
+          username: 454258314@qq.com
+          password: zwy0410
+      label: master
+server:
+  port: 9000
 
+#  profiles: native
 #  cloud:
 #    config:
 #      server:
-#        git:
-#          uri: https://github.com/forezp/SpringcloudConfig/
-#          search-paths: respo
-#          username:
-#          password:
-#      label: master
-server:
-  port: 9000
+#        native:
+#          search-locations: ../ghost/config/configserver/configs
