@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>authcustomer</name>
+    <name>auth-customer</name>
     <description>服务消费者</description>
 
     <parent>
