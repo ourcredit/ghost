@@ -11,7 +11,6 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableEurekaClient
-@MapperScan("com.monkey.authprovider.repository")
 @EnableCaching
 public class AuthProviderApplication {
     public static void main(String[] args) {

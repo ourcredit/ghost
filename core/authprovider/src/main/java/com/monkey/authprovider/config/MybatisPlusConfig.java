@@ -29,7 +29,6 @@ import java.util.List;
  */
 @EnableTransactionManagement
 @Configuration
-@MapperScan("com.monkey.core.mapper")
 public class MybatisPlusConfig {
     @Bean
     public GlobalConfiguration globalConfiguration() {

@@ -29,7 +29,7 @@ public class UserController {
     public Result<Page<User>> users(@RequestBody PageFilterInputDto page) throws Exception {
         EntityWrapper<User> filter = new EntityWrapper<User>();
         filter = ComUtil.genderFilter(filter, page.getWhere());
-        Page<User> res = _userService.selectPage(new Page<>(page.getIndex(), page.getSize()), filter);
+        Page<User> res = _userService.selectPage(new Page<>(page.getIndex(), page.getSize()), null );
         return new Result<>(1,"", res);
     }
     private Logger logger = LoggerFactory.getLogger(UserController.class);

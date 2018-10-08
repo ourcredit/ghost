@@ -30,9 +30,9 @@ spring:
 # jdbc_config
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Repository.xml
-  typeAliasesPackage: com.monkey.core.entity
+  typeAliasesPackage: com.monkey.authprovider.core
   global-config:
-    meta-object-handler: com.monkey.web.config.MyMetaObjectHandler
+    meta-object-handler: com.monkey.authprovider.config.MyMetaObjectHandler
     id-type: 2
     field-strategy: 2
     logic-delete-value: -1

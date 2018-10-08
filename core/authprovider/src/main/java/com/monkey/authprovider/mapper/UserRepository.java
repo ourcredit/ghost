@@ -1,4 +1,4 @@
-package com.monkey.authprovider.repository;
+package com.monkey.authprovider.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.monkey.authprovider.core.User;

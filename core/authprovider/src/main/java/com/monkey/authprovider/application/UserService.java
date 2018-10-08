@@ -2,7 +2,7 @@ package com.monkey.authprovider.application;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.monkey.authprovider.core.User;
-import com.monkey.authprovider.repository.UserRepository;
+import com.monkey.authprovider.mapper.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
