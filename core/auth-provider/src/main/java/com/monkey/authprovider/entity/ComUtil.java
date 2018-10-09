@@ -1,7 +1,8 @@
-package tools;
+package com.monkey.authprovider.entity;
 
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import java.util.*;
 
@@ -15,9 +16,9 @@ public class ComUtil {
         if (aObj instanceof String) {
             return isEmpty((String) aObj);
         } else if (aObj instanceof Long) {
-            return isEmpty((Long) aObj);
+            return false;
         } else if (aObj instanceof Date) {
-            return isEmpty((Date) aObj);
+            return false;
         } else if (aObj instanceof Collection) {
             return isEmpty((Collection) aObj);
         } else if (aObj instanceof Map) {
@@ -30,7 +31,7 @@ public class ComUtil {
     }
 
     private static boolean isEmptyArray(Object array) {
-        int length = 0;
+        int length ;
         if (array instanceof int[]) {
             length = ((int[]) array).length;
         } else if (array instanceof byte[]) {
@@ -50,50 +51,29 @@ public class ComUtil {
         } else {
             length = ((Object[]) array).length;
         }
-        if (length == 0) {
-            return true;
-        }
-        return false;
+        return length == 0;
     }
 
 
     public static boolean isEmpty(Date aDate) {
-        if (aDate == null) {
-            return true;
-        } else {
-            return false;
-        }
+        return aDate == null;
     }
 
     public static boolean isEmpty(Long aLong) {
-        if (aLong == null) {
-            return true;
-        } else {
-            return false;
-        }
+        return aLong == null;
     }
 
 
     public static boolean isEmpty(Map m) {
-        if (m == null || m.size() == 0) {
-            return true;
-        }
-        return false;
+        return m == null || m.size() == 0;
     }
 
     public static boolean isEmpty(Collection c) {
-        if (c == null || c.size() == 0) {
-            return true;
-        }
-        return false;
+        return c == null || c.size() == 0;
     }
 
     public static boolean isEmpty(String aStr) {
-        if (aStr == null || aStr.trim().isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return aStr == null || aStr.trim().isEmpty();
     }
 
 
@@ -106,11 +86,7 @@ public class ComUtil {
     }
 
     public static boolean isNull(Object oStr) {
-        if (oStr == null) {
-            return true;
-        } else {
-            return false;
-        }
+        return oStr == null;
     }
 
 
@@ -136,7 +112,7 @@ public class ComUtil {
         return str1 != null ? str1.equalsIgnoreCase(str2) : str2 == null;
     }
 
-    public static EntityWrapper genderFilter(EntityWrapper e, Map<String, Object> m) {
+    public static QueryWrapper genderFilter(QueryWrapper e, Map<String, Object> m) {
         if (m != null && !m.isEmpty()) {
             Set<String> r = m.keySet();
             for (String key : r) {
@@ -152,10 +128,8 @@ public class ComUtil {
                         e.like(key, s);
                     }
                 } else if (v instanceof Boolean) {
-                    Boolean b = ((Boolean) v).booleanValue();
-                    if (b != null) {
-                        e.eq(key, b);
-                    }
+                    Boolean b = (Boolean) v;
+                    e.eq(key, b);
                 } else if (v instanceof Date) {
                     Date d = (Date) v;
                     e.eq(key, d);
@@ -176,7 +150,7 @@ public class ComUtil {
                 }
             }
         }
-        e.orderBy("creationTime",false);
+        e.orderBy(true,false,"creationTime");
         return e;
     }
 
