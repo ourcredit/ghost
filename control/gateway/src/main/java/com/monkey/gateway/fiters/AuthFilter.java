@@ -40,14 +40,12 @@ public class AuthFilter extends ZuulFilter {
         if (accessToken == null) {
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(401);
-            try {
-                ctx.getResponse().setHeader("Authorization", accessToken.toString());
-
-            } catch (Exception e) {
-            }
             return null;
         }
-
+        try {
+            ctx.addZuulRequestHeader("Authorization",accessToken.toString());
+        } catch (Exception e) {
+        }
         //解析token
         return null;
     }

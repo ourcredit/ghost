@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import result.Result;
 import tools.JWTUtil;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,7 @@ public class AccountController {
     AccountRepository _accountRepository;
 
     @RequestMapping(value = "/all",method = RequestMethod.GET)
-    public Result<List<Account>> getall(){
+    public Result<List<Account>> getall(HttpServletRequest request){
         List<Account> res=_accountRepository.selectList(null);
         return new Result<>(1, "", res);
     }
