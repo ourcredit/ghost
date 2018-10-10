@@ -1,6 +1,7 @@
 package result;
 
 public class Result<T> {
+    public Result(){}
     public  Result(Integer code,String message,T data){
         this.code=code;
         this.message=message;
@@ -11,6 +12,9 @@ public class Result<T> {
     private String message;
     private T data;
 
+    public static Result NotFound(){
+        return  new Result<>(-1,"对象不存在",null);
+    }
     public Integer getCode() {
         return code;
     }

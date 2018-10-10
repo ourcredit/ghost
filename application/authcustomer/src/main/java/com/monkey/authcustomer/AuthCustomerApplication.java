@@ -15,4 +15,5 @@ public class AuthCustomerApplication {
     public static void main(String[] args) {
         SpringApplication.run(AuthCustomerApplication.class, args);
     }
+
 }

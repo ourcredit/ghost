@@ -15,3 +15,13 @@ zuul:
     order:
       path: /order/**
       serviceId: order-customer
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeout-in-milliseconds: 3000
+

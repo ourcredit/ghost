@@ -1,11 +1,17 @@
 package com.monkey.authprovider.entity;
 
 
-import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-
+import java.time.LocalDateTime;
 import java.io.Serializable;
-import java.util.Date;
+
+import com.netflix.discovery.provider.ISerializer;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -13,158 +19,38 @@ import java.util.Date;
  * </p>
  *
  * @author zhaohejing
- * @since 2018-07-26
+ * @since 2018-10-10
  */
-@TableName("ghost_account")
-public class Account extends Model<Account> {
-
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class Account  implements Serializable  {
     private static final long serialVersionUID = 1L;
-    public  Account(){}
-    @TableId(value = "id", type = IdType.AUTO)
+
     private Integer id;
-    private String account;
-    private String password;
-    @TableField(fill = FieldFill.INSERT)
-    private Date creation_time;
-    @TableField(fill = FieldFill.INSERT)
-    private Integer creator_user_id;
-    private String user_name;
+    private String userName;
+
+    private Integer creatorUserId;
+
+    private LocalDateTime creationTime;
+
     private String mobile;
-    private Integer is_active;
-    private Integer is_deleted;
-    private Date last_login_time;
 
-    private Integer tenant_id;
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.getId();
-    }
-
-
-    /**
-     * 自增主键
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * 账户
-     */
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
+    private Integer isActive;
 
     /**
      * 密码
      */
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    private String password;
 
     /**
-     * 创建时间
+     * 账户
      */
-    public Date getCreation_time() {
-        return creation_time;
-    }
+    private String account;
 
-    public void setCreation_time(Date creation_time) {
-        this.creation_time = creation_time;
-    }
+    private Integer tenantId;
 
-    /**
-     * 创建人id
-     */
-    public Integer getCreator_user_id() {
-        return creator_user_id;
-    }
+    private LocalDateTime lastLoginTime;
 
-    public void setCreator_user_id(Integer creator_user_id) {
-        this.creator_user_id = creator_user_id;
-    }
-
-    /**
-     * 姓名
-     */
-    public String getUser_name() {
-        return user_name;
-    }
-
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
-    }
-
-    /**
-     * 手机
-     */
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    /**
-     * 1启用  0禁用
-     */
-    public Integer getIs_active() {
-        return is_active;
-    }
-
-    public void setIs_active(Integer is_active) {
-        this.is_active = is_active;
-    }
-
-    /**
-     * 软删除
-     */
-    public Integer getIs_deleted() {
-        return is_deleted;
-    }
-
-    public void setIs_deleted(Integer is_deleted) {
-        this.is_deleted = is_deleted;
-    }
-
-    /**
-     * 最后登陆时间
-     */
-    public Date getLast_login_time() {
-        return last_login_time;
-    }
-
-    public void setLast_login_time(Date last_login_time) {
-        this.last_login_time = last_login_time;
-    }
-
-    /**
-     * 租户id
-     */
-    public Integer getTenant_id() {
-        return tenant_id;
-    }
-
-    public void setTenant_id(Integer tenant_id) {
-        this.tenant_id = tenant_id;
-    }
+    private Integer isDeleted;
 }
