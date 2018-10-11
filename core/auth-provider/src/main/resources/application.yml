@@ -1,0 +1,14 @@
+# ====================MybatisPlus====================
+
+#mybatis-plus????
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  typeAliasesPackage: com.monkey.authprovider.entity
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+  global-config:
+    id-type: 0
+    field-strategy: 2
+    logic-delete-value: -1
+    logic-not-delete-value: 0

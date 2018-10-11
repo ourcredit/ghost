@@ -1,0 +1,19 @@
+server:
+  port: 6001
+
+spring:
+  application:
+    name: auth-provider
+    ##远程仓库服务地址访问
+  cloud:
+    config:
+      label: master
+      profile: dev
+      uri: http://localhost:9000/
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eureka/
+
+

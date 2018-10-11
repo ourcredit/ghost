@@ -1,14 +1,18 @@
 package com.monkey.gateway.fiters;
 
+import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import result.Result;
 import tools.JWTUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.Map;
 
 @Component
 public class AuthFilter extends ZuulFilter {
@@ -26,20 +30,22 @@ public class AuthFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        return true;
+        RequestContext ctx = RequestContext.getCurrentContext();
+        return !ctx.getRequest().getRequestURI().toString().equals("/auth/auth/login");
     }
 
     @Override
     public Object run() throws ZuulException {
         RequestContext ctx = RequestContext.getCurrentContext();
+
         HttpServletRequest request = ctx.getRequest();
-        log.info(String.format("%s >>> %s", request.getMethod(), request.getRequestURL().toString()));
-        String url = request.getRequestURL().toString();
-        if (url.contains("/auth/auth/login")) return null;
+
         Object accessToken = request.getHeader("Authorization");
         if (accessToken == null) {
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(401);
+            Result r=new Result(-1,"Authorization Not Allow",null);
+            ctx.setResponseBody(JSON.toJSONString(r));
             return null;
         }
         try {

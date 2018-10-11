@@ -10,10 +10,10 @@ spring:
 zuul:
   routes:
     auth:
-      path: /auth/**
+      path: /api-auth/**
       serviceId: auth-customer
     order:
-      path: /order/**
+      path: /api-order/**
       serviceId: order-customer
 
 hystrix:

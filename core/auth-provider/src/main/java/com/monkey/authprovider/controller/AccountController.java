@@ -1,6 +1,7 @@
 package com.monkey.authprovider.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.springframework.beans.factory.annotation.Value;
 import result.LoginInput;
 import result.TokenDto;
 import com.monkey.authprovider.entity.Account;
@@ -25,9 +26,11 @@ public class AccountController {
     @Autowired
     AccountRepository _accountRepository;
 
+    @Value("${basic.connection.url}")
+    String message;
     @RequestMapping(value = "/all",method = RequestMethod.GET)
     public Result<List<Account>> getall(HttpServletRequest request){
-        List<Account> res=_accountRepository.selectList(null);
+        List<Account> res=_accountRepository.selectByFilter(null);
         return new Result<>(1, "", res);
     }
 
@@ -43,4 +46,9 @@ public class AccountController {
       TokenDto t=new TokenDto(res.getId(),token,res.getUserName(),res.getTenantId());
         return new Result<>(1, "成功", t);
     }
+    @RequestMapping(value = "/config",method = RequestMethod.GET)
+    public Result testconfig(){
+      return new Result(1,"成功",message);
+    }
+
 }
