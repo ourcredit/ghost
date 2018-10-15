@@ -11,6 +11,13 @@ spring:
           username: 454258314@qq.com
           password: zwy0410
       label: master
+      #kafka
+  stream:
+    kakfa:
+      binder:
+        zk-nodes: 103.45.8.198:2181
+        brokers: 103.45.8.198:9092
+
 server:
   port: 9000
 eureka:
