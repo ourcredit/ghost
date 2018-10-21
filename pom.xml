@@ -120,5 +120,5 @@
 
         </plugins>
     </build>
-         <defaultGoal>compile</defaultGoal>
+    
 </project>
