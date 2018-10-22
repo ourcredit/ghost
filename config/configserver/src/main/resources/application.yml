@@ -19,11 +19,11 @@ spring:
 #        brokers: 103.45.8.198:9092
 
 server:
-  port: 9000
+  port: 9002
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8888/eureka/
+      defaultZone: http://localhost:9001/eureka/
 #  profiles: native
 #  cloud:
 #    config:
