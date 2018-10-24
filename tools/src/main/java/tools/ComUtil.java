@@ -1,8 +1,7 @@
-package com.monkey.authprovider.entity;
+package tools;
 
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import java.util.*;
 
@@ -111,48 +110,5 @@ public class ComUtil {
     public static boolean equalsIgnoreCase(String str1, String str2) {
         return str1 != null ? str1.equalsIgnoreCase(str2) : str2 == null;
     }
-
-    public static QueryWrapper genderFilter(QueryWrapper e, Map<String, Object> m) {
-        if (m != null && !m.isEmpty()) {
-            Set<String> r = m.keySet();
-            for (String key : r) {
-                if(key.equals("code"))continue;
-                Object v = m.get(key);
-
-                if (v instanceof Number) {
-                    e.eq(key, v);
-                } else if (v instanceof String) {
-                    String s = (String) v;
-                    s= s.trim();
-                    if (!s.isEmpty()) {
-                        e.like(key, s);
-                    }
-                } else if (v instanceof Boolean) {
-                    Boolean b = (Boolean) v;
-                    e.eq(key, b);
-                } else if (v instanceof Date) {
-                    Date d = (Date) v;
-                    e.eq(key, d);
-                } else if (v instanceof List) {
-                    List a = (List) v;
-                    if (!a.isEmpty() && a.size() == 2) {
-                        String l = a.get(0).toString();
-                        if (!l.isEmpty()) {
-                            e.ge(key, l);
-
-                        }
-                        String rr = a.get(1).toString();
-                        if (!rr.isEmpty()) {
-                            e.le(key, rr);
-
-                        }
-                    }
-                }
-            }
-        }
-        e.orderBy(true,false,"creationTime");
-        return e;
-    }
-
 
 }

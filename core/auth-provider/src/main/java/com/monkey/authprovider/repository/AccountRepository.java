@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface AccountRepository extends BaseMapper<Account> {
-    List<Account> selectByFilter(@Param("filter") String filter);
+
 }

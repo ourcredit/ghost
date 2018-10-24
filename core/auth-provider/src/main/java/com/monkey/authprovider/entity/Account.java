@@ -37,12 +37,10 @@ public class Account  implements Serializable  {
     private String mobile;
 
     private Integer isActive;
-
     /**
      * 密码
      */
     private String password;
-
     /**
      * 账户
      */

@@ -3,7 +3,6 @@ package input;
 public class FilterInputDto {
     private Integer index;
     private  Integer size;
-
     public Integer getIndex() {
         return index;
     }
@@ -19,4 +18,5 @@ public class FilterInputDto {
     public void setSize(Integer size) {
         this.size = size;
     }
+
 }
