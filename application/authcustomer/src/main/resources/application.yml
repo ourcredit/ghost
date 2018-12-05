@@ -1,9 +1,9 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:9001/eureka/
+      defaultZone: http://zrc.f3322.net:9001/eureka/
 server:
-  port: 6002
+  port: 9005
 spring:
   application:
     name: auth-customer

@@ -23,7 +23,7 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:9001/eureka/
+      defaultZone: http://zrc.f3322.net:9001/eureka/
 #  profiles: native
 #  cloud:
 #    config:

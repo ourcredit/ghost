@@ -1,7 +1,7 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:9001/eureka/
+      defaultZone: http://zrc.f3322.net:9001/eureka/
 server:
   port: 9003
 spring:
