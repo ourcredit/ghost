@@ -14,6 +14,6 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://zrc.f3322.net:9001/eureka/
+      defaultZone: http://47.94.214.199:9001/eureka/
 
 
