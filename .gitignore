@@ -1,4 +1,9 @@
 /target/
+/tools/target/
+/core/**/target/
+/control/**/target/
+/config/**/target/
+/application/**/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
