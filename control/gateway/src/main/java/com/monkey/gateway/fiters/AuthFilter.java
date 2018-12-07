@@ -8,11 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import result.Result;
-import tools.JWTUtil;
-
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.util.Map;
 
 @Component
 public class AuthFilter extends ZuulFilter {
@@ -44,8 +40,7 @@ public class AuthFilter extends ZuulFilter {
         if (accessToken == null) {
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(401);
-            Result r=new Result(-1,"Authorization Not Allow",null);
-            ctx.setResponseBody(JSON.toJSONString(r));
+            ctx.setResponseBody(JSON.toJSONString(Result.AuthNotAllow()));
             return null;
         }
         try {

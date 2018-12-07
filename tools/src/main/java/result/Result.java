@@ -15,8 +15,11 @@ public class Result<T> {
     public static Result NotFound(){
         return  new Result<>(-1,"对象不存在",null);
     }
+    public static Result AuthNotAllow(){
+        return  new Result<>(-1,"授权失败",null);
+    }
     public  static  Result Success(Object data){
-        return  new Result(1,"",data);
+        return  new Result(1,"获取成功",data);
     }
     public Integer getCode() {
         return code;
