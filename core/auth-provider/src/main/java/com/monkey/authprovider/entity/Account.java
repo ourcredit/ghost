@@ -1,17 +1,12 @@
 package com.monkey.authprovider.entity;
 
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
-import com.netflix.discovery.provider.ISerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
-import java.time.LocalDateTime;
 
 /**
  * <p>
