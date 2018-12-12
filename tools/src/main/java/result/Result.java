@@ -21,6 +21,9 @@ public class Result<T> {
     public  static  Result Success(Object data){
         return  new Result(1,"获取成功",data);
     }
+    public  static  Result Success(String message,Object data){
+        return  new Result(1,message,data);
+    }
     public Integer getCode() {
         return code;
     }
