@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Component
 public class JwtFeignInterceptor implements RequestInterceptor {
-    private final String key = "Authorization";
+  //  private final String key = "Authorization";
 
     @Override
     public void apply(RequestTemplate template) {

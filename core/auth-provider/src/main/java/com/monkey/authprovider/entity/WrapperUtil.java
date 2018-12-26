@@ -2,7 +2,6 @@ package com.monkey.authprovider.entity;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.sun.corba.se.spi.ior.ObjectKey;
 import input.FilterInputDto;
 import input.PageFilterInputDto;
 

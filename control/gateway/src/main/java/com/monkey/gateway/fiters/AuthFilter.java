@@ -46,6 +46,7 @@ public class AuthFilter extends ZuulFilter {
         try {
             ctx.addZuulRequestHeader("Authorization",accessToken.toString());
         } catch (Exception e) {
+            log.error(e.getMessage());
         }
         //解析token
         return null;

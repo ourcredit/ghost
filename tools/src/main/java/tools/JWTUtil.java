@@ -25,7 +25,7 @@ public class JWTUtil {
                     .withClaim("userId", userId)
                     .withClaim("tenantId", tenantId)
                     .build();
-            DecodedJWT jwt = verifier.verify(token);
+             verifier.verify(token);
             return true;
         } catch (Exception exception) {
             return false;
