@@ -50,9 +50,6 @@ public class MybatisPlusConfig {
     public ISqlInjector sqlInjector() {
         return new LogicSqlInjector();
     }
-
-
-
     //    MyBatis 动态扫描
     @Bean(name = "basisMapperScannerConfigurer")
     public MapperScannerConfigurer mapperScannerConfigurer() {
@@ -61,7 +58,6 @@ public class MybatisPlusConfig {
         mapperScannerConfigurer.setBasePackage(basePackage);
         return mapperScannerConfigurer;
     }
-
     //    配置事务管理
     @Bean(name = "basisTransactionManager")
     public DataSourceTransactionManager transactionManager(@Qualifier(value = "basicDataSource") DruidDataSource dataSource) {
