@@ -12,7 +12,7 @@
     <artifactId>core</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>auth-provider</module>
+        <module>account-provider</module>
     </modules>
     <dependencies>
         <dependency>
