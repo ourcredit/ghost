@@ -1,6 +1,7 @@
 package com.monkey.account.entity;
 
 
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -19,14 +20,18 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@TableName("base_account")
 public class Account  implements Serializable  {
     private static final long serialVersionUID = 1L;
-
+    /**
+     * key
+     */
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     private String userName;
-
+    @TableField(value = "creatorUserId",fill = FieldFill.INSERT)
     private Integer creatorUserId;
-
+    @TableField(value = "creationTime",fill = FieldFill.INSERT)
     private LocalDateTime creationTime;
 
     private String mobile;

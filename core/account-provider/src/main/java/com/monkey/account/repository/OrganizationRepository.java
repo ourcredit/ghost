@@ -11,6 +11,6 @@ import com.monkey.account.entity.Organization;
  * @author zhaohejing
  * @since 2019-03-03
  */
-public interface BaseOrganizationMapper extends BaseMapper<Organization> {
+public interface OrganizationRepository extends BaseMapper<Organization> {
 
 }

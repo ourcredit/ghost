@@ -11,6 +11,6 @@ import com.monkey.account.entity.UserRole;
  * @author zhaohejing
  * @since 2019-03-03
  */
-public interface BaseUserroleMapper extends BaseMapper<UserRole> {
+public interface UserRoleRepository extends BaseMapper<UserRole> {
 
 }

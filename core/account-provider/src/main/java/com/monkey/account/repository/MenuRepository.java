@@ -11,6 +11,6 @@ import com.monkey.account.entity.Menu;
  * @author zhaohejing
  * @since 2019-03-03
  */
-public interface BaseMenuMapper extends BaseMapper<Menu> {
+public interface MenuRepository extends BaseMapper<Menu> {
 
 }

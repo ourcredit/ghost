@@ -1,8 +1,8 @@
 package com.monkey.account.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,27 +20,22 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("base_roleMenu")
-public class Rolemenu implements Serializable {
+public class RoleMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    /**
+     * key
+     */
+    @TableId(value = "id", type = IdType.UUID)
+    private String id;
     @TableField("roleId")
     private Integer roleId;
 
     @TableField("menuId")
     private Integer menuId;
 
-    /**
-     * 创建时间
-     */
-    @TableField("creationTime")
-    private LocalDateTime creationTime;
-
-    /**
-     * 创建人id
-     */
-    @TableField("creatorUserId")
+    @TableField(value = "creatorUserId",fill = FieldFill.INSERT)
     private Integer creatorUserId;
-
-
+    @TableField(value = "creationTime",fill = FieldFill.INSERT)
+    private LocalDateTime creationTime;
 }

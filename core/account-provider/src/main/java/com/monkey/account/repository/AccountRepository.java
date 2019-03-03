@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author zhaohejing
  * @since 2019-03-03
  */
-public interface BaseAccountMapper extends BaseMapper<Account> {
+public interface AccountRepository extends BaseMapper<Account> {
 
 }

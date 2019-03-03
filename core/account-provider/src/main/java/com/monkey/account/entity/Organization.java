@@ -1,8 +1,11 @@
 package com.monkey.account.entity;
 
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableField;
+
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,10 +21,20 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class BaseOrganization implements Serializable {
+@TableName("base_organization")
+public class Organization implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    /**
+     * key
+     */
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
+    private String userName;
+    @TableField(value = "creatorUserId",fill = FieldFill.INSERT)
+    private Integer creatorUserId;
+    @TableField(value = "creationTime",fill = FieldFill.INSERT)
+    private LocalDateTime creationTime;
     /**
      * 节点名
      */
@@ -32,19 +45,6 @@ public class BaseOrganization implements Serializable {
      */
     @TableField("parentId")
     private Integer parentId;
-
-    /**
-     * 创建时间
-     */
-    @TableField("creationTime")
-    private LocalDateTime creationTime;
-
-    /**
-     * 创建人id
-     */
-    @TableField("creatorUserId")
-    private Integer creatorUserId;
-
     /**
      * 级别code
      */

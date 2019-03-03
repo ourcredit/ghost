@@ -13,25 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class CodeGenerator {
-    /**
-     * <p>
-     * 读取控制台内容
-     * </p>
-     */
-    private static String scanner(String tip) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(("请输入" + tip + "："));
-        if (scanner.hasNext()) {
-            String ipt = scanner.next();
-            if (!ipt.isEmpty()) {
-                return ipt;
-            }
-        }
-        throw new MybatisPlusException("请输入正确的" + tip + "！");
-    }
-    public static void main(String[] args) {
+public class AccountGenerator {
 
+
+    private static   void  build(String module,String table){
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -53,7 +38,7 @@ public class CodeGenerator {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName(scanner("authprovider"));
+        pc.setModuleName(module);
         pc.setParent("com.monkey");
         mpg.setPackageInfo(pc);
 
@@ -70,7 +55,7 @@ public class CodeGenerator {
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输入文件名称
                 return  "E:\\test/mapper/"
-                      + tableInfo.getEntityName() + "Repository" + StringPool.DOT_XML;
+                        + tableInfo.getEntityName().replace("Base","") + "Repository" + StringPool.DOT_XML;
             }
         });
         cfg.setFileOutConfigList(focList);
@@ -81,17 +66,31 @@ public class CodeGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-      //  strategy.setSuperEntityClass("com.monkey.ant.common.BaseEntity");
+        //  strategy.setSuperEntityClass("com.monkey.ant.common.BaseEntity");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-      //  strategy.setSuperControllerClass("com.monkey.ant.common.BaseController");
-        strategy.setInclude(scanner("表名"));
+        //  strategy.setSuperControllerClass("com.monkey.ant.common.BaseController");
+        strategy.setInclude(table);
         strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix(pc.getModuleName() + "_");
+        //  strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
-    }
 
+    }
+    public static void main(String[] args) {
+        List<String> list=new ArrayList<String>(){{
+            add("base_account");
+            add("base_menu");
+            add("base_organization");
+            add("base_role");
+            add("base_roleMenu");
+            add("base_userRole");
+        }};
+        for (String x:
+             list) {
+            build("account",x);
+        }
+    }
 }

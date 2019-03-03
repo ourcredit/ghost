@@ -1,8 +1,11 @@
 package com.monkey.account.entity;
 
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableField;
+
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,15 +21,18 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class BaseMenu implements Serializable {
+@TableName("base_menu")
+public class Menu implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    /**
+     * key
+     */
+    @TableId(value = "id", type = IdType.AUTO)
     /**
      * 显示名
      */
     private String name;
-
     /**
      * url
      */
@@ -41,18 +47,16 @@ public class BaseMenu implements Serializable {
      * 权限码
      */
     private String code;
-
     /**
      * 父级id
      */
     @TableField("parentId")
     private Integer parentId;
 
-    @TableField("creationTime")
-    private LocalDateTime creationTime;
-
-    @TableField("creatorUserId")
+    @TableField(value = "creatorUserId",fill = FieldFill.INSERT)
     private Integer creatorUserId;
+    @TableField(value = "creationTime",fill = FieldFill.INSERT)
+    private LocalDateTime creationTime;
 
     @TableField("isDeleted")
     private Integer isDeleted;

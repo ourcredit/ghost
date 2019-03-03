@@ -11,6 +11,6 @@ import com.monkey.account.entity.RoleMenu;
  * @author zhaohejing
  * @since 2019-03-03
  */
-public interface BaseRolemenuMapper extends BaseMapper<RoleMenu> {
+public interface RoleMenuRepository extends BaseMapper<RoleMenu> {
 
 }
