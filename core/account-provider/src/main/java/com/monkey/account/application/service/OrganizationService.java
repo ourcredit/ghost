@@ -1,8 +1,8 @@
-package com.monkey.account.application.impl;
+package com.monkey.account.application.service;
 
-import com.monkey.account.entity.BaseOrganization;
-import com.monkey.account.mapper.BaseOrganizationMapper;
-import com.monkey.account.service.IBaseOrganizationService;
+import com.monkey.account.application.IOrganizationService;
+import com.monkey.account.entity.Organization;
+import com.monkey.account.repository.OrganizationRepository;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2019-03-03
  */
 @Service
-public class BaseOrganizationServiceImpl extends ServiceImpl<BaseOrganizationMapper, BaseOrganization> implements IBaseOrganizationService {
+public class OrganizationService extends ServiceImpl<OrganizationRepository, Organization> implements IOrganizationService {
 
 }

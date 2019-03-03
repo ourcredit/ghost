@@ -1,7 +1,7 @@
-package com.monkey.account.service;
+package com.monkey.account.application;
 
-import com.monkey.account.entity.BaseRolemenu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.monkey.account.entity.RoleMenu;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author zhaohejing
  * @since 2019-03-03
  */
-public interface IBaseRolemenuService extends IService<BaseRolemenu> {
+public interface IRoleMenuService extends IService<RoleMenu> {
 
 }

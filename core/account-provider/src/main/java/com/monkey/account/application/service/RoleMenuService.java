@@ -1,8 +1,8 @@
-package com.monkey.account.application.impl;
+package com.monkey.account.application.service;
 
-import com.monkey.account.entity.BaseRolemenu;
-import com.monkey.account.mapper.BaseRolemenuMapper;
-import com.monkey.account.service.IBaseRolemenuService;
+import com.monkey.account.application.IRoleMenuService;
+import com.monkey.account.entity.RoleMenu;
+import com.monkey.account.repository.RoleMenuRepository;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2019-03-03
  */
 @Service
-public class BaseRolemenuServiceImpl extends ServiceImpl<BaseRolemenuMapper, BaseRolemenu> implements IBaseRolemenuService {
+public class RoleMenuService extends ServiceImpl<RoleMenuRepository, RoleMenu> implements IRoleMenuService {
 
 }

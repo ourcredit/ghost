@@ -1,9 +1,10 @@
 package com.monkey.account.application.service;
 
-import com.monkey.account.entity.BaseUserrole;
-import com.monkey.account.mapper.BaseUserroleMapper;
-import com.monkey.account.service.IBaseUserroleService;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.monkey.account.application.IUserRoleService;
+import com.monkey.account.entity.UserRole;
+import com.monkey.account.repository.UserRoleRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +16,6 @@ import org.springframework.stereotype.Service;
  * @since 2019-03-03
  */
 @Service
-public class BaseUserroleServiceImpl extends ServiceImpl<BaseUserroleMapper, BaseUserrole> implements IBaseUserroleService {
+public class UserRoleService extends ServiceImpl<UserRoleRepository, UserRole> implements IUserRoleService {
 
 }

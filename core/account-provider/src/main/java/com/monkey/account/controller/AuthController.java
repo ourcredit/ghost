@@ -1,7 +1,7 @@
 package com.monkey.account.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.monkey.account.application.account.IAccountService;
+import com.monkey.account.application.IAccountService;
 import com.monkey.account.entity.Account;
 import constant.JwtTokenConstant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import result.TokenDto;
 import tools.JWTUtil;
 
 @RestController
-@RequestMapping(value = "/api/auth" ,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/base/token" ,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class AuthController {
     @Autowired
     IAccountService _accountService;

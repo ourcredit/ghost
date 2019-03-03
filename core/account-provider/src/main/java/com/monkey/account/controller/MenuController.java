@@ -1,6 +1,7 @@
 package com.monkey.account.controller;
 
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-03-03
  */
 @RestController
-@RequestMapping("/account/base-menu")
-public class BaseMenuController {
+@RequestMapping(value = "/base/menu",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+public class MenuController {
 
 }
