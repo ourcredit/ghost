@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import result.LoginInput;
 import result.Result;
 
-@FeignClient(value = "auth-provider",fallback = AuthHystric.class,configuration = FeignConfig.class)
+@FeignClient(value = "account-provider",fallback = AuthHystric.class,configuration = FeignConfig.class)
 public interface AuthService {
-    @PostMapping(value = "/api/auth")
+    @PostMapping(value = "/base/account")
     Result auth(@RequestBody LoginInput input);
     @GetMapping(value = "/api/all")
     Result all();

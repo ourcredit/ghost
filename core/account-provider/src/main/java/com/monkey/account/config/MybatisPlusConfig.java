@@ -54,7 +54,7 @@ public class MybatisPlusConfig {
     @Bean(name = "basisMapperScannerConfigurer")
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        String basePackage = "com.monkey.authprovider.*.repository";
+        String basePackage = "com.monkey.account.*.repository";
         mapperScannerConfigurer.setBasePackage(basePackage);
         return mapperScannerConfigurer;
     }

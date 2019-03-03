@@ -21,7 +21,7 @@ public class AuthController {
     @Autowired
     IAccountService _accountService;
 
-    @RequestMapping(value = "/auth",method = RequestMethod.POST)
+    @RequestMapping(value = "",method = RequestMethod.POST)
     public Result auth(@RequestBody LoginInput input){
         QueryWrapper q=new QueryWrapper<Account>();
         q.eq("account",input.getAccount());
