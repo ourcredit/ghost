@@ -1,7 +1,7 @@
 package com.monkey.account.repository;
 
-import com.monkey.account.entity.Account;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.monkey.account.entity.Organization;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author zhaohejing
  * @since 2019-03-03
  */
-public interface BaseAccountMapper extends BaseMapper<Account> {
+public interface BaseOrganizationMapper extends BaseMapper<Organization> {
 
 }

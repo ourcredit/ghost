@@ -1,6 +1,5 @@
 package com.monkey.account.repository;
 
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.monkey.account.entity.Role;
 
@@ -10,8 +9,8 @@ import com.monkey.account.entity.Role;
  * </p>
  *
  * @author zhaohejing
- * @since 2018-10-24
+ * @since 2019-03-03
  */
-public interface RoleRepository extends BaseMapper<Role> {
+public interface BaseRoleMapper extends BaseMapper<Role> {
 
 }
