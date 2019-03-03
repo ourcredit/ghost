@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-03-03
  */
 @RestController
-@RequestMapping("/account/base-role")
-public class RoleController {
+@RequestMapping("/account/base-organization")
+public class BaseOrganizationController {
 
 }
