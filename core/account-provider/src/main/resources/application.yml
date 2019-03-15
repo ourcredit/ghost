@@ -1,5 +1,6 @@
 # ====================MybatisPlus====================
-
+apollo:
+  meta: http://47.94.214.199:8080
 #mybatis-plus config
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
