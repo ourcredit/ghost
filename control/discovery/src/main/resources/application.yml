@@ -1,6 +1,7 @@
 server:
   port: 9001
-
+apollo:
+  meta: http://47.94.214.199:8080
 eureka:
   instance:
     hostname: 47.94.214.199
@@ -13,8 +14,6 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     enable-self-preservation: false
-
-
 spring:
   application:
     name: discovery

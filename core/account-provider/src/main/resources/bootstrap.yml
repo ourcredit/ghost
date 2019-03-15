@@ -3,13 +3,6 @@ server:
 spring:
   application:
     name: account-provider
-    ##远程仓库服务地址访问
-  cloud:
-    config:
-      label: master
-      profile: dev
-      uri: http://47.94.214.199:9002/
-
 eureka:
   client:
     serviceUrl:
