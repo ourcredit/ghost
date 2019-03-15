@@ -7,11 +7,9 @@ server:
 spring:
   application:
     name: auth-customer
-
 feign:
   hystrix:
     enabled: true
-
 hystrix:
   command:
     default:

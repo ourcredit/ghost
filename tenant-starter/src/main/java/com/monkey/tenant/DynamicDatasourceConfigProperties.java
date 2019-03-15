@@ -1,9 +1,7 @@
 package com.monkey.tenant;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import java.util.Map;
-
 @ConfigurationProperties(prefix = "dynamicds")
 public class DynamicDatasourceConfigProperties {
     private String orgCodeHeader;
