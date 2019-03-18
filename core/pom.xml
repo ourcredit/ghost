@@ -20,6 +20,11 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.monkey</groupId>
+            <artifactId>tenant-starter</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
         <dependency>
             <groupId>com.monkey</groupId>

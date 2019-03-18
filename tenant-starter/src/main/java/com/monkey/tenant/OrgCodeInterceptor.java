@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class OrgCodeInterceptor implements HandlerInterceptor{
     private static final Logger LOGGER = LoggerFactory.getLogger(HandlerInterceptor.class);
-    private String orgCodeHeaderName = "orgCode";
+    private String orgCodeHeaderName = "tenantId";
 
     private Set<String> validOrgCodes;
 

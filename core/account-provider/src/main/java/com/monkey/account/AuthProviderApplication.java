@@ -1,6 +1,7 @@
 package com.monkey.account;
 
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
+import com.monkey.tenant.EnableDynamicDS;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableEurekaClient
 @MapperScan("com.monkey.account.repository")
 @EnableApolloConfig
+@EnableDynamicDS
 public class AuthProviderApplication {
 
 	public static void main(String[] args) {

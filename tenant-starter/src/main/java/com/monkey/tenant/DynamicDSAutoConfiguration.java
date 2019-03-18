@@ -30,7 +30,7 @@ public class DynamicDSAutoConfiguration {
     @ConditionalOnClass(SaasDynamicDatasource.class)
     OrgCodeInterceptor orgCodeInterceptor() {
         OrgCodeInterceptor interceptor = new OrgCodeInterceptor();
-        interceptor.setOrgCodeHeaderName(properties.getOrgCodeHeader());
+        interceptor.setOrgCodeHeaderName(properties.getTenantId());
         interceptor.setValidOrgCodes(properties.getTenants().keySet());
         return interceptor;
     }
