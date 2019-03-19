@@ -10,6 +10,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Map;
+
 @Configuration
 @EnableApolloConfig
 @EnableConfigurationProperties(DynamicDatasourceConfigProperties.class)
@@ -17,12 +19,14 @@ public class DynamicDSAutoConfiguration {
 
     @Autowired
     private DynamicDatasourceConfigProperties properties;
+    @Autowired
+    private  DynamicTenantConfig _tenantConfig;
+
 
     @Bean
-    public DynamicDatasourceConfigProperties sampleRedisConfig() {
-        return new DynamicDatasourceConfigProperties();
+    DynamicTenantConfig tenantConfig (){
+       return new DynamicTenantConfig();
     }
-
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnClass(SaasDynamicDatasource.class)
@@ -36,8 +40,9 @@ public class DynamicDSAutoConfiguration {
     @ConditionalOnMissingBean
     @ConditionalOnClass(SaasDynamicDatasource.class)
     OrgCodeInterceptor orgCodeInterceptor() {
+      Map mp=  _tenantConfig.getSomeMap();
         OrgCodeInterceptor interceptor = new OrgCodeInterceptor();
-        interceptor.setOrgCodeHeaderName(properties.getOrgCodeHeader());
+        interceptor.setOrgCodeHeaderName(properties.getTenantId());
         interceptor.setValidOrgCodes(properties.getTenants().keySet());
         return interceptor;
     }

@@ -9,14 +9,13 @@ public class DynamicDatasourceConfigProperties {
     @ApolloConfig("tenants.yml")
     private Config _config;
 
-    private String orgCodeHeader;
+    private String tenantId;
     private Map<String, String> general;
     private Map<String, Map<String, String>> tenants;
     public Map<String, String> getGeneral() {
         return  general;
     }
     public void setGeneral(Map<String, String> general) {
-        this.general = general;
     }
 
     public Map<String, Map<String, String>> getTenants() {
@@ -28,11 +27,11 @@ public class DynamicDatasourceConfigProperties {
     }
 
 
-    public String getOrgCodeHeader() {
-        return _config.getProperty("dynamicds.orgCodeHeader","TenantId");
+    public String getTenantId() {
+        return _config.getProperty("dynamicds.tenantId","abc");
     }
 
-    public void setOrgCodeHeader(String orgCodeHeader) {
-        this.orgCodeHeader = orgCodeHeader;
+    public void setTenantId(String orgCodeHeader) {
+        this.tenantId = orgCodeHeader;
     }
 }
