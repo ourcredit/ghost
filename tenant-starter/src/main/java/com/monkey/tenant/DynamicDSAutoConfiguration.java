@@ -19,14 +19,6 @@ public class DynamicDSAutoConfiguration {
 
     @Autowired
     private DynamicDatasourceConfigProperties properties;
-    @Autowired
-    private  DynamicTenantConfig _tenantConfig;
-
-
-    @Bean
-    DynamicTenantConfig tenantConfig (){
-       return new DynamicTenantConfig();
-    }
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnClass(SaasDynamicDatasource.class)
@@ -40,7 +32,7 @@ public class DynamicDSAutoConfiguration {
     @ConditionalOnMissingBean
     @ConditionalOnClass(SaasDynamicDatasource.class)
     OrgCodeInterceptor orgCodeInterceptor() {
-      Map mp=  _tenantConfig.getSomeMap();
+      Map mp=  properties.getTenants();
         OrgCodeInterceptor interceptor = new OrgCodeInterceptor();
         interceptor.setOrgCodeHeaderName(properties.getTenantId());
         interceptor.setValidOrgCodes(properties.getTenants().keySet());
