@@ -2,6 +2,7 @@ package com.monkey.tenant;
 
 import javax.sql.DataSource;
 
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -10,11 +11,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableApolloConfig
 @EnableConfigurationProperties(DynamicDatasourceConfigProperties.class)
 public class DynamicDSAutoConfiguration {
 
     @Autowired
     private DynamicDatasourceConfigProperties properties;
+
+    @Bean
+    public DynamicDatasourceConfigProperties sampleRedisConfig() {
+        return new DynamicDatasourceConfigProperties();
+    }
 
     @Bean
     @ConditionalOnMissingBean
@@ -30,7 +37,7 @@ public class DynamicDSAutoConfiguration {
     @ConditionalOnClass(SaasDynamicDatasource.class)
     OrgCodeInterceptor orgCodeInterceptor() {
         OrgCodeInterceptor interceptor = new OrgCodeInterceptor();
-        interceptor.setOrgCodeHeaderName(properties.getTenantId());
+        interceptor.setOrgCodeHeaderName(properties.getOrgCodeHeader());
         interceptor.setValidOrgCodes(properties.getTenants().keySet());
         return interceptor;
     }

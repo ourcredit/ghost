@@ -4,15 +4,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.Map;
 @ConfigurationProperties(prefix = "dynamicds")
 public class DynamicDatasourceConfigProperties {
-    private String tenantId;
+    private String orgCodeHeader;
     private Map<String, String> general;
     private Map<String, Map<String, String>> tenants;
-
-
     public Map<String, String> getGeneral() {
         return general;
     }
-
     public void setGeneral(Map<String, String> general) {
         this.general = general;
     }
@@ -25,11 +22,12 @@ public class DynamicDatasourceConfigProperties {
         this.tenants = tenants;
     }
 
-    public String getTenantId() {
-        return tenantId;
+
+    public String getOrgCodeHeader() {
+        return orgCodeHeader;
     }
 
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
+    public void setOrgCodeHeader(String orgCodeHeader) {
+        this.orgCodeHeader = orgCodeHeader;
     }
 }
