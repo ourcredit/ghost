@@ -54,7 +54,6 @@ public class WrapperUtil {
     }
 
     public static Page toPage(FilterInputDto input) {
-        Page _page = new Page(input.getIndex(), input.getSize());
-        return _page;
+        return new Page(input.getIndex(), input.getSize());
     }
 }

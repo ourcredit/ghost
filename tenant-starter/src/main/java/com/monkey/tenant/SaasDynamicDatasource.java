@@ -18,7 +18,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class SaasDynamicDatasource extends AbstractDataSource{
 
-    private Map<String, DataSource> dataSourceMap = new WeakHashMap<>();
+    private final Map<String, DataSource>  dataSourceMap = new WeakHashMap<>();
 
     private GeneralAttributes generalAttributes;
     private Map<String, TenantDatasourceAttributes> tenantDatasourceAttributesMap;
@@ -147,7 +147,7 @@ public class SaasDynamicDatasource extends AbstractDataSource{
             currentOrgCode = generalAttributes.getDefaultTenant();
         }
         if(!tenantDatasourceAttributesMap.containsKey(currentOrgCode)) {
-            throw new SQLException("there is no datasource configuration for the organization with code " + currentOrgCode);
+            throw new SQLException("该租户尚未配置数据源链接 " + currentOrgCode);
         }
         TenantDatasourceAttributes tenantDatasourceAttributes = tenantDatasourceAttributesMap.get(currentOrgCode);
         DataSource ds = dataSourceMap.get(currentOrgCode);

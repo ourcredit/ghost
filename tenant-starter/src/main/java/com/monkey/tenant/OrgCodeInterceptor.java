@@ -10,39 +10,38 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-public class OrgCodeInterceptor implements HandlerInterceptor{
+public class OrgCodeInterceptor implements HandlerInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(HandlerInterceptor.class);
-    private String orgCodeHeaderName = "tenantId";
+    private String orgCodeHeaderName = "tenantName";
 
     private Set<String> validOrgCodes;
 
 
-
-    public void setOrgCodeHeaderName(String orgCodeName) {
+    void setOrgCodeHeaderName(String orgCodeName) {
         orgCodeHeaderName = orgCodeName;
     }
 
-    public void setValidOrgCodes(Set<String> validOrgCodes) {
+    void setValidOrgCodes(Set<String> validOrgCodes) {
         this.validOrgCodes = validOrgCodes;
     }
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) {
         String orgCodeVal = httpServletRequest.getHeader(orgCodeHeaderName);
-        if(orgCodeVal == null) {
-            LOGGER.error("The request without a header named as " + orgCodeHeaderName);
+        if (orgCodeVal == null) {
+            LOGGER.error("未传递租户编码" + orgCodeHeaderName);
             return false;
         }
-        if(!validOrgCodes.contains(orgCodeVal)) {
-            LOGGER.error(String.format(" the orgCode %s is not valid.", orgCodeVal));
+        if (!validOrgCodes.contains(orgCodeVal)) {
+            LOGGER.error(String.format("无效的租户编码", orgCodeVal));
             return false;
         }
-        OrgCodeHolder.putOrgCode(httpServletRequest.getHeader(orgCodeHeaderName));
+        OrgCodeHolder.putOrgCode(orgCodeVal);
         return true;
     }
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        System.out.println("postHandle被调用");
+        System.out.println("请求之后被调用的地方");
         OrgCodeHolder.remove();
     }
 

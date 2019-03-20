@@ -1,6 +1,5 @@
-package com.monkey.account.config;
+package com.monkey.account.generator;
 
-import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
@@ -11,11 +10,8 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class AccountGenerator {
-
-
     private static   void  build(String module,String table){
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();

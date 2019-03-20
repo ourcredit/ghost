@@ -29,8 +29,9 @@ public class Menu implements Serializable {
      * key
      */
     @TableId(value = "id", type = IdType.AUTO)
-    /**
-     * 显示名
+    private Integer id;
+    /*
+      显示名
      */
     private String name;
     /**

@@ -71,10 +71,12 @@ public class JWTUtil {
     /**
      * 生成签名,5min后过期
      * @param username 用户名
+     * @param userId 用户id
+     * @param tenantName 租户名
      * @param secret 用户的密码
      * @return 加密的token
      */
-    public static String sign(String username,Integer userId,Integer tenantId, String secret) {
+    public static String sign(String username,Integer userId,String tenantName, String secret) {
         try {
             Date date = new Date(System.currentTimeMillis()+EXPIRE_TIME);
             Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -82,7 +84,7 @@ public class JWTUtil {
             return JWT.create()
                     .withClaim("username", username)
                     .withClaim("userId", userId)
-                    .withClaim("tenantId", tenantId)
+                    .withClaim("tenantName", tenantName)
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (UnsupportedEncodingException e) {

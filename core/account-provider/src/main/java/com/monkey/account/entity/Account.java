@@ -45,9 +45,6 @@ public class Account  implements Serializable  {
      * 账户
      */
     private String account;
-
-    private Integer tenantId;
-
     private LocalDateTime lastLoginTime;
 
     private Integer isDeleted;

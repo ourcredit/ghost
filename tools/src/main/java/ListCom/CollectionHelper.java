@@ -1,11 +1,5 @@
 package ListCom;
 
-/**
- * @Date:2015年4月16日
- * @Author: zhaojiwei
- * @Description:
- */
-
 import tools.ComUtil;
 
 import java.util.ArrayList;
@@ -59,7 +53,7 @@ public class CollectionHelper {
     public static <T> List<T> findAll(Collection<T> list, IMatch<T> collectionInterface) {
         if (ComUtil.isEmpty(list)) { return null; }
 
-        List<T> ts = new ArrayList<T>();
+        List<T> ts = new ArrayList<>();
         for (T t : list) {
             if (t != null && collectionInterface.match(t)) {
                 ts.add(t);
@@ -70,7 +64,7 @@ public class CollectionHelper {
 
     public static <T, E> List<E> select(Collection<T> list, ISingleMapping<T, E> singleMappingInterface) {
         if (ComUtil.isEmpty(list)) { return null; }
-        List<E> result = new ArrayList<E>();
+        List<E> result = new ArrayList<>();
         for (T t : list) {
             E e = singleMappingInterface.func(t);
             if (e != null) {
@@ -83,8 +77,8 @@ public class CollectionHelper {
     public static <T, E> List<E> selectMany(Collection<T> list, IManyMapping<T, E> manyMapping) {
         if (ComUtil.isEmpty(list)) { return null; }
 
-        List<E> result = new ArrayList<E>();
-        Collection<E> e = null;
+        List<E> result = new ArrayList<>();
+        Collection<E> e;
         for (T t : list) {
             e = manyMapping.selectMany(t);
             if (e != null) {

@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.monkey.account.application.IAccountService;
 import com.monkey.account.entity.Account;
 import com.monkey.account.entity.WrapperUtil;
-import input.EntityInput;
 import input.PageFilterInputDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,11 +25,16 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/base/account", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class AccountController {
-    @Autowired
+    final
     IAccountService _accountService;
 
+    @Autowired
+    public AccountController(IAccountService _accountService) {
+        this._accountService = _accountService;
+    }
+
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public Result<IPage<Account>> list(PageFilterInputDto input) {
+    public Result<IPage<Account>> list(@RequestBody PageFilterInputDto input) {
         IPage<Account> res = _accountService.page(WrapperUtil.toPage(input), WrapperUtil.toWrapper(input));
         return Result.Success(res);
     }

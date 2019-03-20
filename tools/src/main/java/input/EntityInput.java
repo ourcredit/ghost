@@ -3,6 +3,9 @@ package input;
 
 import java.io.Serializable;
 
+/**
+ * @param <T>
+ */
 public class EntityInput<T>  implements Serializable{
     private  T id;
 

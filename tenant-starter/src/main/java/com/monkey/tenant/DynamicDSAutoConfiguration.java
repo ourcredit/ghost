@@ -17,8 +17,13 @@ import java.util.Map;
 @EnableConfigurationProperties(DynamicDatasourceConfigProperties.class)
 public class DynamicDSAutoConfiguration {
 
+    private final DynamicDatasourceConfigProperties properties;
+
     @Autowired
-    private DynamicDatasourceConfigProperties properties;
+    public DynamicDSAutoConfiguration(DynamicDatasourceConfigProperties properties) {
+        this.properties = properties;
+    }
+
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnClass(SaasDynamicDatasource.class)
@@ -32,7 +37,6 @@ public class DynamicDSAutoConfiguration {
     @ConditionalOnMissingBean
     @ConditionalOnClass(SaasDynamicDatasource.class)
     OrgCodeInterceptor orgCodeInterceptor() {
-      Map mp=  properties.getTenants();
         OrgCodeInterceptor interceptor = new OrgCodeInterceptor();
         interceptor.setOrgCodeHeaderName(properties.getTenantId());
         interceptor.setValidOrgCodes(properties.getTenants().keySet());

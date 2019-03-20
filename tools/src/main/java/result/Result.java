@@ -12,7 +12,7 @@ public class Result<T> {
     private String message;
     private T data;
 
-    public static Result NotFound(){
+    public static Result<Object> NotFound(){
         return  new Result<>(-1,"对象不存在",null);
     }
     public static Result AuthNotAllow(){

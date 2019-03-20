@@ -2,16 +2,16 @@ package result;
 
 public class TokenDto {
     private  Integer  id;
-    private  Integer tenantId;
+    private  String tenantName;
     private  String token;
     private  String userName;
 
     public  TokenDto(){}
-    public  TokenDto(Integer id,String token,String userName,Integer tenantId){
+    public  TokenDto(Integer id,String token,String userName,String tenantName){
         this.id=id;
         this.token=token;
         this.userName=userName;
-        this.tenantId=tenantId;
+        this.tenantName=tenantName;
     }
     public Integer getId() {
         return id;
@@ -21,13 +21,7 @@ public class TokenDto {
         this.id = id;
     }
 
-    public Integer getTenantId() {
-        return tenantId;
-    }
 
-    public void setTenantId(Integer tenantId) {
-        this.tenantId = tenantId;
-    }
 
     public String getToken() {
         return token;
@@ -45,5 +39,13 @@ public class TokenDto {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getTenantName() {
+        return tenantName;
+    }
+
+    public void setTenantName(String tenantName) {
+        this.tenantName = tenantName;
     }
 }

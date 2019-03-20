@@ -1,5 +1,5 @@
 package constant;
 
 public class JwtTokenConstant {
-    public static final String Secrit = "Ghost_Monkey";
+    public static final String Secret = "Ghost_Monkey";
 }

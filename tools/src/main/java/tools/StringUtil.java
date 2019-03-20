@@ -19,11 +19,11 @@ public class StringUtil {
     public static String getMethodAnnotationOne(Method method, String validationParamValue) {
         String retParam =null;
         Annotation[][] parameterAnnotations = method.getParameterAnnotations();
-        for (int i = 0; i < parameterAnnotations.length; i++) {
-            for (int j = 0; j < parameterAnnotations[i].length; j++) {
-                String str = parameterAnnotations[i][j].toString();
-                if(str.indexOf(validationParamValue) >0){
-                    retParam = str.substring(str.indexOf("=")+1,str.indexOf(")"));
+        for (Annotation[] parameterAnnotation : parameterAnnotations) {
+            for (Annotation aParameterAnnotation : parameterAnnotation) {
+                String str = aParameterAnnotation.toString();
+                if (str.indexOf(validationParamValue) > 0) {
+                    retParam = str.substring(str.indexOf("=") + 1, str.indexOf(")"));
                 }
             }
         }
@@ -57,7 +57,7 @@ public class StringUtil {
         if (ComUtil.isEmpty(email)) {
             return false;
         }
-        boolean flag = false;
+        boolean flag;
         try {
             String check = "^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
             Pattern regex = Pattern.compile(check);
@@ -74,7 +74,7 @@ public class StringUtil {
      * @return
      */
     public static boolean checkMobileNumber(String mobileNumber) {
-        boolean flag = false;
+        boolean flag;
         try {
             // Pattern regex = Pattern.compile("^(((13[0-9])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8})|(0\\d{2}-\\d{8})|(0\\d{3}-\\d{7})$");
             Pattern regex = Pattern.compile("^1[345789]\\d{9}$");

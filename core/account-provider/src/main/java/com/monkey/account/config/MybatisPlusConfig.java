@@ -1,17 +1,14 @@
 
 package com.monkey.account.config;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
@@ -32,12 +29,6 @@ public class MybatisPlusConfig {
         return performanceInterceptor;
     }
 
-    /**
-     * @Description : mybatis-plus分页插件
-     * ---------------------------------
-     * @Author : Liang.Guangqing
-     * @Date : Create in 2017/9/19 13:59
-     */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         return new PaginationInterceptor();
@@ -59,10 +50,10 @@ public class MybatisPlusConfig {
         return mapperScannerConfigurer;
     }
     //    配置事务管理
-    @Bean(name = "basisTransactionManager")
-    public DataSourceTransactionManager transactionManager(@Qualifier(value = "basicDataSource") DruidDataSource dataSource) {
-        return new DataSourceTransactionManager(dataSource);
-    }
+//    @Bean(name = "basisTransactionManager")
+//    public DataSourceTransactionManager transactionManager(@Qualifier(value = "basicDataSource") DruidDataSource dataSource) {
+//        return new DataSourceTransactionManager(dataSource);
+//    }
 
 
 }

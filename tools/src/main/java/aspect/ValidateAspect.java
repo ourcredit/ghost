@@ -14,13 +14,11 @@ public class ValidateAspect implements  AspectInterface {
         //获取注解的value值返回
         String validationParamValue = StringUtil.getMethodAnnotationOne(method,ValidateAspect.class.getSimpleName());
         if(!ComUtil.isEmpty(validationParamValue)){
-            for (int i = 0; i < obj.length; i++) {
-                if(obj[i] instanceof JSONObject){
-                    JSONObject jsonObject = JSONObject.parseObject(obj[i].toString());
+            for (Object anObj : obj) {
+                if (anObj instanceof JSONObject) {
+                    JSONObject jsonObject = JSONObject.parseObject(anObj.toString());
                     //是否有所有必须参数
-                    hasAllRequired(jsonObject,validationParamValue);
-                }else {
-                    continue;
+                    hasAllRequired(jsonObject, validationParamValue);
                 }
             }
         }
@@ -35,16 +33,16 @@ public class ValidateAspect implements  AspectInterface {
         if (!ComUtil.isEmpty(requiredColumns)) {
             //验证字段非空
             String[] columns = requiredColumns.split(",");
-            String missCol = "";
+            StringBuilder missCol = new StringBuilder();
             for (String column : columns) {
                 Object val = jsonObject.get(column.trim());
                 if (ComUtil.isEmpty(val)) {
-                    missCol += column + "  ";
+                    missCol.append(column).append("  ");
                 }
             }
-            if (!ComUtil.isEmpty(missCol)) {
+            if (!ComUtil.isEmpty(missCol.toString())) {
                 jsonObject.clear();
-                throw new ParamJsonException("缺少必填参数:"+missCol.trim());
+                throw new ParamJsonException("缺少必填参数:"+ missCol.toString().trim());
             }
         }
     }

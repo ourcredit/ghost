@@ -1,7 +1,7 @@
 package com.monkey.tenant;
 
  class OrgCodeHolder {
-    static final ThreadLocal<String> holder = new ThreadLocal<String>();
+    static final ThreadLocal<String> holder = new ThreadLocal<>();
 
      public static void putOrgCode(String orgCode) {
         holder.set(orgCode);

@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 
 @Component
 public class AuthFilter extends ZuulFilter {
-    private static Logger log = LoggerFactory.getLogger(AuthFilter.class);
+    /**
+     *
+     */
+    private static final Logger log = LoggerFactory.getLogger(AuthFilter.class);
 
     @Override
     public String filterType() {
@@ -27,7 +30,7 @@ public class AuthFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        return !ctx.getRequest().getRequestURI().toString().equals("/auth/auth/login");
+        return !ctx.getRequest().getRequestURI().equals("/auth/auth/login");
     }
 
     @Override

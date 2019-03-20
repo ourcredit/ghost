@@ -11,8 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class AuthController {
-    @Autowired
+    private final
     AuthService _authService;
+
+    @Autowired
+    public AuthController(AuthService _authService) {
+        this._authService = _authService;
+    }
+
     @PostMapping(value = "auth/login")
     public Result<TokenDto> login(@RequestBody LoginInput input){
         return  _authService.auth(input);
