@@ -9,10 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import tools.JWTUtil;
 
 public class OrgCodeInterceptor implements HandlerInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(HandlerInterceptor.class);
     private String orgCodeHeaderName = "tenantName";
+    private String oauthName = "Authorization";
 
     private Set<String> validOrgCodes;
 
@@ -27,23 +29,25 @@ public class OrgCodeInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) {
-        String orgCodeVal = httpServletRequest.getHeader(orgCodeHeaderName);
-        if (orgCodeVal == null) {
-            LOGGER.error("未传递租户编码" + orgCodeHeaderName);
+        String tenantName = httpServletRequest.getHeader(orgCodeHeaderName);
+        String oauth = httpServletRequest.getHeader(oauthName);
+        if (tenantName == null) {
+            LOGGER.error("未获取到租户编码" + orgCodeHeaderName);
             return false;
         }
-        if (!validOrgCodes.contains(orgCodeVal)) {
-            LOGGER.error(String.format("无效的租户编码", orgCodeVal));
+        if (!validOrgCodes.contains(tenantName)) {
+            LOGGER.error(String.format("无效的租户编码", tenantName));
             return false;
         }
-        OrgCodeHolder.putOrgCode(orgCodeVal);
+        OrgCodeHolder.putOrgCode(tenantName);
+        if(!oauth.isEmpty()){
+            ApplicationContext.getInstance().setCurrent(new CurrentTenant(tenantName,JWTUtil.getTenantId(oauth),JWTUtil.getUserId(oauth)));
+        }
         return true;
     }
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        System.out.println("请求之后被调用的地方");
         OrgCodeHolder.remove();
+        ApplicationContext.getInstance().setCurrent(null);
     }
-
-
 }

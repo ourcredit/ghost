@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.monkey.account.application.IAccountService;
 import com.monkey.account.entity.Account;
 import com.monkey.account.entity.WrapperUtil;
+import com.monkey.tenant.ApplicationContext;
 import input.PageFilterInputDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -38,13 +39,11 @@ public class AccountController {
         IPage<Account> res = _accountService.page(WrapperUtil.toPage(input), WrapperUtil.toWrapper(input));
         return Result.Success(res);
     }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Result<Account> get(@PathVariable Integer input) {
         Account res = _accountService.getById(input);
         return Result.Success(res);
     }
-
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public Result<Account> modify(@RequestBody Account input) {
         Boolean res = _accountService.saveOrUpdate(input);
