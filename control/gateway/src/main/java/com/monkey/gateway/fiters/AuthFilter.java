@@ -36,9 +36,7 @@ public class AuthFilter extends ZuulFilter {
     @Override
     public Object run() throws ZuulException {
         RequestContext ctx = RequestContext.getCurrentContext();
-
         HttpServletRequest request = ctx.getRequest();
-
         Object accessToken = request.getHeader("Authorization");
         if (accessToken == null) {
             ctx.setSendZuulResponse(false);

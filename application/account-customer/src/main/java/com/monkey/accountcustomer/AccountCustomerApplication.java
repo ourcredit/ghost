@@ -1,4 +1,4 @@
-package com.monkey.authcustomer;
+package com.monkey.accountcustomer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,10 +17,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableHystrix
 @EnableHystrixDashboard
 @EnableCircuitBreaker
-public class AuthCustomerApplication {
+public class AccountCustomerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthCustomerApplication.class, args);
+        SpringApplication.run(AccountCustomerApplication.class, args);
     }
 
 }

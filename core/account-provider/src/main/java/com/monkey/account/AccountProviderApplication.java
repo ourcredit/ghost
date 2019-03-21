@@ -14,9 +14,9 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @MapperScan("com.monkey.account.repository")
 @EnableApolloConfig
 @EnableDynamicDS
-public class AuthProviderApplication {
+public class AccountProviderApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AuthProviderApplication.class, args);
+		SpringApplication.run(AccountProviderApplication.class, args);
 	}
 }

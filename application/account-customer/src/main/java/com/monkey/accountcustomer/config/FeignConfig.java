@@ -1,4 +1,4 @@
-package com.monkey.authcustomer.config;
+package com.monkey.accountcustomer.config;
 
 import feign.Request;
 import feign.Retryer;

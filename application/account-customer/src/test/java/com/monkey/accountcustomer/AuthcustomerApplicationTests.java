@@ -1,4 +1,4 @@
-package com.monkey.authcustomer;
+package com.monkey.accountcustomer;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

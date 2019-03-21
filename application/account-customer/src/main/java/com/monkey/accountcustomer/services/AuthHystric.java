@@ -1,4 +1,4 @@
-package com.monkey.authcustomer.services;
+package com.monkey.accountcustomer.services;
 
 import org.springframework.stereotype.Component;
 import result.LoginInput;

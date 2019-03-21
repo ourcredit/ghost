@@ -1,15 +1,13 @@
 server:
   port: 9001
 eureka:
-  instance:
-    hostname: 47.94.214.199
     # 服务失效时间： 如果多久没有收到请求，则可以删除服务
     lease-expiration-duration-in-seconds: 20
   client:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://${host:47.94.214.199}:9001}/eureka/
   server:
     enable-self-preservation: false
 spring:

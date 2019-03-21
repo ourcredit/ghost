@@ -1,6 +1,6 @@
-package com.monkey.authcustomer.controller;
+package com.monkey.accountcustomer.controller;
 
-import com.monkey.authcustomer.services.AuthService;
+import com.monkey.accountcustomer.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import result.LoginInput;

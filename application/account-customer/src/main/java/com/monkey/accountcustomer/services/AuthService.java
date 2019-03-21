@@ -1,6 +1,6 @@
-package com.monkey.authcustomer.services;
+package com.monkey.accountcustomer.services;
 
-import com.monkey.authcustomer.config.FeignConfig;
+import com.monkey.accountcustomer.config.FeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
