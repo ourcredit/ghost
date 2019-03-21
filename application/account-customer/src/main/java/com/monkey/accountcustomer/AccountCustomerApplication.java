@@ -1,5 +1,6 @@
 package com.monkey.accountcustomer;
 
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -13,10 +14,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableEurekaClient
 @EnableFeignClients
-
 @EnableHystrix
 @EnableHystrixDashboard
 @EnableCircuitBreaker
+@EnableApolloConfig
 public class AccountCustomerApplication {
 
     public static void main(String[] args) {

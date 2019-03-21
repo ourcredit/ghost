@@ -6,7 +6,7 @@ server:
   port: 9005
 spring:
   application:
-    name: auth-customer
+    name: account-customer
 feign:
   hystrix:
     enabled: true

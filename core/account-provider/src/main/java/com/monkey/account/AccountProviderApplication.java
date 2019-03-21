@@ -15,7 +15,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableApolloConfig
 @EnableDynamicDS
 public class AccountProviderApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(AccountProviderApplication.class, args);
 	}
