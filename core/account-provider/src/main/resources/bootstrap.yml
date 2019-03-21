@@ -3,9 +3,9 @@ server:
 spring:
   application:
     name: account-provider
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://${host:47.94.214.199}:9001/eureka/
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${host:47.94.214.199}:9001/eureka/
 
 
