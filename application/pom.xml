@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <modules>
-        <module>authcustomer</module>
+        <module>account-customer</module>
     </modules>
 
     <artifactId>application</artifactId>
