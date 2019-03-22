@@ -7,15 +7,6 @@ server:
 spring:
   application:
     name: gateway
-zuul:
-  routes:
-    auth:
-      path: /api-auth/**
-      serviceId: auth-customer
-    order:
-      path: /api-order/**
-      serviceId: order-customer
-
 hystrix:
   command:
     default:
@@ -24,4 +15,3 @@ hystrix:
           strategy: SEMAPHORE
           thread:
             timeout-in-milliseconds: 3000
-
