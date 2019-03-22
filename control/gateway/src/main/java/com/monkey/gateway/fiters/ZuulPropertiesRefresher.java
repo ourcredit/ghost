@@ -1,24 +1,26 @@
 package com.monkey.gateway.fiters;
-
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.context.scope.refresh.RefreshScope;
+import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
+import org.springframework.cloud.netflix.zuul.RoutesRefreshedEvent;
+import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+
 @Component
-public class ZuulPropertiesRefresher {
+public class ZuulPropertiesRefresher implements ApplicationContextAware {
 
     private static final Logger logger = LoggerFactory.getLogger(ZuulPropertiesRefresher.class);
 
-    private final RefreshScope refreshScope;
+    private ApplicationContext applicationContext;
 
     @Autowired
-    public ZuulPropertiesRefresher(RefreshScope refreshScope) {
-        this.refreshScope = refreshScope;
-    }
-
+    private RouteLocator routeLocator;
     @ApolloConfigChangeListener
     public void onChange(ConfigChangeEvent changeEvent) {
         boolean zuulPropertiesChanged = false;
@@ -28,9 +30,32 @@ public class ZuulPropertiesRefresher {
                 break;
             }
         }
+
         if (zuulPropertiesChanged) {
-            logger.info("Refreshing zuul properties!");
-            refreshScope.refresh("ZUUL_PROPERTIES_BEAN");
+            refreshZuulProperties(changeEvent);
         }
+    }
+
+    private void refreshZuulProperties(ConfigChangeEvent changeEvent) {
+        logger.info("Refreshing zuul properties!");
+
+        /**
+         * rebind configuration beans, e.g. ZuulProperties
+         * @see org.springframework.cloud.context.properties.ConfigurationPropertiesRebinder#onApplicationEvent
+         */
+        this.applicationContext.publishEvent(new EnvironmentChangeEvent(changeEvent.changedKeys()));
+
+        /**
+         * refresh routes
+         * @see org.springframework.cloud.netflix.zuul.ZuulServerAutoConfiguration.ZuulRefreshListener#onApplicationEvent
+         */
+        this.applicationContext.publishEvent(new RoutesRefreshedEvent(routeLocator));
+
+        logger.info("Zuul properties refreshed!");
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }
