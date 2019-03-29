@@ -16,7 +16,7 @@ public class Result<T> {
         return  new Result<>(-1,"对象不存在",null);
     }
     public static Result AuthNotAllow(){
-        return  new Result<>(-1,"授权失败",null);
+        return  new Result<>(-1,"auth not allowd",null);
     }
     public  static  Result Success(Object data){
         return  new Result(1,"获取成功",data);

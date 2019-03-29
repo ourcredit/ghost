@@ -30,7 +30,7 @@ public class AuthFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        return !ctx.getRequest().getRequestURI().equals("/auth/auth/login");
+        return !ctx.getRequest().getRequestURI().equals("/account/login");
     }
 
     @Override
