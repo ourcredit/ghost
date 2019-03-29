@@ -1,19 +1,25 @@
 package constant;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ApiConstant {
     // =====================RMS begin====================
 
-    public static final String RMS = "/rms";
+    public static final String BASE = "";
 
-    public static final String RMS_USER = RMS + "/user";
+    public static final String ACCOUNT = BASE + "/account/";
 
-    public static final String RMS_ROLE = RMS + "/role";
+    public static final String ORG = BASE + "/org/";
 
-    public static final String RMS_DEPT = RMS + "/dept";
-
-    public static final String RMS_MENU = RMS + "/menu";
-
-    // ======================RMS end====================
-
-    public static final String VIEW = "/view";
+    public static final String ATTENDANCE = BASE + "/attendance/";
+    //无需验证的route
+    public static final List<String> NOTAUTHROUTES=new ArrayList<String>(){
+        {
+            add("/account/account/login");
+        }
+    };
+    public static boolean Contains(String url){
+      return   NOTAUTHROUTES.contains(url);
+    }
 }

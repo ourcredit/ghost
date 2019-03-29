@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Primary;
 public class ZuulConfig {
     @Bean(name = "zuul.configuration.properties")
     @RefreshScope
-    @ConfigurationProperties("zuul")
     @Primary
     public ZuulProperties zuulProperties(){
         ZuulProperties p=  new ZuulProperties();
