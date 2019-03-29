@@ -30,7 +30,8 @@ public class AuthFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        return !ctx.getRequest().getRequestURI().equals("/account/login");
+        boolean b= !ctx.getRequest().getRequestURI().equals("/account/login");
+        return  b;
     }
 
     @Override
@@ -38,7 +39,7 @@ public class AuthFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         Object accessToken = request.getHeader("Authorization");
-        if (accessToken == null) {
+        if (accessToken == null&&!request.getRequestURI().equals("/account/login")) {
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(401);
             ctx.setResponseBody(JSON.toJSONString(Result.AuthNotAllow()));

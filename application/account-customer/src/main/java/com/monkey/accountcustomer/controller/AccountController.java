@@ -1,6 +1,6 @@
 package com.monkey.accountcustomer.controller;
 
-import com.monkey.accountcustomer.services.AuthService;
+import com.monkey.accountcustomer.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import result.LoginInput;
@@ -10,20 +10,20 @@ import result.TokenDto;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-public class AuthController {
-    private final
-    AuthService _authService;
+@RequestMapping(value = "/account")
+public class AccountController {
+    private final AccountService _authService;
 
     @Autowired
-    public AuthController(AuthService _authService) {
+    public AccountController(AccountService _authService) {
         this._authService = _authService;
     }
 
-    @PostMapping(value = "auth/login")
+    @PostMapping(value = "/login")
     public Result<TokenDto> login(@RequestBody LoginInput input){
         return  _authService.auth(input);
     }
-    @GetMapping(value = "auth/all")
+    @GetMapping(value = "/list")
     public Result all(HttpServletRequest request){
         request.getRequestURL();
         Result r=  _authService.all();

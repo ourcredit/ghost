@@ -5,7 +5,7 @@ import result.LoginInput;
 import result.Result;
 
 @Component
-public class AuthHystric implements AuthService {
+public class AccountHystric implements AccountService {
 
     @Override
     public Result auth(LoginInput input) {
