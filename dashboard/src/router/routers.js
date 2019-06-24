@@ -33,7 +33,7 @@ export default [
     redirect: '/home',
     component: Main,
     meta: {
-      hideInMenu: true,
+      hideInMenu: false,
       notCache: true
     },
     children: [
@@ -41,38 +41,162 @@ export default [
         path: '/home',
         name: 'home',
         meta: {
-          hideInMenu: true,
+          hideInMenu: false,
           title: '首页',
           notCache: true,
           icon: 'md-home'
         },
-        component: () => import('@/view/single-page/home')
+        component: () => import('@/view/single-page/home/dash')
       }
     ]
   },
   {
-    path: '',
-    name: 'doc',
+    path: '/user',
+    name: 'user',
     meta: {
-      title: '文档',
-      href: 'https://lison16.github.io/iview-admin-doc/#/',
-      icon: 'ios-book'
-    }
+      hideInBread: true
+    },
+    component: Main,
+    children: [
+      {
+        path: '',
+        name: '用户管理',
+        meta: {
+          icon: 'ios-hammer',
+          title: '用户管理'
+        },
+        component: () => import('@/view/tools-methods/tools-methods.vue')
+      }
+    ]
   },
   {
-    path: '/join',
-    name: 'join',
+    path: '/invitation',
+    name: 'invitation',
     component: Main,
     meta: {
       hideInBread: true
     },
     children: [
       {
-        path: 'join_page',
-        name: 'join_page',
+        path: '',
+        name: '邀请记录管理',
         meta: {
           icon: '_qq',
-          title: 'QQ群'
+          title: '邀请记录管理'
+        },
+        component: () => import('@/view/join-page.vue')
+      }
+    ]
+  },
+  {
+    path: '/group',
+    name: 'group',
+    component: Main,
+    meta: {
+      hideInBread: true
+    },
+    children: [
+      {
+        path: '',
+        name: '群组管理',
+        meta: {
+          icon: '_qq',
+          title: '群组管理'
+        },
+        component: () => import('@/view/join-page.vue')
+      }
+    ]
+  },
+  {
+    path: '/publichub',
+    name: 'publichub',
+    component: Main,
+    meta: {
+      hideInBread: true
+    },
+    children: [
+      {
+        path: '',
+        name: '公共频道管理',
+        meta: {
+          icon: '_qq',
+          title: '公共频道管理'
+        },
+        component: () => import('@/view/join-page.vue')
+      }
+    ]
+  },
+  {
+    path: '/history',
+    name: 'history',
+    component: Main,
+    meta: {
+      hideInBread: true
+    },
+    children: [
+      {
+        path: '',
+        name: '聊天记录管理',
+        meta: {
+          icon: '_qq',
+          title: '聊天记录管理'
+        },
+        component: () => import('@/view/join-page.vue')
+      }
+    ]
+  },
+  {
+    path: '/resource',
+    name: 'resource',
+    component: Main,
+    meta: {
+      hideInBread: true
+    },
+    children: [
+      {
+        path: '',
+        name: '资源管理',
+        meta: {
+          icon: '_qq',
+          title: '资源管理'
+        },
+        component: () => import('@/view/join-page.vue')
+      }
+    ]
+  },
+  {
+    path: '/common',
+    name: 'common',
+    component: Main,
+    meta: {
+      hideInBread: true
+    },
+    children: [
+      {
+        path: '',
+        name: '通用管理',
+        meta: {
+          icon: '_qq',
+          title: '通用管理'
+        },
+        component: () => import('@/view/join-page.vue')
+      }
+    ]
+  },
+  {
+    path: '/total',
+    name: 'total',
+    component: Main,
+    meta: {
+      hideInBread: true
+    },
+    children: [
+      {
+        path: '',
+        name: '统计',
+        meta: {
+          icon: '_qq',
+          title: '统计'
         },
         component: () => import('@/view/join-page.vue')
       }
