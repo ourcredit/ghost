@@ -9,6 +9,7 @@ server:
 spring:
   application:
     name: gateway
+    
 hystrix:
   command:
     default:
