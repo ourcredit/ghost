@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>account-provider</module>
+        <module>app-provider</module>
     </modules>
     <dependencies>
         <dependency>

@@ -1,0 +1,18 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${host:47.94.214.199}:9001/eureka/
+server:
+  port: 9005
+spring:
+  application:
+    name: account-customer
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE

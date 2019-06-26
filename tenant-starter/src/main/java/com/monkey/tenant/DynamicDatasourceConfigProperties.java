@@ -30,13 +30,15 @@ public class DynamicDatasourceConfigProperties {
             String key="tenantconfig.tenants["+i+"]";
           String st[]  = _config.getArrayProperty(key, "tenants", a);
             for (String s:st) {
-                //jdbc:mysql://47.94.214.199:3306/ghost,account,root,Dizhu20!&
-                String[] arr= s.split(",");
-                Map<String,String> temp=new HashMap<>();
-                temp.put("userName",arr[2]);
-                temp.put("password",arr[3]);
-                temp.put("url",arr[0]);
-                tenants.put(arr[1],temp);
+                if(s!=null){
+                    //jdbc:mysql://47.94.214.199:3306/ghost,account,root,Dizhu20!&
+                    String[] arr= s.split(",");
+                    Map<String,String> temp=new HashMap<>();
+                    temp.put("userName",arr[2]);
+                    temp.put("password",arr[3]);
+                    temp.put("url",arr[0]);
+                    tenants.put(arr[1],temp);
+                }
             }
         }
         return tenants;
