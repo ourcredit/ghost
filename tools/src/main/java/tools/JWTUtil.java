@@ -69,6 +69,18 @@ public class JWTUtil {
         }
     }
     /**
+     * 获得token中的信息无需secret解密也能获得
+     * @return token中包含的用户名
+     */
+    public static String getUserName(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getClaim("userName").asString();
+        } catch (JWTDecodeException e) {
+            return null;
+        }
+    }
+    /**
      * 生成签名,5min后过期
      * @param username 用户名
      * @param userId 用户id

@@ -7,7 +7,8 @@ import {
     hasRead,
     removeReaded,
     restoreTrash,
-    getUnreadCount
+    getUnreadCount,
+    getDashList
   } from '@/api/user'
   import { setToken, getToken } from '@/libs/util'
   
@@ -25,6 +26,9 @@ import {
       messageContentStore: {}
     },
     mutations: {
+      setList(state,list){
+        state.list = list;
+      },
       setAvator (state, avatorPath) {
         state.avatorImgPath = avatorPath
       },
@@ -72,6 +76,19 @@ import {
       messageTrashCount: state => state.messageTrashList.length
     },
     actions: {
+      getAll({ commit }, params){
+        return new Promise((resolve, reject) => {
+          getDashList(params).then(res => {
+            const data = res.data
+            commit('setList', data);
+            commit('setList', data);
+            commit('setList', data);
+            resolve()
+          }).catch(err => {
+            reject(err)
+          })
+        })
+      },
       // 登录
       handleLogin ({ commit }, { userName, password }) {
         userName = userName.trim()
