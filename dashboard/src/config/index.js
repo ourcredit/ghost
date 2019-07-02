@@ -19,6 +19,7 @@ export default {
   baseUrl: {
     test:'www.baidu.com',
     dev: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/',
+    dev: 'http://47.94.214.199/',
     pro: 'https://produce.com'
   },
   /**

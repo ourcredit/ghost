@@ -65,7 +65,7 @@ export default [
           icon: 'ios-hammer',
           title: '用户管理'
         },
-        component: () => import('@/view/tools-methods/tools-methods.vue')
+        component: () => import('@/view/user/index')
       }
     ]
   },

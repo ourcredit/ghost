@@ -94,14 +94,8 @@
       searchable: {
         type: Boolean,
         default: false
-      },
+      }
     },
-    /**
-     * Events
-     * @on-start-edit 返回值 {Object} ：同iview中render函数中的params对象 { row, index, column }
-     * @on-cancel-edit 返回值 {Object} 同上
-     * @on-save-edit 返回值 {Object} ：除上面三个参数外，还有一个value: 修改后的数据
-     */
     data() {
       return {
         insideTableData: [],
@@ -171,9 +165,13 @@
         this.insideTableData = this.value.filter(item => item[this.searchKey].indexOf(this.searchValue) > -1)
       },
       initTableData() {
-          let params={index:this.currentIndex,size:this.currentSize, where:{} };
-        await this.$store.dispatch({
-          type: `${this.type}/getAll`,
+        let params = {
+          index: this.currentIndex,
+          size: this.currentSize,
+          where: {}
+        };
+        this.$store.dispatch({
+          type: `${this.type}_users`,
           data: params
         });
       },
@@ -213,6 +211,7 @@
     },
     computed: {
       total() {
+        console.log(this.$store);
         return this.$store.state[this.type].total;
       },
       currentIndex() {
@@ -220,11 +219,11 @@
       },
       currentSize() {
         return this.$store.state[this.type].size;
-      }
+      },
       data() {
         return this.$store.state[this.type].list;
       }
-    }
+    },
     watch: {
       columns(columns) {
         this.setDefaultSearchKey()
@@ -235,8 +234,9 @@
       }
     },
     mounted() {
+      console.log(this.$store);
       this.setDefaultSearchKey()
-      this.handleTableData()
+      this.initTableData()
     }
   }
 
