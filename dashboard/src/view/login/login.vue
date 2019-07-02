@@ -18,6 +18,7 @@
 <script>
 import LoginForm from '_c/login-form'
 import { mapActions } from 'vuex'
+import { setSomeKey,getSomeKey } from '@/libs/util'
 export default {
   components: {
     LoginForm
@@ -28,7 +29,8 @@ export default {
       'getUserInfo'
     ]),
     handleSubmit ({ userName, password }) {
-      this.handleLogin({ userName, password }).then(res => {
+      let appId=getSomeKey("appId");
+      this.handleLogin({appId, userName, password }).then(res => {
         this.getUserInfo().then(res => {
           this.$router.push({
             name: this.$config.homeName

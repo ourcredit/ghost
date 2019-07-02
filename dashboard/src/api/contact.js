@@ -1,50 +1,53 @@
 import axios from '@/libs/api.request'
-
-export const login = ({ appId, userName, password }) => {
+export const users = ({ index, size,where }) => {
   const data = {
-    tenantName:appId,
-    userName,
-    password
+    index,
+    size,
+    where
   }
   return axios.request({
-    url: '/app/api/user/testlogin',
+    url: '/app/api/user',
     data,
     method: 'post'
   })
 }
 
-export const getUserInfo = (token) => {
+export const user = (key) => {
   return axios.request({
-    url: 'get_info',
+    url: '/app/api/user',
     params: {
-      token
+      key
     },
     method: 'get'
   })
 }
 
-export const logout = (token) => {
+export const edit = (user) => {
   return axios.request({
-    url: 'logout',
+    url: '/app/api/user/edit',
+    data:user,
     method: 'post'
   })
 }
 
-export const getUnreadCount = () => {
+export const remove = (key) => {
   return axios.request({
     url: 'message/count',
+    params:{
+        key
+    },
     method: 'get'
   })
 }
 
-export const getMessage = () => {
+export const appUseState = () => {
   return axios.request({
     url: 'message/init',
     method: 'get'
   })
 }
 
-export const getContentByMsgId = msg_id => {
+export const recordInfo = msg_id => {
   return axios.request({
     url: 'message/content',
     method: 'get',
@@ -54,7 +57,7 @@ export const getContentByMsgId = msg_id => {
   })
 }
 
-export const hasRead = msg_id => {
+export const groupInfo = msg_id => {
   return axios.request({
     url: 'message/has_read',
     method: 'post',
@@ -64,7 +67,7 @@ export const hasRead = msg_id => {
   })
 }
 
-export const removeReaded = msg_id => {
+export const publicGroup = msg_id => {
   return axios.request({
     url: 'message/remove_readed',
     method: 'post',
@@ -74,7 +77,7 @@ export const removeReaded = msg_id => {
   })
 }
 
-export const restoreTrash = msg_id => {
+export const friendInvate = msg_id => {
   return axios.request({
     url: 'message/restore',
     method: 'post',

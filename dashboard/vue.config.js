@@ -40,4 +40,18 @@ module.exports = {
   // devServer: {
   //   proxy: 'localhost:3000'
   // }
+  ,
+  devServer: {
+    proxy: {
+      '/': {
+        //接口地址
+        target: 'http://47.94.214.199/',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/': ''  //通过pathRewrite重写地址，将前缀/api转为/
+        }
+      }
+    }
+  }
 }

@@ -5,8 +5,12 @@
 </template>
 
 <script>
+import { setSomeKey,getSomeKey } from '@/libs/util'
 export default {
-  name: 'App'
+  name: 'App',
+  mounted() {
+    setSomeKey("appId","88888");
+  },
 }
 </script>
 
