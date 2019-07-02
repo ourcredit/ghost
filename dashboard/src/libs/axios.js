@@ -1,6 +1,9 @@
 import axios from 'axios'
 import store from '@/store'
 // import { Spin } from 'iview'
+import {getToken,getSomeKey} from '@/libs/util'
+
+
 const addErrorLog = errorInfo => {
   const { statusText, status, request: { responseURL } } = errorInfo
   let info = {
@@ -18,10 +21,14 @@ class HttpRequest {
     this.queue = {}
   }
   getInsideConfig () {
+    let token=getToken();
     const config = {
       baseURL: this.baseUrl,
       headers: {
-        //
+        "Authorization":token,
+        "Content-Type":"application/json",
+        "tenantName":"account",
+        "appId":"88888"
       }
     }
     return config
@@ -35,6 +42,7 @@ class HttpRequest {
   interceptors (instance, url) {
     // 请求拦截
     instance.interceptors.request.use(config => {
+      console.log(config);
       // 添加全局的loading...
       if (!Object.keys(this.queue).length) {
         // Spin.show() // 不建议开启，因为界面不友好
@@ -46,6 +54,7 @@ class HttpRequest {
     })
     // 响应拦截
     instance.interceptors.response.use(res => {
+      console.log(res);
       this.destroy(url)
       const { data, status } = res
       return { data, status }

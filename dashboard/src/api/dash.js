@@ -12,15 +12,7 @@ export const newRegistUserCount = ({ userName, password }) => {
   })
 }
 
-export const getUserInfo = (token) => {
-  return axios.request({
-    url: 'get_info',
-    params: {
-      token
-    },
-    method: 'get'
-  })
-}
+
 
 export const logout = (token) => {
   return axios.request({
