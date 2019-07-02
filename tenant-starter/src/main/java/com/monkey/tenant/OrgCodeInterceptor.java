@@ -40,8 +40,18 @@ public class OrgCodeInterceptor implements HandlerInterceptor {
             return false;
         }
         OrgCodeHolder.putOrgCode(tenantName);
-        if(!oauth.isEmpty()){
-            ApplicationContext.getInstance().setCurrent(new CurrentTenant(tenantName,JWTUtil.getTenantId(oauth),JWTUtil.getUserId(oauth),JWTUtil.getUserName(oauth)));
+        String appId = httpServletRequest.getHeader("appId");
+        CurrentTenant current=new CurrentTenant();
+        if(appId.isEmpty()){
+            current.setAppId("88888");
+        }else {
+            current.setAppId(appId);
+        }
+        if(oauth!=null&& !oauth.isEmpty()){
+            current.setAppId(JWTUtil.getUserName(oauth));
+            current.setUserId(JWTUtil.getUserId(oauth));
+            current.setUserName(JWTUtil.getUserName(oauth));
+            ApplicationContext.getInstance().setCurrent(current);
         }
         return true;
     }

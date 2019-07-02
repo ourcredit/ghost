@@ -1,26 +1,19 @@
 package com.monkey.tenant;
 
 public class CurrentTenant {
-    public CurrentTenant(String tenantName, Integer tenantId, Integer userId, String userName) {
+    public CurrentTenant(String appId, Integer tenantId, Integer userId, String userName) {
         this.tenantId = tenantId;
-        this.tenantName = tenantName;
+        this.appId = appId;
         this.userId = userId;
         this.userName = userName;
     }
+    public  CurrentTenant(){
 
-    private String tenantName;
+    }
+    private String appId;
     private Integer tenantId;
     private Integer userId;
     private String userName;
-
-    public String getTenantName() {
-        return tenantName;
-    }
-
-    public void setTenantName(String tenantName) {
-        this.tenantName = tenantName;
-    }
-
     public Integer getTenantId() {
         return tenantId;
     }
@@ -43,5 +36,14 @@ public class CurrentTenant {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 }

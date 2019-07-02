@@ -34,7 +34,7 @@ public class IMUser extends baseEntity implements Serializable {
 
 
     @TableField("appId")
-    private Integer appId;
+    private String appId;
 
     /**
      * 用户关联的对外ID。可用于云服务的架构处理

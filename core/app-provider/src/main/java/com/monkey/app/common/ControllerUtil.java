@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.monkey.app.application.IIMUserService;
 import com.monkey.app.entity.IMUser;
+import com.monkey.tenant.CurrentTenant;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -184,7 +185,14 @@ public class ControllerUtil {
         IMUser user=iOnImuserService.getOne(new QueryWrapper<IMUser>().eq("appId",appId).eq("api_token",token));
         return user;
     }
-
+    public IMUser checkToken(CurrentTenant tenant)
+    {
+        if(tenant==null)return null;
+        Integer userId= tenant.getUserId();
+        String appId= tenant.getAppId();
+        IMUser user=iOnImuserService.getOne(new QueryWrapper<IMUser>().eq("appId",appId).eq("id",userId));
+        return user;
+    }
     public  Long timestamp() {
         long timeStampSec = System.currentTimeMillis()/1000;
         String timestamp = String.format("%010d", timeStampSec);
