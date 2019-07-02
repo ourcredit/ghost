@@ -170,6 +170,7 @@
           size: this.currentSize,
           where: {}
         };
+        console.log(params)
         this.$store.dispatch({
           type: `${this.type}_users`,
           data: params
@@ -215,7 +216,7 @@
         return this.$store.state[this.type].total;
       },
       currentIndex() {
-        return this.$store.state[this.type].current;
+        return this.$store.state[this.type].index;
       },
       currentSize() {
         return this.$store.state[this.type].size;

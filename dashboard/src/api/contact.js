@@ -5,6 +5,7 @@ export const users = ({ index, size,where }) => {
     size,
     where
   }
+  console.log(data);
   return axios.request({
     url: '/app/api/user',
     data,

@@ -48,7 +48,6 @@ export default {
   methods: {
   },
   mounted() {
-    console.log(this.$store);
   },
 }
 </script>

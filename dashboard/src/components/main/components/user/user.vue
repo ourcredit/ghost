@@ -4,6 +4,7 @@
       <Badge :dot="!!messageUnreadCount">
         <Avatar :src="userAvator"/>
       </Badge>
+  {{userName}}
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <DropdownMenu slot="list">
         <DropdownItem name="message">
@@ -17,7 +18,7 @@
 
 <script>
 import './user.less'
-import { mapActions } from 'vuex'
+import { mapActions,mapGetters } from 'vuex'
 export default {
   name: 'User',
   props: {
@@ -29,6 +30,12 @@ export default {
       type: Number,
       default: 0
     }
+  },
+ computed: {
+    userName () {
+      return this.$store.state.user.userName
+    },
+    
   },
   methods: {
     ...mapActions([
