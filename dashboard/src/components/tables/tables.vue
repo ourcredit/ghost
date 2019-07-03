@@ -1,9 +1,5 @@
 <template>
   <div>
-    <div v-if="searchable" class="search-con search-con-top">
-      <Input @on-change="handleClear" clearable placeholder="输入关键字搜索" class="search-input" v-model="searchValue"/>
-      <Button @click="handleSearch" class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;搜索</Button>
-    </div>
     <Table
       ref="tablesMain"
       :data="insideTableData"
@@ -35,7 +31,6 @@
       <slot name="footer" slot="footer"></slot>
       <slot name="loading" slot="loading"></slot>
     </Table>
-    <a id="hrefToExportTable" style="display: none;width: 0px;height: 0px;"></a>
   </div>
 </template>
 
@@ -100,20 +95,6 @@ export default {
       type: Boolean
     },
     loading: {
-      type: Boolean,
-      default: false
-    },
-    /**
-     * @description 全局设置是否可编辑
-     */
-    editable: {
-      type: Boolean,
-      default: false
-    },
-    /**
-     * @description 是否可搜索
-     */
-    searchable: {
       type: Boolean,
       default: false
     },

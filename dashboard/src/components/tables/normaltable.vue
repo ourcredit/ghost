@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div v-if="searchable" class="search-con search-con-top">
-      <Input @on-change="handleClear" clearable placeholder="输入关键字搜索" class="search-input" v-model="searchValue" />
-      <Button @click="handleSearch" class="search-btn" type="primary">
-        <Icon type="search" />&nbsp;&nbsp;搜索</Button>
-    </div>
+    <slot name="search" slot="search"></slot>
     <Table ref="tablesMain" :type="type" :data="data" :columns="columns" :stripe="stripe" :border="border"
       :show-header="showHeader" :width="width" :height="height" :loading="loading" :disabled-hover="disabledHover"
       :highlight-row="highlightRow" :row-class-name="rowClassName" :size="size" :no-data-text="noDataText"
@@ -17,7 +13,6 @@
     <Page @on-change="initTableData" :total="total" :current="currentIndex" :page-size="size" show-total show-sizer
         show-elevator />
     </Row>
-     
   </div>
 </template>
 
@@ -48,7 +43,11 @@
       },
       stripe: {
         type: Boolean,
-        default: false
+        default: true
+      },
+      filter:{
+        type:Object,
+        default:{}
       },
       border: {
         type: Boolean,
@@ -83,28 +82,13 @@
       loading: {
         type: Boolean,
         default: false
-      },
-      /**
-       * @description 全局设置是否可编辑
-       */
-      editable: {
-        type: Boolean,
-        default: false
-      },
-      /**
-       * @description 是否可搜索
-       */
-      searchable: {
-        type: Boolean,
-        default: false
       }
     },
     data() {
       return {
         edittingCellId: '',
         edittingText: '',
-        searchValue: '',
-        where: {}
+        searchValue: ''
       }
     },
     methods: {
@@ -159,18 +143,11 @@
         this.searchKey = this.columns[0].key !== 'handle' ? this.columns[0].key : (this.columns.length > 1 ? this
           .columns[1].key : '')
       },
-      handleClear(e) {
-        if (e.target.value === '') this.insideTableData = this.value
-      },
-      //搜索 todo 网络形式
-      handleSearch() {
-        this.insideTableData = this.value.filter(item => item[this.searchKey].indexOf(this.searchValue) > -1)
-      },
       initTableData() {
         let params = {
           index: this.currentIndex,
           size: this.currentSize,
-          where: {}
+          where: this.filter
         };
         console.log(params)
         this.$store.dispatch(`${this.type}_users`,params);
