@@ -17,10 +17,9 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    test:'www.baidu.com',
-    dev: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/',
+    test:'http://47.94.214.199:9004/',
     dev: 'http://47.94.214.199:9004/',
-    pro: 'https://produce.com'
+    pro: 'http://47.94.214.199:9004/'
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home
