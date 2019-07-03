@@ -13,11 +13,16 @@ export default {
    data () {
     return {
       columns: [
-        { title: 'Name', key: 'name', sortable: true },
-        { title: 'Email', key: 'email', editable: true },
-        { title: 'Create-Time', key: 'createTime' },
+        { title: 'id', key: 'id', sortable: false,width:"90px" },
+        { title: '用户名', key: 'username', sortable: false },
+        { title: '昵称', key: 'nickname', editable: false },
+        { title: '手机', key: 'phone', editable: false },
+        { title: '邮箱', key: 'email', editable: true },
+        { title: '注册国家', key: 'country', editable: true },
+        { title: '最后登录时间', key: 'updated', editable: true },
+        { title: '创建时间', key: 'created' },
         {
-          title: 'Handle',
+          title: '操作',
           key: 'handle',
           options: ['delete'],
           button: [

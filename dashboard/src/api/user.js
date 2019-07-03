@@ -7,9 +7,15 @@ export const login = ({ appId, userName, password }) => {
     password
   }
   return axios.request({
-    url: '/app/api/user/testlogin',
+    url: '/app/api/user/login',
     data,
     method: 'post'
+  })
+}
+export const current = () => {
+  return axios.request({
+    url: '/app/api/user/current',
+    method: 'get'
   })
 }
 export const logout = (token) => {

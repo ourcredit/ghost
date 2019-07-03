@@ -1,18 +1,16 @@
 import axios from '@/libs/api.request'
 export const users = ({ index, size,where }) => {
-  const data = {
+  const params = {
     index,
     size,
     where
   }
-  console.log(data);
   return axios.request({
-    url: '/app/api/user',
-    data,
+    url: '/app/api/user/list',
+    data:params,
     method: 'post'
   })
 }
-
 export const user = (key) => {
   return axios.request({
     url: '/app/api/user',

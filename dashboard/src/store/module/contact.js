@@ -13,7 +13,7 @@ import {
   
   export default {
     state: {
-      userList: [],
+      list: [],
       user: {},
       index: 1,
       size: 10,
@@ -30,14 +30,14 @@ import {
         state.totalCount = totalCount
       },
       setUserList (state, list) {
-        state.userList = list
+        state.list = list
       },
       setUser (state, user) {
         state.user = user
       }
     },
     getters: {
-        userList: state => state.userList,
+        userList: state => state.list,
         user: state => state.user,
     },
     actions: {
@@ -48,7 +48,8 @@ import {
             index,
             size,where
           }).then(res => {
-            const data = res.data
+            const data = res.data.data
+          
             commit('setUserList', data.records);
             commit('setTotalCount', data.total);
             resolve()

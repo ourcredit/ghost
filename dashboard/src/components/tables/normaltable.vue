@@ -5,16 +5,19 @@
       <Button @click="handleSearch" class="search-btn" type="primary">
         <Icon type="search" />&nbsp;&nbsp;搜索</Button>
     </div>
-    <Table ref="tablesMain" :type="type" :data="insideTableData" :columns="columns" :stripe="stripe" :border="border"
+    <Table ref="tablesMain" :type="type" :data="data" :columns="columns" :stripe="stripe" :border="border"
       :show-header="showHeader" :width="width" :height="height" :loading="loading" :disabled-hover="disabledHover"
       :highlight-row="highlightRow" :row-class-name="rowClassName" :size="size" :no-data-text="noDataText"
       :no-filtered-data-text="noFilteredDataText" @on-current-change="onCurrentChange" @on-select="onSelect"
       @on-select-cancel="onSelectCancel" @on-select-all="onSelectAll" @on-selection-change="onSelectionChange"
       @on-sort-change="onSortChange" @on-filter-change="onFilterChange" @on-row-click="onRowClick"
       @on-row-dblclick="onRowDblclick" @on-expand="onExpand">
-      <Page @on-change="initTableData" :total="total" :current="currentIndex" :page-size="size" show-total show-sizer
-        show-elevator />
     </Table>
+    <Row>
+    <Page @on-change="initTableData" :total="total" :current="currentIndex" :page-size="size" show-total show-sizer
+        show-elevator />
+    </Row>
+     
   </div>
 </template>
 
@@ -98,11 +101,10 @@
     },
     data() {
       return {
-        insideTableData: [],
         edittingCellId: '',
         edittingText: '',
         searchValue: '',
-        searchKey: ''
+        where: {}
       }
     },
     methods: {
@@ -171,10 +173,7 @@
           where: {}
         };
         console.log(params)
-        this.$store.dispatch({
-          type: `${this.type}_users`,
-          data: params
-        });
+        this.$store.dispatch(`${this.type}_users`,params);
       },
       clearCurrentRow() {
         this.$refs.talbesMain.clearCurrentRow()
@@ -212,8 +211,7 @@
     },
     computed: {
       total() {
-        console.log(this.$store);
-        return this.$store.state[this.type].total;
+        return this.$store.state[this.type].totalCount;
       },
       currentIndex() {
         return this.$store.state[this.type].index;
@@ -235,7 +233,6 @@
       }
     },
     mounted() {
-      console.log(this.$store);
       this.setDefaultSearchKey()
       this.initTableData()
     }
