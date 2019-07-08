@@ -22,7 +22,6 @@
     </Row>
     <Row>
       <Card shadow>
-        <example style="height: 310px;"/>
       </Card>
     </Row>
   </div>
@@ -32,7 +31,6 @@
 import InforCard from '_c/info-card'
 import CountTo from '_c/count-to'
 import { ChartPie, ChartBar } from '_c/charts'
-import Example from './example.vue'
 export default {
   name: 'home',
   components: {
@@ -40,7 +38,6 @@ export default {
     CountTo,
     ChartPie,
     ChartBar,
-    Example
   },
   data () {
     return {

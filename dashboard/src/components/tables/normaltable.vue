@@ -10,7 +10,7 @@
       @on-row-dblclick="onRowDblclick" @on-expand="onExpand">
     </Table>
     <Row>
-    <Page @on-change="initTableData" :total="total" :current="currentIndex" :page-size="size" show-total show-sizer
+    <Page v-if="pageable" @on-change="initTableData" :total="total" :current="currentIndex" :page-size="size" show-total show-sizer
         show-elevator />
     </Row>
   </div>
@@ -78,6 +78,12 @@
       },
       disabledHover: {
         type: Boolean
+      },
+      pageable: {
+        type: Boolean,
+        default () {
+          return true
+        }
       },
       loading: {
         type: Boolean,

@@ -6,21 +6,20 @@ import {
     hasRead,
     removeReaded,
     restoreTrash,
-    getUnreadCount,
-    getDashList
+    getUnreadCount
   } from '@/api/user'
   import { setToken, getToken } from '@/libs/util'
   
   export default {
     state: {
-      newRegistUserCount: 0,//新注册用户数
+      newRegistUserCount: 1,//新注册用户数
+      newCreateGroup: 2,//最新成立群组
+      newCreatePublicGroup: 3,//最新成立公开群组
       newRegistUserList: [],//新注册用户集合
       historyList: [],//聊天记录历史
       loginTimeList: [],//登陆时长排行榜
       activeList: [],//活跃度分布
-      newCreateGroupCount: 0,
       newCreateGroupList: [],
-      newCreatePublicCount: 0,
       newCreatePublicList: [],
       messageContentStore: {}
     },
@@ -70,9 +69,9 @@ import {
       }
     },
     getters: {
-      messageUnreadCount: state => state.messageUnreadList.length,
-      messageReadedCount: state => state.messageReadedList.length,
-      messageTrashCount: state => state.messageTrashList.length
+      newRegistUserCount: state => state.newRegistUserCount,
+      newCreateGroup: state => state.newCreateGroup,
+      newCreatePublicGroup: state => state.newCreatePublicGroup
     },
     actions: {
       getAll({ commit }, params){
