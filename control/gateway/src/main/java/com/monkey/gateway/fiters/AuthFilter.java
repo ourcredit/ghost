@@ -32,8 +32,7 @@ public class AuthFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        boolean res = !ApiConstant.Contains(ctx.getRequest().getRequestURI());
-        return res;
+        return !ctx.getRequest().getRequestURI().contains("login");
     }
 
     @Override

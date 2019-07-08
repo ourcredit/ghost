@@ -16,7 +16,7 @@ public class ApiConstant {
     //无需验证的route
     public static final List<String> NOTAUTHROUTES=new ArrayList<String>(){
         {
-            add("/account/account/login");
+            add("login");
         }
     };
     public static boolean Contains(String url){

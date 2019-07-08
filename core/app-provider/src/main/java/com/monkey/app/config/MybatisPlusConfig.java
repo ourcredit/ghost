@@ -49,7 +49,6 @@ public class MybatisPlusConfig {
         PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
         //格式化sql语句
         Properties properties = new Properties();
-        properties.setProperty("format", "true");
         performanceInterceptor.setProperties(properties);
         return performanceInterceptor;
     }
