@@ -79,9 +79,13 @@ public class ApiController {
     private IIMDepartService iimDepartService;
 
     @RequestMapping(value = "test", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    public Object test(HttpServletRequest req, HttpServletResponse rsp) {
+    public ApiResult test(HttpServletRequest req, HttpServletResponse rsp) {
+        ApiResult returnResult = new ApiResult();
         controllerUtil.sendIMSystemMessage(137, 4, "FRIEND_INVITE");
-        return "helloworld!";
+        returnResult.setCode(200);
+        returnResult.setData(null);
+        returnResult.setMessage("helloworld!");
+        return returnResult;
     }
     @RequestMapping(value = "addFriend", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public ApiResult addFriend(HttpServletRequest req, HttpServletResponse rsp) {
