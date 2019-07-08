@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.monkey.app.application.IIMUserService;
+import com.monkey.app.common.ControllerUtil;
 import com.monkey.app.common.JavaBeanUtil;
 import com.monkey.app.entity.*;
 import constant.RequestConstant;
@@ -16,7 +17,9 @@ import result.LoginInput;
 import result.Result;
 import tools.JWTUtil;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +36,8 @@ import java.util.Map;
 public class UserController {
     @Autowired
     IIMUserService _userService;
+    @Resource
+    ControllerUtil controllerUtil;
     /*用户列表*/
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     // @RequiresPermissions(value = {PermissionConst._devices._device.list})
@@ -64,15 +69,16 @@ public class UserController {
         returnUsers.remove("password");
 
         returnData.put("token", JWTUtil.sign(users.getUsername(), users.getId(), users.getAppId(), users.getSalt()));
+
         returnData.put("ipAddress", JWTUtil.getIpAddress(req));
         returnData.put("userinfo", returnUsers);
-        returnData.put("serverinfo", serverinfo);
-        returnData.put("bqmmplugin", bmqq_plugin);
+
+        users.setUpdated(controllerUtil.date2Timestamp(new Date()));
         _userService.updateById(users);
         returnResult.setCode(ApiResult.SUCCESS);
         returnResult.setData(returnData);
         returnResult.setMessage("登录成功!");
-        return new Result<Object>(1,RequestConstant.SUCCESSMSG,returnResult);
+        return new Result<>(1, RequestConstant.SUCCESSMSG, returnResult);
     }
     /*获取当前用户信息*/
     @RequestMapping(value = "/current", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")

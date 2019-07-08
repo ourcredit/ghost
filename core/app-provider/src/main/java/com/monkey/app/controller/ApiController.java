@@ -1,6 +1,7 @@
 package com.monkey.app.controller;
 
 
+import java.sql.Timestamp;
 import java.util.*;
 
 import javax.annotation.Resource;
@@ -519,6 +520,7 @@ public class ApiController {
         String password = controllerUtil.getStringParameter(req, "password", "0");
         String code = controllerUtil.getStringParameter(req, "code", "0");
         String nickname = controllerUtil.getStringParameter(req, "nickname", "");
+        String country = controllerUtil.getStringParameter(req, "country", "");
         int salt = new Random().nextInt(8888) + 1000;
 
         if (username.length() != 11) {
@@ -546,12 +548,15 @@ public class ApiController {
         String enPass = DigestUtils.md5Hex(password + users.getSalt()).toLowerCase();
         users.setPassword(enPass);
         if (nickname.equals("")) {
-            nickname = "cloudtalk" + salt;
+            nickname = "ghost_" + salt;
         }
         users.setNickname(nickname);
+        if(country.equals("")){
+            country="中国";
+        }
         users.setRealname(nickname);
-        users.setCreated(controllerUtil.timestamp2());
-        users.setUpdated(controllerUtil.timestamp2());
+        users.setCreated(controllerUtil.date2Timestamp(new Date()));
+        users.setUpdated(controllerUtil.date2Timestamp(new Date()));
         users.setSex(1);
         users.setDomain("0");
         users.setPhone(username);
@@ -564,19 +569,15 @@ public class ApiController {
         returnResult.setMessage("注册成功!");
         return returnResult;
     }
-
     @RequestMapping(value = "checkLogin", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public ApiResult checkLogin(HttpServletRequest req, HttpServletResponse rsp) {
-        //
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
         ServerInfoEntity serverinfo = new ServerInfoEntity();
         Map<String, Object> bmqq_plugin = new HashMap<>();
-
         String appid = req.getParameter("appId");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-
         IMUser users = iimUserService.getOne(new QueryWrapper<IMUser>().eq("appId", appid).eq("username", username));
         if (users == null || users.getId() == 0) {
             returnResult.setCode(ApiResult.ERROR);
@@ -584,7 +585,6 @@ public class ApiController {
             returnResult.setMessage("账号不存在!");
             return returnResult;
         }
-
         password = DigestUtils.md5Hex(password + users.getSalt()).toLowerCase();
         if (!users.getPassword().equals(password)) {
             returnResult.setCode(ApiResult.ERROR);
@@ -592,7 +592,6 @@ public class ApiController {
             returnResult.setMessage("密码错误!");
             return returnResult;
         }
-
         //*********从redis中获取 负载量小的 聊天服务器************
         //****************************************************
         Map<Object, Object> serveries = redisHelper.hmget("msg_srv_list");
@@ -603,7 +602,6 @@ public class ApiController {
             serverinfo.setServer_ip2(selectServerInfo.split("\\|")[1]);
             serverinfo.setServer_port(Integer.parseInt(selectServerInfo.split("\\|")[2]));
         }
-
         bmqq_plugin.put("appid", bqmmplugin_appid);
         bmqq_plugin.put("appsecret", bqmmplugin_appsecret);
 
@@ -625,11 +623,9 @@ public class ApiController {
 
     @RequestMapping(value = "getUserInfo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public ApiResult getUserInfo(HttpServletRequest req, HttpServletResponse rsp, @CurrentUser IMUser user) {
-
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
-        IMUser myinfo = controllerUtil.checkToken(req);
-        if (myinfo == null) {
+        if (user == null) {
             returnResult.setCode(ApiResult.ERROR);
             returnResult.setData(returnData);
             returnResult.setMessage("token验证失败!");
@@ -637,10 +633,8 @@ public class ApiController {
         }
         String friuid = req.getParameter("friuids");
         List<Map<String, Object>> userslist = iimUserService.getUsersInfo(friuid);
-
         if (userslist.size() > 0) {
             returnData.put("userinfo", userslist);
-
             returnResult.setCode(ApiResult.SUCCESS);
             returnResult.setData(returnData);
         } else {
@@ -649,7 +643,6 @@ public class ApiController {
         returnResult.setMessage("查询成功!");
         return returnResult;
     }
-
     @RequestMapping(value = "getSrvInfo", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public ApiResult getSrvInfo(HttpServletRequest req, HttpServletResponse rsp) {
 
@@ -683,11 +676,8 @@ public class ApiController {
     public Map<String, Object> users(@PathVariable Integer page, @PathVariable Integer size) {
         Map<String, Object> map = new HashMap<>();
         Page<IMUser> questionStudent = iimUserService.getAllUserBypage(new Page<>(page, size));
-
         IMUser users = iimUserService.getById(1);
-
         List<Map<String, Object>> list = iimUserService.selectUser2();
-
         if (questionStudent.getRecords().size() == 0) {
             map.put("code", 400);
         } else {
@@ -696,5 +686,4 @@ public class ApiController {
         }
         return map;
     }
-
 }

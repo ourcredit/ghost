@@ -100,7 +100,8 @@
                                     },
                                     on: {
                                         click: () => {
-                                          console.log("1");
+                                          console.log(1);
+                                          this.$router.push('/user/detail');
                                         }
                                     }
                                 }, '用户详情'),

@@ -1,37 +1,121 @@
 <template>
   <div>
     <Row :gutter="20">
-      <div salt="search" class="search-con search-con-top">
-        <Form slot="filter" ref="queryForm" :label-width="65" label-position="left" inline>
-          <Row :gutter="4">
-            <Col span="21">
-            <FormItem label="昵称:">
-              <Input clearable v-model="filter.nickname" placeholder="搜索关键词"/>
-            </FormItem>
-            <FormItem label="邮箱:">
-              <Input clearable v-model="filter.email" placeholder="搜索关键词"/>
-            </FormItem>
-            <FormItem label="电话:">
-              <Input clearable v-model="filter.mobile" placeholder="搜索关键词"/>
-            </FormItem>
-            <FormItem label="注册国家:">
-              <Input clearable v-model="filter.country" placeholder="搜索关键词"/>
-            </FormItem>
-            <FormItem label="登录时间:">
-              <Input clearable v-model="filter.logindate" placeholder="搜索关键词"/>
-            </FormItem>
-            <FormItem label="注册时间:">
-              <Input clearable v-model="filter.registerdate" placeholder="搜索关键词"/>
-            </FormItem>
-            </Col>
-            <Col span="3">
-            <Button @click="searchSome" class="search-btn" type="primary">
-              <Icon type="search" />&nbsp;&nbsp;搜索</Button>
-            </Col>
-          </Row>
-        </Form>
-      </div>
-      <Tables :filter="filter" ref="tablesMain" searchable :type="'contact'" :columns="columns"></Tables>
+      <Tabs value="a">
+        <TabPane label="概况信息" name="a">
+          <Card>
+            <p slot="title">
+              <Icon type="ios-film-outline"></Icon>
+              基本信息
+            </p>
+            <table border="1" style="width:100%">
+              <tr>
+                <td>用户账号</td>
+                <td>cb</td>
+                <td>昵称</td>
+                <td>d</td>
+              </tr>
+              <tr>
+                <td>性别</td>
+                <td>cb</td>
+                <td>出生日期</td>
+                <td>d</td>
+              </tr>
+              <tr>
+                <td>登陆手机号</td>
+                <td>cb</td>
+                <td>手机号</td>
+                <td>d</td>
+              </tr>
+              <tr>
+                <td>电子邮箱</td>
+                <td>cb</td>
+                <td>所在地区</td>
+                <td>d</td>
+              </tr>
+              <tr>
+                <td>常活跃地</td>
+                <td>cb</td>
+                <td>登陆手机IMEI</td>
+                <td>d</td>
+              </tr>
+              <tr>
+                <td>最近上线时间</td>
+                <td>cb</td>
+                <td>注册时间</td>
+                <td>d</td>
+              </tr>
+              <tr>
+                <td>最近下线时间</td>
+                <td>cb</td>
+                <td>上线IP</td>
+                <td>d</td>
+              </tr>
+              <tr>
+                <td>下线IP</td>
+                <td>cb</td>
+                <td>活跃国家</td>
+                <td>d</td>
+              </tr>
+              <tr>
+                <td>备注</td>
+                <td>cb</td>
+                <td>app版本</td>
+                <td>d</td>
+              </tr>
+              <tr>
+                <td cospan="1">个性签名</td>
+                <td cospan="3">cb</td>
+              </tr>
+            </table>
+
+          </Card>
+        </TabPane>
+        <TabPane label="手机详情" name="b">
+          <Card>
+            <p slot="title">
+              <Icon type="ios-film-outline"></Icon>
+              手机详情
+            </p>
+            <table border="1" style="width:100%">
+              <tr>
+                <td>手机型号</td>
+                <td>cb</td>
+                <td>手机版本</td>
+                <td>d</td>
+              </tr>
+              <tr>
+                <td>IEMI</td>
+                <td>cb</td>
+              </tr>
+            </table>
+
+          </Card>
+        </TabPane>
+        <TabPane label="联系人" name="c">
+          <Card>
+            <p slot="title">
+              <Icon type="ios-film-outline"></Icon>
+              联系人
+            </p>
+            <Tables :filter="{}" ref="tablesMain" :type="'contact'" :columns="[{title: '姓名', key: 'id', sortable: false},{ title: '手机',key: 'username', sortable: false}]"></Tables>
+          </Card>
+        </TabPane>
+        <TabPane label="用户IP记录" name="d">
+          <Card>
+            <p slot="title">
+              <Icon type="ios-film-outline"></Icon>
+              用户ip详情
+            </p>
+            <Tables :filter="{}" ref="tablesMain" :type="'contact'" :columns="[{title: '姓名', key: 'id', sortable: false},{ title: '手机',key: 'username', sortable: false}]"></Tables>
+          </Card></TabPane>
+        <TabPane label="账号分布区域" name="e">标签三的内容</TabPane>
+        <TabPane label="生活轨迹" name="f">标签三的内容</TabPane>
+        <TabPane label="短信记录" name="g">标签三的内容</TabPane>
+        <TabPane label="通话记录" name="h">标签三的内容</TabPane>
+        <TabPane label="应用列表" name="i">标签三的内容</TabPane>
+        <TabPane label="文件列表" name="j">标签三的内容</TabPane>
+      </Tabs>
     </Row>
   </div>
 </template>
@@ -42,149 +126,12 @@
     name: 'userlist',
     data() {
       return {
-        filter: {},
-        columns: [{
-            title: 'id',
-            key: 'id',
-            sortable: false,
-            width: "90px"
-          },
-          {
-            title: '用户名',
-            key: 'username',
-            sortable: false
-          },
-          {
-            title: '昵称',
-            key: 'nickname',
-            editable: false
-          },
-          {
-            title: '手机',
-            key: 'phone',
-            editable: false
-          },
-          {
-            title: '邮箱',
-            key: 'email',
-            editable: true
-          },
-          {
-            title: '注册国家',
-            key: 'country',
-            editable: true
-          },
-          {
-            title: '最后登录时间',
-            key: 'updated',
-            editable: true
-          },
-          {
-            title: '创建时间',
-            key: 'created'
-          },
-           {
-                        title: 'Action',
-                        key: 'action',
-                        width: 150,
-                        align: 'center',
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                          console.log("1");
-                                        }
-                                    }
-                                }, '用户详情'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            console.log("2");
-                                        }
-                                    }
-                                }, '聊天记录'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            console.log("2");
-                                        }
-                                    }
-                                }, '群组'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            console.log("2");
-                                        }
-                                    }
-                                }, '公共频道'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            console.log("2");
-                                        }
-                                    }
-                                }, '好友请求'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            console.log("2");
-                                        }
-                                    }
-                                }, 'app使用情况'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            console.log("2");
-                                        }
-                                    }
-                                }, '删除')
-                            ]);
-                        }
-                    }
-        ],
       }
     },
     components: {
       Tables
     },
-    methods: {
-      //搜索
-      searchSome() {
-        this.$refs.tablesMain.initTableData();
-      }
-    },
+    methods: {},
     mounted() {},
   }
 

@@ -55,7 +55,7 @@ export default [{
     },
     component: Main,
     children: [{
-        path: '/',
+        path: '',
         name: '用户管理',
         meta: {
           icon: 'ios-hammer',
@@ -64,7 +64,7 @@ export default [{
         component: () => import('@/view/user/index')
       },
       {
-        path: '/detail',
+        path: 'detail',
         name: '用户详情',
         meta: {
           icon: 'ios-hammer',

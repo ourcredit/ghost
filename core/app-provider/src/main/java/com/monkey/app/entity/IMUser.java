@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -41,7 +43,11 @@ public class IMUser extends baseEntity implements Serializable {
      */
     @TableField("outId")
     private Integer outId;
-
+    /**
+     * 国家
+     */
+    @TableField("country")
+    private String  country;
     /**
      * 用户名
      */
@@ -115,12 +121,12 @@ public class IMUser extends baseEntity implements Serializable {
     /**
      * 更新时间
      */
-    private Integer updated;
+    private Timestamp updated;
 
     /**
      * 创建时间
      */
-    private Integer created;
+    private Timestamp created;
 
     private String dataSign;
 
