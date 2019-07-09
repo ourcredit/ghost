@@ -11,15 +11,18 @@ import com.monkey.app.entity.*;
 import constant.RequestConstant;
 import input.PageFilterInputDto;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import result.LoginInput;
 import result.Result;
+import tools.DateUtil;
 import tools.JWTUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,12 +55,9 @@ public class UserController {
     public Result<Object> checkLogin(HttpServletRequest req, @RequestBody LoginInput input) {
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
-        ServerInfoEntity serverinfo = new ServerInfoEntity();
-        Map<String, Object> bmqq_plugin = new HashMap<>();
-        String appid = input.getTenantName();
         String username = input.getAccount();
         String password = input.getPassword();
-        IMUser users = _userService.getOne(new QueryWrapper<IMUser>().eq("appId", appid).eq("username", username));
+        IMUser users = _userService.getOne(new QueryWrapper<IMUser>().eq("username", username));
         if (users == null || users.getId() == 0) {
            return  Result.NotFound();
         }
@@ -67,15 +67,15 @@ public class UserController {
         }
         Map<String, Object> returnUsers = JavaBeanUtil.convertBeanToMap(users);
 
-        Timestamp haslogin=users.getUpdated();
-        users.setUpdated(controllerUtil.date2Timestamp(new Date()));
+        LocalDateTime haslogin=users.getUpdated();
+        users.setUpdated(LocalDateTime.now());
         _userService.updateById(users);
 
         returnUsers.remove("password");
         returnData.put("token", JWTUtil.sign(users.getUsername(), users.getId(), users.getAppId(), users.getSalt()));
         returnData.put("ipAddress", JWTUtil.getIpAddress(req));
-        returnData.put("loginTime", controllerUtil.date2String(haslogin));
-        returnData.put("hasLoginTime", controllerUtil.deffTime(haslogin,new Date()));
+        returnData.put("loginTime", haslogin);
+        returnData.put("hasLoginTime", DateUtil.deffTime(haslogin,LocalDateTime.now()));
         returnData.put("userinfo", returnUsers);
 
         returnResult.setCode(ApiResult.SUCCESS);
@@ -95,9 +95,9 @@ public class UserController {
         Map<String, Object> returnUsers = JavaBeanUtil.convertBeanToMap(users);
         returnUsers.remove("password");
         returnData.put("ipAddress", JWTUtil.getIpAddress(req));
-        Timestamp haslogin=users.getUpdated();
-        returnData.put("loginTime", controllerUtil.date2String(haslogin));
-        returnData.put("hasLoginTime", controllerUtil.deffTime(haslogin,new Date()));
+        LocalDateTime haslogin=users.getUpdated();
+        returnData.put("loginTime", DateUtil.date2String(haslogin));
+        returnData.put("hasLoginTime", DateUtil.deffTime(haslogin,LocalDateTime.now()));
         returnData.put("userinfo", returnUsers);
         returnResult.setCode(ApiResult.SUCCESS);
         returnResult.setData(returnData);

@@ -1,7 +1,7 @@
 package com.monkey.app.controller;
 
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.annotation.Resource;
@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import tools.DateUtil;
 import tools.JWTUtil;
 
 /**
@@ -112,8 +113,8 @@ public class ApiController {
             addFriend.setGroupId(1);
             addFriend.setMessage("已通过好友请求!");
             addFriend.setStatus(22);
-            addFriend.setUpdated(controllerUtil.timestamp2());
-            addFriend.setCreated(controllerUtil.timestamp2());
+            addFriend.setUpdated(LocalDateTime.now());
+            addFriend.setCreated(LocalDateTime.now());
             iimUserFriendsService.save(addFriend);
 
             controllerUtil.sendIMSystemMessage(137, friduid, "FRIEND_INVITE");
@@ -129,10 +130,10 @@ public class ApiController {
                 returnResult.setMessage("已经是好友!");
                 return returnResult;
             } else {
-                if ((controllerUtil.timestamp2() - imUserFriends.getUpdated()) > 1000 * 60 * 60 * 24) {
+                if (DateUtil.GetDateSecond(LocalDateTime.now()) - DateUtil.GetDateSecond(imUserFriends.getUpdated())   > 1000 * 60 * 60 * 24) {
                     imUserFriends.setMessage("请求加为好友");
                     imUserFriends.setStatus(2);
-                    imUserFriends.setUpdated(controllerUtil.timestamp2());
+                    imUserFriends.setUpdated(LocalDateTime.now());
                     iimUserFriendsService.updateById(imUserFriends);
 
                     controllerUtil.sendIMSystemMessage(137, friduid, "FRIEND_INVITE");
@@ -181,7 +182,7 @@ public class ApiController {
                 //更新当前记录的状态
                 imUserFriends.setMessage("请求加为好友");
                 imUserFriends.setStatus(1);
-                imUserFriends.setUpdated(controllerUtil.timestamp2());
+                imUserFriends.setUpdated(LocalDateTime.now());
                 iimUserFriendsService.updateById(imUserFriends);
 
 
@@ -193,12 +194,10 @@ public class ApiController {
                 addFriend.setGroupId(1);
                 addFriend.setMessage("已通过好友请求!");
                 addFriend.setStatus(1);
-                addFriend.setUpdated(controllerUtil.timestamp2());
-                addFriend.setCreated(controllerUtil.timestamp2());
+                addFriend.setUpdated(LocalDateTime.now());
+                addFriend.setCreated(LocalDateTime.now());
                 iimUserFriendsService.save(addFriend);
-
                 controllerUtil.sendIMSystemMessage(137, friduid, "FRIEND_AGEREE");
-
                 returnResult.setCode(200);
                 returnResult.setData(null);
                 returnResult.setMessage("请求成功!");
@@ -447,7 +446,7 @@ public class ApiController {
 
         //流程:先从数据库查找缓存。看有没有缓存数据，如果有的话，直接读取缓存数据进行查分页查找。没有缓存数据时，用redis geo里面进行搜索
         IMUserGeoData imUserGeoData2 = iimUserGeoDataService.getOne(new QueryWrapper<IMUserGeoData>().eq("uid", myinfo.getId()));
-        if (imUserGeoData2 != null && imUserGeoData2.getId() > 0 && imUserGeoData2.getUpdated() > 0 && ((controllerUtil.timestamp() - imUserGeoData2.getUpdated()) < 60 * 10)) {
+        if (imUserGeoData2 != null && imUserGeoData2.getId() > 0 &&DateUtil.GetDateSecond(imUserGeoData2.getUpdated() ) > 0 && ((DateUtil.timestamp() - DateUtil.GetDateSecond(imUserGeoData2.getUpdated())) < 60 * 10)) {
             geojson = imUserGeoData2.getData();
             geoBeanList = JSON.parseArray(geojson, GeoBean.class);
         } else {
@@ -472,7 +471,7 @@ public class ApiController {
             imUserGeoData.setLat(lat);
             imUserGeoData.setLng(lng);
 
-            imUserGeoData.setUpdated(controllerUtil.timestamp());
+            imUserGeoData.setUpdated(LocalDateTime.now());
             iimUserGeoDataService.save(imUserGeoData);
         }
 
@@ -555,8 +554,8 @@ public class ApiController {
             country="中国";
         }
         users.setRealname(nickname);
-        users.setCreated(controllerUtil.date2Timestamp(new Date()));
-        users.setUpdated(controllerUtil.date2Timestamp(new Date()));
+        users.setCreated(LocalDateTime.now());
+        users.setUpdated(LocalDateTime.now());
         users.setSex(1);
         users.setDomain("0");
         users.setPhone(username);

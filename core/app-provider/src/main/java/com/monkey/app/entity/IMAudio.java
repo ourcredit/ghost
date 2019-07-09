@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -58,7 +61,7 @@ public class IMAudio implements Serializable {
     /**
      * 创建时间
      */
-    private Integer created;
+    private LocalDateTime created;
 
 
 }

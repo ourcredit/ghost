@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.monkey.app.application.IIMUserService;
 import com.monkey.app.entity.IMUser;
-import com.monkey.tenant.CurrentTenant;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -21,9 +20,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.Charset;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Component
@@ -174,71 +170,4 @@ public class ControllerUtil {
         return user;
     }
 
-    public Long timestamp() {
-        long timeStampSec = System.currentTimeMillis() / 1000;
-        String timestamp = String.format("%010d", timeStampSec);
-        return Long.parseLong(timestamp);
-    }
-
-    public Integer timestamp2() {
-        long timeStampSec = System.currentTimeMillis() / 1000;
-        String timestamp = String.format("%010d", timeStampSec);
-        return Integer.parseInt(timestamp);
-    }
-
-    /**
-     * method 将字符串类型的日期转换为一个timestamp（时间戳记java.sql.Timestamp）
-     * dateString 需要转换为timestamp的字符串
-     * dataTime timestamp
-     */
-    public java.sql.Timestamp string2Time(String dateString)
-            throws java.text.ParseException {
-        DateFormat dateFormat;
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss.SSS", Locale.ENGLISH);//设定格式
-        //dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss", Locale.ENGLISH);
-        dateFormat.setLenient(false);
-        java.util.Date timeDate = dateFormat.parse(dateString);//util类型
-        java.sql.Timestamp dateTime = new java.sql.Timestamp(timeDate.getTime());//Timestamp类型,timeDate.getTime()返回一个long型
-        return dateTime;
-    }
-
-    /**
-     * method 将字符串类型的日期转换为一个Date（java.sql.Date）
-     * dateString 需要转换为Date的字符串
-     * dataTime Date
-     */
-    public java.sql.Date string2Date(String dateString)
-            throws java.lang.Exception {
-        DateFormat dateFormat;
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        dateFormat.setLenient(false);
-        java.util.Date timeDate = dateFormat.parse(dateString);//util类型
-        java.sql.Date dateTime = new java.sql.Date(timeDate.getTime());//sql类型
-        return dateTime;
-    }
-
-
-    public String date2String(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
-        return sdf.format(date);
-    }
-
-    public Integer deffTime(Date left, Date right) {
-        Long b = right.getTime() - left.getTime();
-        Integer c = (int) (b / 1000);
-        if (c < 60) return 1;
-        c = (int) (c / 60);
-        return c;
-    }
-
-    /**
-     * method 将字符串类型的日期转换为一个Date（java.sql.Date）
-     * dateString 需要转换为Date的字符串
-     * dataTime Date
-     */
-    public Timestamp date2Timestamp(Date date) {
-        //第一种方法：使用new Timestamp(long)
-        Timestamp t = new Timestamp(date.getTime());
-        return t;
-    }
 }

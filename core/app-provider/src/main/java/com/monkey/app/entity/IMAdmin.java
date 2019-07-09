@@ -3,11 +3,8 @@ package com.monkey.app.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,38 +15,41 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author cloudtalk
- * @since 2019-01-15
+ * @since 2019-07-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("on_IMTransmitFile")
-public class IMTransmitFile implements Serializable {
+@TableName("on_IMAdmin")
+public class IMAdmin implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @TableField("fromId")
-    private Integer fromId;
+    /**
+     * 用户名
+     */
+    private String uname;
 
-    @TableField("toId")
-    private Integer toId;
+    /**
+     * 密码
+     */
+    private String pwd;
 
-    @TableField("fileName")
-    private String fileName;
-
-    private Integer size;
-
-    @TableField("taskId")
-    private Integer taskId;
-
+    /**
+     * 用户状态 0 :正常 1:删除 可扩展
+     */
     private Integer status;
 
+    /**
+     * 创建时间´
+     */
     private LocalDateTime created;
 
+    /**
+     * 更新时间´
+     */
     private LocalDateTime updated;
-
-
 }

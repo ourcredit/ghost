@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -121,12 +122,12 @@ public class IMUser extends baseEntity implements Serializable {
     /**
      * 更新时间
      */
-    private Timestamp updated;
+    private LocalDateTime updated;
 
     /**
      * 创建时间
      */
-    private Timestamp created;
+    private LocalDateTime created;
 
     private String dataSign;
 

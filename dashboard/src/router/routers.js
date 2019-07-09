@@ -156,8 +156,8 @@ export default [{
     ]
   },
   {
-    path: '/invitation',
-    name: 'invitation',
+    path: '/invate',
+    name: '邀请记录管理',
     component: Main,
     meta: {
       hideInBread: true
@@ -169,7 +169,7 @@ export default [{
         icon: '_qq',
         title: '邀请记录管理'
       },
-      component: () => import('@/view/join-page.vue')
+      component: () => import('@/view/invate/index')
     }]
   },
   {

@@ -49,7 +49,7 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig config = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        config.setOutputDir(projectPath + "/src/main/java");
+        config.setOutputDir("E:/test");
         config.setAuthor("cloudtalk");
         config.setOpen(false);
         config.setFileOverride(true);
@@ -57,17 +57,17 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://123.56.9.38:3306/newim?useUnicode=true&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://60.205.251.83:3306/newim?useUnicode=true&useSSL=false&characterEncoding=utf8");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("chwa2891220");
+        dsc.setUsername("newim");
+        dsc.setPassword("zwy0410");
         mpg.setDataSource(dsc);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName("api");
-        pc.setParent("com.zhangwuji.im");
+        pc.setModuleName("entity");
+        pc.setParent("com.monkey.app");
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -95,15 +95,16 @@ public class CodeGenerator {
         strategy.setTablePrefix(new String[]{"on_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);
         //  strategy.setNaming(NamingStrategy.removePrefixAndCamel("on_IMUserGeoData",new String[]{"on_IMUserGeoData"}));// 表名生成策略
-        strategy.setInclude(new String[]{"on_IMGroupMember"}); // 需要生成的表
+      //  strategy.setInclude(new String[]{"on_IMAdmin"}); // 需要生成的表
+    //    strategy.setInclude(new String[]{"on_IMRole"}); // 需要生成的表
+       strategy.setInclude(new String[]{"on_IMRolePermission"}); // 需要生成的表
+//        strategy.setInclude(new String[]{"on_IMUserRole"}); // 需要生成的表
 
 
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-//        strategy.setSuperEntityClass("com.baomidou.ant.common.BaseEntity");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         strategy.setControllerMappingHyphenStyle(true);
-        //  strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();

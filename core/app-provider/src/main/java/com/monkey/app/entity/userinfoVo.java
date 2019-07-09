@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -112,12 +114,12 @@ public class userinfoVo extends baseEntity implements Serializable {
     /**
      * 更新时间
      */
-    private Integer updated;
+    private LocalDateTime updated;
 
     /**
      * 创建时间
      */
-    private Integer created;
+    private LocalDateTime created;
 
     private String dataSign;
 

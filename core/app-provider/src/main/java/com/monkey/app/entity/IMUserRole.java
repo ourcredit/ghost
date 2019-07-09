@@ -1,41 +1,33 @@
 package com.monkey.app.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 用户和群的关系表
+ * 
  * </p>
  *
  * @author cloudtalk
- * @since 2019-01-15
+ * @since 2019-07-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("on_IMGroupMember")
-public class IMGroupMember implements Serializable {
+@TableName("on_IMUserRole")
+public class IMUserRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
-
     /**
-     * 群Id
+     * key
      */
-    @TableField("groupId")
-    private Integer groupId;
+    private Integer id;
 
     /**
      * 用户id
@@ -44,19 +36,18 @@ public class IMGroupMember implements Serializable {
     private Integer userId;
 
     /**
-     * 是否退出群，0-正常，1-已退出
+     * 角色id
      */
-    private Integer status;
-
-    private String remak;
+    @TableField("roleId")
+    private Integer roleId;
 
     /**
-     * 创建时间
+     * 创建时间´
      */
     private LocalDateTime created;
 
     /**
-     * 更新时间
+     * 更新时间´
      */
     private LocalDateTime updated;
 
