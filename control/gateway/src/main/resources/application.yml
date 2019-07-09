@@ -1,6 +1,6 @@
 eureka:
   client:
-    register-with-eureka: false #网关不用注册到注册中心中，因为没其他微服务调用他
+    register-with-eureka: true #网关不用注册到注册中心中，因为没其他微服务调用他
     fetch-registry: true #这个必须是true fetchRegistry打开才能从eureka拉取服务列表
     serviceUrl:
       defaultZone: http://${host:47.94.214.199}:9001/eureka/
