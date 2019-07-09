@@ -2,12 +2,11 @@ import axios from '@/libs/api.request'
 
 export const login = ({ appId, userName, password }) => {
   const data = {
-    tenantName:appId,
     account: userName,
     password
   }
   return axios.request({
-    url: '/app/api/user/login',
+    url: '/app/api/admin/login',
     data,
     method: 'post'
   })

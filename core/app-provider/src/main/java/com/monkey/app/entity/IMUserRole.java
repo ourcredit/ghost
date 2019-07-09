@@ -23,7 +23,11 @@ import lombok.experimental.Accessors;
 public class IMUserRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    public IMUserRole(){}
+    public IMUserRole(Integer userId,Integer roleId){
+        this.userId=userId;
+        this.roleId=roleId;
+    }
     /**
      * key
      */

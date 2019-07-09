@@ -24,6 +24,11 @@ import lombok.experimental.Accessors;
 @TableName("on_IMRolePermission")
 public class IMRolePermission implements Serializable {
 
+    public IMRolePermission(){}
+    public IMRolePermission(Integer roleId,String permission){
+        this.roleId=roleId;
+        this.permission=permission;
+    }
     private static final long serialVersionUID = 1L;
 
     /**

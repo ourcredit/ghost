@@ -3,7 +3,9 @@ package com.monkey.app.config;
 
 import annotation.CurrentUser;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.monkey.app.application.IIMAdminService;
 import com.monkey.app.application.IIMUserService;
+import com.monkey.app.entity.IMAdmin;
 import com.monkey.app.entity.IMUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
@@ -20,7 +22,7 @@ import tools.JWTUtil;
  */
 public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentResolver {
     @Autowired
-    IIMUserService _userService;
+    IIMAdminService _adminService;
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.getParameterType().isAssignableFrom(IMUser.class)
@@ -33,8 +35,7 @@ public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentR
                                   WebDataBinderFactory binderFactory) throws Exception {
        String token= webRequest.getHeader("Authorization");
         Integer userId= JWTUtil.getUserId(token);
-        String appId= JWTUtil.getAppId(token);
-        IMUser user = _userService.getOne(new QueryWrapper<IMUser>().eq("appId", appId).eq("id", userId));
+        IMAdmin user = _adminService.getOne(new QueryWrapper<IMAdmin>().eq("id", userId));
         if (user == null) {
             throw new Exception("获取用户信息失败");
         }

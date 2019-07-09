@@ -105,9 +105,11 @@ export default {
           const data = res.data.data.data
           commit('setToken', data.token)
           commit('setAvator', data.userinfo.avator)
-          commit('setUserName', data.userinfo.nickname)
-          commit('setUserId', data.userinfo.peerId)
+          commit('setUserName', data.userinfo.uname)
+          commit('setUserId', data.userinfo.id)
           commit('setIpAddress', data.ipAddress)
+          commit('setAccess', data.access)
+          
           commit('setHasGetInfo', true)
         
           resolve()
