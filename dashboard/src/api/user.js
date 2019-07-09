@@ -13,7 +13,7 @@ export const login = ({ appId, userName, password }) => {
 }
 export const current = () => {
   return axios.request({
-    url: '/app/api/user/current',
+    url: '/app/api/admin/current',
     method: 'get'
   })
 }

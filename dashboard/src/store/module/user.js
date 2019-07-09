@@ -20,7 +20,7 @@ export default {
     avatorImgPath: '',
     token: getToken(),
     access: '',
-    ipAddress:"",
+    ipAddress: "",
     hasGetInfo: false,
     unreadCount: 0,
     messageUnreadList: [],
@@ -84,7 +84,7 @@ export default {
     messageUnreadCount: state => state.messageUnreadList.length,
     messageReadedCount: state => state.messageReadedList.length,
     messageTrashCount: state => state.messageTrashList.length,
-    ipAddress:state=>state.ipAddress
+    ipAddress: state => state.ipAddress
   },
   actions: {
     // 登录
@@ -109,9 +109,9 @@ export default {
           commit('setUserId', data.userinfo.id)
           commit('setIpAddress', data.ipAddress)
           commit('setAccess', data.access)
-          
+
           commit('setHasGetInfo', true)
-        
+
           resolve()
         }).catch(err => {
           reject(err)
@@ -139,11 +139,12 @@ export default {
           current().then(res => {
             const data = res.data.data.data
             commit('setAvator', data.userinfo.avator)
-            commit('setUserName', data.userinfo.nickname)
-            commit('setUserId', data.userinfo.peerId)
+            commit('setUserName', data.userinfo.uname)
+            commit('setUserId', data.userinfo.id)
             commit('setIpAddress', data.ipAddress)
+            commit('setAccess', data.access)
             commit('setHasGetInfo', true)
-          
+
             resolve(data)
           }).catch(err => {
             reject(err)

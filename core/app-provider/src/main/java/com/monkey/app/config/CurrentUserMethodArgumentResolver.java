@@ -25,7 +25,7 @@ public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentR
     IIMAdminService _adminService;
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().isAssignableFrom(IMUser.class)
+        return parameter.getParameterType().isAssignableFrom(IMAdmin.class)
                 && parameter.hasParameterAnnotation(CurrentUser.class);
     }
     @Override
