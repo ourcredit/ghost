@@ -5,6 +5,7 @@ import user from './module/user'
 import app from './module/app'
 import contact from './module/contact'
 import dash from './module/dash'
+import admin from './module/admin'
 
 Vue.use(Vuex)
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     user,
     app,
     contact,
-    dash
+    dash,
+    admin
   }
 })

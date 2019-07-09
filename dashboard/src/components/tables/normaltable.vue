@@ -98,53 +98,6 @@
       }
     },
     methods: {
-      suportEdit(item, index) {
-        item.render = (h, params) => {
-          return h(TablesEdit, {
-            props: {
-              params: params,
-              value: this.insideTableData[params.index][params.column.key],
-              edittingCellId: this.edittingCellId,
-              editable: this.editable
-            },
-            on: {
-              'input': val => {
-                this.edittingText = val
-              },
-              'on-start-edit': (params) => {
-                this.edittingCellId = `editting-${params.index}-${params.column.key}`
-                this.$emit('on-start-edit', params)
-              },
-              'on-cancel-edit': (params) => {
-                this.edittingCellId = ''
-                this.$emit('on-cancel-edit', params)
-              },
-              'on-save-edit': (params) => {
-                this.value[params.row.initRowIndex][params.column.key] = this.edittingText
-                this.$emit('input', this.value)
-                this.$emit('on-save-edit', Object.assign(params, {
-                  value: this.edittingText
-                }))
-                this.edittingCellId = ''
-              }
-            }
-          })
-        }
-        return item
-      },
-      surportHandle(item) {
-        let options = item.options || []
-        let insideBtns = []
-        options.forEach(item => {
-          if (handleBtns[item]) insideBtns.push(handleBtns[item])
-        })
-        let btns = item.button ? [].concat(insideBtns, item.button) : insideBtns
-        item.render = (h, params) => {
-          params.tableData = this.value
-          return h('div', btns.map(item => item(h, params, this)))
-        }
-        return item
-      },
       setDefaultSearchKey() {
         this.searchKey = this.columns[0].key !== 'handle' ? this.columns[0].key : (this.columns.length > 1 ? this
           .columns[1].key : '')
@@ -156,7 +109,7 @@
           where: this.filter
         };
         console.log(params)
-        this.$store.dispatch(`${this.type}_users`,params);
+        this.$store.dispatch(`${this.type}_list`,params);
       },
       clearCurrentRow() {
         this.$refs.talbesMain.clearCurrentRow()
