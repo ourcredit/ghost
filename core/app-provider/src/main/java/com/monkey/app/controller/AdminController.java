@@ -23,6 +23,7 @@ import tools.DateUtil;
 import tools.JWTUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -126,46 +127,62 @@ public class AdminController {
 
     /*更新用户*/
     @RequestMapping(value = "/updateadmin", method = RequestMethod.POST)
-    public Result<Object> updateadmin(@RequestBody AdminDto adminInput) throws Exception {
-        IMAdmin admin = _adminService.getById(adminInput.getAdminId());
-        if (admin == null) {
-            return Result.NotFound();
-        }
-        if (adminInput.getRoleIds() == null || adminInput.getRoleIds().isEmpty()) {
-            return new Result<>(RequestConstant.ERRORCODE, "请选择角色信息", null);
-        }
-        Boolean b = _userRoleService.remove(new QueryWrapper<IMUserRole>().eq("userId", admin.getId()));
-        if (b) {
-            List<IMUserRole> list = new ArrayList<>();
-            for (Integer i : adminInput.getRoleIds()) {
-                list.add(new IMUserRole(admin.getId(), i));
+    public Result<Object> updateadmin(@RequestBody AdminDto adminInput, @CurrentUser IMAdmin current) throws Exception {
+        IMAdmin admin;
+        if (adminInput.getId() == null) {
+            admin = new IMAdmin();
+            admin.setUname(adminInput.getUname());
+            admin.setPwd(DigestUtils.md5Hex(adminInput.getPwd()).toLowerCase());
+            admin.setCreaterUser(current.getUname());
+            admin.setStatus(1);
+        } else {
+            admin = _adminService.getById(adminInput.getId());
+            if (admin == null) return Result.NotFound();
+            String pwd = DigestUtils.md5Hex(adminInput.getPwd()).toLowerCase();
+            if (admin.getPwd() != pwd) {
+                admin.setPwd(pwd);
             }
-            _userRoleService.saveBatch(list);
         }
-        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, null);
+        Boolean bo = _adminService.saveOrUpdate(admin);
+        if (adminInput.getRoleIds() != null && !adminInput.getRoleIds().isEmpty()) {
+            Boolean b = _userRoleService.remove(new QueryWrapper<IMUserRole>().eq("userId", admin.getId()));
+            if (b) {
+                List<IMUserRole> list = new ArrayList<>();
+                for (Integer i : adminInput.getRoleIds()) {
+                    list.add(new IMUserRole(admin.getId(), i));
+                }
+                _userRoleService.saveBatch(list);
+            }
+        }
+
+        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, bo);
     }
 
     /*更新用户*/
     @RequestMapping(value = "/updaterole", method = RequestMethod.POST)
     public Result<Object> updateRole(@RequestBody RoleDto roleInput) throws Exception {
-        IMRole role = _roleService.getById(roleInput.getRoleId());
-        if (role == null) {
-            return Result.NotFound();
+        IMRole role;
+        if (roleInput.getId() == null) {
+            role = new IMRole();
+            role.setRoleName(roleInput.getRoleName());
+            role.setDisplayName(roleInput.getDisplayName());
+        } else {
+            role = _roleService.getById(roleInput.getId());
+            if (role == null) return Result.NotFound();
+            role.setDisplayName(roleInput.getDisplayName());
         }
-        if (roleInput.getPermissionIds() == null || roleInput.getPermissionIds().isEmpty()) {
-            return new Result<>(RequestConstant.ERRORCODE, "请选择角色信息", null);
-        }
-        role.setDisplayName(roleInput.getDisplayName());
-        _roleService.updateById(role);
-        Boolean b = _rolePermissionService.remove(new QueryWrapper<IMRolePermission>().eq("roleId", role.getId()));
-        if (b) {
-            List<IMRolePermission> list = new ArrayList<>();
-            for (String i : roleInput.getPermissionIds()) {
-                list.add(new IMRolePermission(role.getId(), i));
+        Boolean bo = _roleService.saveOrUpdate(role);
+        if (roleInput.getPermissionIds() != null && !roleInput.getPermissionIds().isEmpty()) {
+            Boolean b = _rolePermissionService.remove(new QueryWrapper<IMRolePermission>().eq("roleId", role.getId()));
+            if (b) {
+                List<IMRolePermission> list = new ArrayList<>();
+                for (String i : roleInput.getPermissionIds()) {
+                    list.add(new IMRolePermission(role.getId(), i));
+                }
+                _rolePermissionService.saveBatch(list);
             }
-            _rolePermissionService.saveBatch(list);
         }
-        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, null);
+        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, bo);
     }
 
     /*删除用户*/

@@ -42,7 +42,7 @@ import {
     },
     actions: {
       // 获取用户列表
-      contact_users ({ commit }, { index, size,where }) {
+      contact_list ({ commit }, { index, size,where }) {
         return new Promise((resolve, reject) => {
           users({
             index,

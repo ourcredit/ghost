@@ -3,8 +3,9 @@ package com.monkey.app.controller.dtos;
 import java.util.List;
 
 public class RoleDto {
-    private Integer roleId;
+    private Integer id;
     private String displayName;
+    private String roleName;
     private List<String> permissionIds;
 
 
@@ -16,13 +17,6 @@ public class RoleDto {
         this.permissionIds = permissionIds;
     }
 
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
 
     public String getDisplayName() {
         return displayName;
@@ -30,5 +24,21 @@ public class RoleDto {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

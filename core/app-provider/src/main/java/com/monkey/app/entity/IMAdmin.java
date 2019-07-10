@@ -47,7 +47,7 @@ public class IMAdmin implements Serializable {
      * 创建时间´
      */
     private LocalDateTime created;
-
+    private String createrUser;
     /**
      * 更新时间´
      */
