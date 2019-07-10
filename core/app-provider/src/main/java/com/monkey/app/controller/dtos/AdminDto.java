@@ -8,14 +8,8 @@ public class AdminDto {
     private String pwd;
     private String createrUser;
     private List<Integer> roleIds;
-    public List<Integer> getRoleIds() {
-        return roleIds;
-    }
 
-    public void setRoleIds(List<Integer> roleIds) {
-        this.roleIds = roleIds;
-    }
-
+    private List<RoleDto> roles;
     public Integer getId() {
         return id;
     }
@@ -46,5 +40,21 @@ public class AdminDto {
 
     public void setCreaterUser(String createrUser) {
         this.createrUser = createrUser;
+    }
+
+    public List<Integer> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(List<Integer> roleIds) {
+        this.roleIds = roleIds;
+    }
+
+    public List<RoleDto> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleDto> roles) {
+        this.roles = roles;
     }
 }

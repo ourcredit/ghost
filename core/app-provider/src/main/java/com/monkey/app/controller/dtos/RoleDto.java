@@ -7,6 +7,8 @@ public class RoleDto {
     private String displayName;
     private String roleName;
     private List<String> permissionIds;
+    private List<PermissionDto> allPermissions;
+    private List<PermissionDto> hasPermissions;
 
 
     public List<String> getPermissionIds() {
@@ -40,5 +42,21 @@ public class RoleDto {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public List<PermissionDto> getHasPermissions() {
+        return hasPermissions;
+    }
+
+    public void setHasPermissions(List<PermissionDto> hasPermissions) {
+        this.hasPermissions = hasPermissions;
+    }
+
+    public List<PermissionDto> getAllPermissions() {
+        return allPermissions;
+    }
+
+    public void setAllPermissions(List<PermissionDto> allPermissions) {
+        this.allPermissions = allPermissions;
     }
 }

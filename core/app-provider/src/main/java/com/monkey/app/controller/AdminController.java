@@ -10,6 +10,7 @@ import com.monkey.app.application.IIMRoleService;
 import com.monkey.app.application.IIMUserRoleService;
 import com.monkey.app.common.JavaBeanUtil;
 import com.monkey.app.controller.dtos.AdminDto;
+import com.monkey.app.controller.dtos.PermissionDto;
 import com.monkey.app.controller.dtos.RoleDto;
 import com.monkey.app.entity.*;
 import constant.RequestConstant;
@@ -22,6 +23,7 @@ import result.Result;
 import tools.DateUtil;
 import tools.JWTUtil;
 
+import javax.management.relation.Role;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.*;
 import java.time.LocalDateTime;
@@ -76,7 +78,7 @@ public class AdminController {
         returnData.put("loginTime", haslogin);
         returnData.put("hasLoginTime", DateUtil.deffTime(haslogin, LocalDateTime.now()));
         returnData.put("userinfo", returnUsers);
-        List res = _adminService.getAllPermission(admin.getId());
+        List res = _adminService.getUserPermission(admin.getId());
         returnData.put("access", res);
         returnResult.setCode(ApiResult.SUCCESS);
         returnResult.setData(returnData);
@@ -101,7 +103,7 @@ public class AdminController {
         returnData.put("loginTime", haslogin);
         returnData.put("hasLoginTime", DateUtil.deffTime(haslogin, LocalDateTime.now()));
         returnData.put("userinfo", returnUsers);
-        List res = _adminService.getAllPermission(admin.getId());
+        List res = _adminService.getUserPermission(admin.getId());
         returnData.put("access", res);
         returnResult.setCode(ApiResult.SUCCESS);
         returnResult.setData(returnData);
@@ -117,12 +119,63 @@ public class AdminController {
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
     }
 
-    /*用户列表*/
+    /*角色列表*/
     @RequestMapping(value = "/roles", method = RequestMethod.POST)
     public Result<IPage<IMRole>> roles(@RequestBody PageFilterInputDto page) throws Exception {
         Wrapper filter = WrapperUtil.toWrapper(page);
         IPage<IMRole> res = _roleService.page(WrapperUtil.toPage(page), filter);
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
+    }
+    /*获取用户详情*/
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.POST)
+    public Result<Object> user(@PathVariable Integer id) throws Exception {
+        IMAdmin admin=_adminService.getById(id);
+        if(admin==null)return  Result.NotFound();
+        AdminDto adto=new AdminDto();
+        adto.setCreaterUser(admin.getCreaterUser());
+        adto.setId(admin.getId());
+        adto.setUname(admin.getUname());
+
+        List<IMRole> roles=_adminService.getUserRoles(admin.getId());
+        if(!roles.isEmpty()){
+            List<Integer> ids=new ArrayList<>();
+            List<RoleDto> rdtos=new ArrayList<>();
+            for (IMRole r:roles
+                 ) {
+                ids.add(r.getId());
+                RoleDto rd=new RoleDto();
+                rd.setDisplayName(r.getDisplayName());
+                rd.setId(r.getId());
+                rd.setRoleName(r.getRoleName());
+                rdtos.add( rd);
+            }
+            adto.setRoleIds(ids);
+            adto.setRoles(rdtos);
+        }
+        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, adto);
+    }
+    /*获取角色详情*/
+    @RequestMapping(value = "/role/{id}", method = RequestMethod.POST)
+    public Result<Object> role(@PathVariable Integer id) throws Exception {
+        IMRole role=_roleService.getById(id);
+        if(role==null)return  Result.NotFound();
+        RoleDto adto=new RoleDto();
+        adto.setRoleName(role.getRoleName());
+        adto.setId(role.getId());
+        adto.setDisplayName(role.getDisplayName());
+        List<IMRolePermission> all=  _rolePermissionService.list(new QueryWrapper<>());
+        List<PermissionDto> a1=new ArrayList<>();
+        List<PermissionDto> a2=new ArrayList<>();
+        for (IMRolePermission rp:all
+             ) {
+            a1.add(new PermissionDto(rp.getId(),rp.getPermission(),rp.getShouName()));
+            if(rp.getRoleId()==role.getId()){
+                a2.add(new PermissionDto(rp.getId(),rp.getPermission(),rp.getShouName()));
+            }
+        }
+        adto.setAllPermissions(a1);
+        adto.setHasPermissions(a2);
+        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, adto);
     }
 
     /*更新用户*/
