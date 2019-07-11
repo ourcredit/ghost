@@ -62,7 +62,7 @@
         <Tables :filter="filter" ref="tablesMain" searchable :type="'admin'" :columns="columns"></Tables>
       </TabPane>
     </Tabs>
-    <modify :value="userModify" @close="close"  @save-success="searchSome"></modify>
+    <modify :value="userModify" @close="close" @save-success="searchSome"></modify>
   </div>
 </template>
 
@@ -107,9 +107,7 @@
                   },
                   on: {
                     click: () => {
-                      let c=params.row.id;
-                      this.$store.dispatch("admin_user",c);
-                      this.userModify=true;
+                      this.getUser(params.row.id);
                     }
                   }
                 }, '编辑'),
@@ -154,10 +152,15 @@
       searchSome() {
         this.$refs.tablesMain.initTableData();
       },
-      close(){
-        this.userModify=false;
+      close() {
+        this.userModify = false;
       },
-      create() {
+      create(){
+         this.$store.dispatch("admin_user", 0);
+        this.userModify = true;
+      },
+      getUser(key) {
+        this.$store.dispatch("admin_user", key);
         this.userModify = true;
       }
     },

@@ -132,9 +132,7 @@ public class AdminController {
     public Result<Object> user(@PathVariable Integer id) throws Exception {
         IMAdmin admin = _adminService.getById(id);
         AdminDto adto = new AdminDto();
-        adto.setCreaterUser(admin.getCreaterUser());
-        adto.setId(admin.getId());
-        adto.setUname(admin.getUname());
+
 
         List<IMRole> allRoles = _adminService.getAllRoles();
         List<RoleDto> alls = new ArrayList<>();
@@ -149,6 +147,9 @@ public class AdminController {
         }
         adto.setRoles(alls);
         if (admin != null) {
+            adto.setCreaterUser(admin.getCreaterUser());
+            adto.setId(admin.getId());
+            adto.setUname(admin.getUname());
             adto.setId(admin.getId());
             List<IMRole> roles = _adminService.getUserRoles(admin.getId());
             if (!roles.isEmpty()) {
@@ -168,14 +169,14 @@ public class AdminController {
     public Result<Object> role(@PathVariable Integer id) throws Exception {
         IMRole role = _roleService.getById(id);
         RoleDto adto = new RoleDto();
-        adto.setRoleName(role.getRoleName());
-        adto.setDisplayName(role.getDisplayName());
+
         List<IMRolePermission> all = _rolePermissionService.list(new QueryWrapper<>());
 
         if(role!=null){
+            adto.setRoleName(role.getRoleName());
+            adto.setDisplayName(role.getDisplayName());
             adto.setId(role.getId());
         }
-
         List<PermissionDto> a1 = new ArrayList<>();
         List<PermissionDto> a2 = new ArrayList<>();
         for (IMRolePermission rp : all

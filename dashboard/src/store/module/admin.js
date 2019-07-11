@@ -61,10 +61,6 @@ export default {
     roles: state => state.roles
   },
   actions: {
-    admin_init({commit}){
-      commit('setRoles', data.roles);
-      commit('setAdmin', data);
-    },
     // 获取用户列表
     admin_list({
       commit
