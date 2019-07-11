@@ -4,7 +4,9 @@ import {
   roleList,
   updateAdmin,
   updateRole,
-  deladmin
+  deladmin,
+  user,
+  role
 } from '@/api/admin'
 export default {
   state: {
@@ -12,6 +14,9 @@ export default {
     roleList: [],
     admin: {},
     role: {},
+    roles: [],
+    allPermissions: [],
+    hasPermissions: [],
     index: 1,
     size: 10,
     totalCount: 0
@@ -19,6 +24,15 @@ export default {
   mutations: {
     setList(state, list) {
       state.list = list
+    },
+    setRoles(state, roles) {
+      state.roles = roles
+    },
+    setAllPermissions(state, all) {
+      state.allPermissions = all
+    },
+    setHasPermissions(state, has) {
+      state.hasPermissions = has
     },
     setRoleList(state, roleList) {
       state.roleList = roleList
@@ -44,8 +58,13 @@ export default {
     admin: state => state.admin,
     roleList: state => state.roleList,
     role: state => state.role,
+    roles: state => state.roles
   },
   actions: {
+    admin_init({commit}){
+      commit('setRoles', data.roles);
+      commit('setAdmin', data);
+    },
     // 获取用户列表
     admin_list({
       commit
@@ -67,6 +86,20 @@ export default {
         }).catch(err => {
           reject(err)
         })
+      })
+    },
+    admin_user({
+      commit
+    }, id) {
+      return new Promise((resolve, reject) => {
+        user(id).then(res => {
+          const data = res.data.data
+          commit('setRoles', data.roles);
+          commit('setAdmin', data);
+          resolve()
+        }).catch(err => {
+          reject(err)
+        });
       })
     }
   }

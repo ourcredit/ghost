@@ -107,7 +107,9 @@
                   },
                   on: {
                     click: () => {
-                      console.log("1");
+                      let c=params.row.id;
+                      this.$store.dispatch("admin_user",c);
+                      this.userModify=true;
                     }
                   }
                 }, '编辑'),
@@ -156,7 +158,6 @@
         this.userModify=false;
       },
       create() {
-        console.log(1222);
         this.userModify = true;
       }
     },

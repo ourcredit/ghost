@@ -3,11 +3,11 @@
     <Modal title="编辑用户" :value="value" @on-ok="save" @on-visible-change="visibleChange">
       <Form ref="adminForm" label-position="top" :rules="adminRule" :model="admin">
         <FormItem label="用户名" prop="uname">
-          <Input v-model="admin.uname" :maxlength="32" :minlength="2" />
+          <Input readonly v-model="admin.uname" :maxlength="32" :minlength="2" />
         </FormItem>
         <FormItem label="角色">
-          <Select v-model="roleIds" multiple >
-            <Option   v-for="item in models" :value="item.value" :key="item.value">{{ item.name }}</Option>
+          <Select v-model="admin.roleIds" multiple >
+            <Option   v-for="item in roles" :value="item.id" :key="item.id">{{ item.displayName }}</Option>
           </Select>
         </FormItem>
 
@@ -20,6 +20,7 @@
   </div>
 </template>
 <script>
+import { mapActions,mapGetters } from 'vuex'
   export default {
     props: {
       value: {
@@ -38,7 +39,6 @@
             trigger: "blur"
           }]
         },
-        admin: {},
         models: [{
           name: "a",
           value: 1
@@ -47,6 +47,16 @@
           value: 2
         }],
         roleIds: []
+      }
+    },
+    computed: {
+       admin(){
+        let t= this.$store.state.admin.admin;
+        console.log(t);
+        return t;
+      },
+      roles(){
+         return this.$store.state.admin.roles;
       }
     },
     methods: {
@@ -71,6 +81,7 @@
       visibleChange(value) {
         if (!value) {
           this.$emit("input", value);
+         this.$emit("close", false);
         }
       }
     },

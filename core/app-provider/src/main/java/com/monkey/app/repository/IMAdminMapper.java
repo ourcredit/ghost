@@ -28,4 +28,11 @@ public interface IMAdminMapper extends BaseMapper<IMAdmin> {
             "\tINNER JOIN on_IMUserRole b ON a.id = b.userId\n" +
             "\tINNER JOIN on_IMRole c ON b.roleId = c.id where a.id=#{userId}")
     List<IMRole> getUserRoles(Integer userId);
+    @Select("SELECT\n" +
+            "\tc.* \n" +
+            "FROM\n" +
+            "\ton_IMAdmin a\n" +
+            "\tINNER JOIN on_IMUserRole b ON a.id = b.userId\n" +
+            "\tINNER JOIN on_IMRole c ON b.roleId = c.id")
+    List<IMRole> getAllRoles();
 }

@@ -17,6 +17,18 @@ export const roleList = (data) => {
   })
 }
 
+export const user = (id) => {
+  return axios.request({
+    url: '/app/api/admin/user/'+id,
+    method: 'get'
+  })
+}
+export const role = (id) => {
+  return axios.request({
+    url: '/app/api/admin/role/'+id,
+    method: 'get'
+  })
+}
 export const updateAdmin = dto => {
   return axios.request({
     url: '/app/api/admin/updateadmin',

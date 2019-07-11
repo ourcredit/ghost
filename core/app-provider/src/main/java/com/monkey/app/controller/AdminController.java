@@ -126,51 +126,63 @@ public class AdminController {
         IPage<IMRole> res = _roleService.page(WrapperUtil.toPage(page), filter);
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
     }
+
     /*获取用户详情*/
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public Result<Object> user(@PathVariable Integer id) throws Exception {
-        IMAdmin admin=_adminService.getById(id);
-        if(admin==null)return  Result.NotFound();
-        AdminDto adto=new AdminDto();
+        IMAdmin admin = _adminService.getById(id);
+        AdminDto adto = new AdminDto();
         adto.setCreaterUser(admin.getCreaterUser());
         adto.setId(admin.getId());
         adto.setUname(admin.getUname());
 
-        List<IMRole> roles=_adminService.getUserRoles(admin.getId());
-        if(!roles.isEmpty()){
-            List<Integer> ids=new ArrayList<>();
-            List<RoleDto> rdtos=new ArrayList<>();
-            for (IMRole r:roles
-                 ) {
-                ids.add(r.getId());
-                RoleDto rd=new RoleDto();
-                rd.setDisplayName(r.getDisplayName());
-                rd.setId(r.getId());
-                rd.setRoleName(r.getRoleName());
-                rdtos.add( rd);
+        List<IMRole> allRoles = _adminService.getAllRoles();
+        List<RoleDto> alls = new ArrayList<>();
+
+        for (IMRole r : allRoles
+                ) {
+            RoleDto rd = new RoleDto();
+            rd.setDisplayName(r.getDisplayName());
+            rd.setId(r.getId());
+            rd.setRoleName(r.getRoleName());
+            alls.add(rd);
+        }
+        adto.setRoles(alls);
+        if (admin != null) {
+            adto.setId(admin.getId());
+            List<IMRole> roles = _adminService.getUserRoles(admin.getId());
+            if (!roles.isEmpty()) {
+                List<Integer> ids = new ArrayList<>();
+                for (IMRole r : roles
+                        ) {
+                    ids.add(r.getId());
+                }
+                adto.setRoleIds(ids);
             }
-            adto.setRoleIds(ids);
-            adto.setRoles(rdtos);
         }
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, adto);
     }
+
     /*获取角色详情*/
     @RequestMapping(value = "/role/{id}", method = RequestMethod.GET)
     public Result<Object> role(@PathVariable Integer id) throws Exception {
-        IMRole role=_roleService.getById(id);
-        if(role==null)return  Result.NotFound();
-        RoleDto adto=new RoleDto();
+        IMRole role = _roleService.getById(id);
+        RoleDto adto = new RoleDto();
         adto.setRoleName(role.getRoleName());
-        adto.setId(role.getId());
         adto.setDisplayName(role.getDisplayName());
-        List<IMRolePermission> all=  _rolePermissionService.list(new QueryWrapper<>());
-        List<PermissionDto> a1=new ArrayList<>();
-        List<PermissionDto> a2=new ArrayList<>();
-        for (IMRolePermission rp:all
-             ) {
-            a1.add(new PermissionDto(rp.getId(),rp.getPermission(),rp.getShouName()));
-            if(rp.getRoleId()==role.getId()){
-                a2.add(new PermissionDto(rp.getId(),rp.getPermission(),rp.getShouName()));
+        List<IMRolePermission> all = _rolePermissionService.list(new QueryWrapper<>());
+
+        if(role!=null){
+            adto.setId(role.getId());
+        }
+
+        List<PermissionDto> a1 = new ArrayList<>();
+        List<PermissionDto> a2 = new ArrayList<>();
+        for (IMRolePermission rp : all
+                ) {
+            a1.add(new PermissionDto(rp.getId(), rp.getPermission(), rp.getShouName()));
+            if (role!=null&& rp.getRoleId() == role.getId()) {
+                a2.add(new PermissionDto(rp.getId(), rp.getPermission(), rp.getShouName()));
             }
         }
         adto.setAllPermissions(a1);
@@ -251,6 +263,7 @@ public class AdminController {
         Boolean b = _roleService.removeById(roleId);
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, b);
     }
+
     /*修改密码*/
     @RequestMapping(value = "/password", method = RequestMethod.POST)
     public Result<Boolean> password(@PathVariable Integer roleId) throws Exception {

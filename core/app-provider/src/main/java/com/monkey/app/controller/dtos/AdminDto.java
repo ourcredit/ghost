@@ -1,5 +1,7 @@
 package com.monkey.app.controller.dtos;
 
+import com.monkey.app.entity.IMRole;
+
 import java.util.List;
 
 public class AdminDto {
@@ -8,7 +10,6 @@ public class AdminDto {
     private String pwd;
     private String createrUser;
     private List<Integer> roleIds;
-
     private List<RoleDto> roles;
     public Integer getId() {
         return id;
