@@ -97,6 +97,20 @@ export default {
           reject(err)
         });
       })
+    },
+    admin_updateAdmin({
+      commit
+    }, admin) {
+      return new Promise((resolve, reject) => {
+        updateAdmin(admin).then(res => {
+          const data = res.data.data
+          commit('setRoles', data.roles);
+          commit('setAdmin', data);
+          resolve()
+        }).catch(err => {
+          reject(err)
+        });
+      })
     }
   }
 }

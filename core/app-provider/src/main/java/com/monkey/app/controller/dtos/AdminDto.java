@@ -1,7 +1,4 @@
 package com.monkey.app.controller.dtos;
-
-import com.monkey.app.entity.IMRole;
-
 import java.util.List;
 
 public class AdminDto {

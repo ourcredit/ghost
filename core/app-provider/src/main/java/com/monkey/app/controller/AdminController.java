@@ -132,11 +132,8 @@ public class AdminController {
     public Result<Object> user(@PathVariable Integer id) throws Exception {
         IMAdmin admin = _adminService.getById(id);
         AdminDto adto = new AdminDto();
-
-
         List<IMRole> allRoles = _adminService.getAllRoles();
         List<RoleDto> alls = new ArrayList<>();
-
         for (IMRole r : allRoles
                 ) {
             RoleDto rd = new RoleDto();

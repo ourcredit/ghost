@@ -3,11 +3,14 @@
     <Modal title="编辑用户" :value="value" @on-ok="save" @on-visible-change="visibleChange">
       <Form ref="adminForm" label-position="top" :rules="adminRule" :model="admin">
         <FormItem label="用户名" prop="uname">
-          <Input readonly v-model="admin.uname" :maxlength="32" :minlength="2" />
+          <Input v-model="admin.uname" :maxlength="32" :minlength="2" />
+        </FormItem>
+        <FormItem v-if="!admin.id" label="密码" prop="pwd">
+          <Input type="password" v-model="admin.pwd" :maxlength="32" :minlength="2" />
         </FormItem>
         <FormItem label="角色">
-          <Select v-model="admin.roleIds" multiple >
-            <Option   v-for="item in roles" :value="item.id" :key="item.id">{{ item.displayName }}</Option>
+          <Select v-model="admin.roleIds" multiple>
+            <Option v-for="item in roles" :value="item.id" :key="item.id">{{ item.displayName }}</Option>
           </Select>
         </FormItem>
 
@@ -20,7 +23,10 @@
   </div>
 </template>
 <script>
-import { mapActions,mapGetters } from 'vuex'
+  import {
+    mapActions,
+    mapGetters
+  } from 'vuex'
   export default {
     props: {
       value: {
@@ -38,32 +44,23 @@ import { mapActions,mapGetters } from 'vuex'
             message: "用户名必填",
             trigger: "blur"
           }]
-        },
-        models: [{
-          name: "a",
-          value: 1
-        }, {
-          name: "b",
-          value: 2
-        }],
-        roleIds: []
+        }
       }
     },
     computed: {
-       admin(){
-        let t= this.$store.state.admin.admin;
-        console.log(t);
+      admin() {
+        let t = this.$store.state.admin.admin;
         return t;
       },
-      roles(){
-         return this.$store.state.admin.roles;
+      roles() {
+        return this.$store.state.admin.roles;
       }
     },
     methods: {
       save() {
         this.$refs.adminForm.validate(valid => {
           if (valid) {
-            this.$store.dispatch("admin_modify", this.admin);
+            this.$store.dispatch("admin_updateAdmin", this.admin);
             this.$refs.adminForm.resetFields();
             this.$emit("save-success");
             this.$emit("input", false);
@@ -81,7 +78,7 @@ import { mapActions,mapGetters } from 'vuex'
       visibleChange(value) {
         if (!value) {
           this.$emit("input", value);
-         this.$emit("close", false);
+          this.$emit("close", false);
         }
       }
     },
