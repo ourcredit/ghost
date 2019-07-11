@@ -127,7 +127,7 @@ public class AdminController {
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
     }
     /*获取用户详情*/
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public Result<Object> user(@PathVariable Integer id) throws Exception {
         IMAdmin admin=_adminService.getById(id);
         if(admin==null)return  Result.NotFound();
@@ -155,7 +155,7 @@ public class AdminController {
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, adto);
     }
     /*获取角色详情*/
-    @RequestMapping(value = "/role/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/role/{id}", method = RequestMethod.GET)
     public Result<Object> role(@PathVariable Integer id) throws Exception {
         IMRole role=_roleService.getById(id);
         if(role==null)return  Result.NotFound();
