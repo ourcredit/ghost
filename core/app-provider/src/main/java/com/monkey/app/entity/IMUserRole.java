@@ -1,5 +1,7 @@
 package com.monkey.app.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -31,8 +33,8 @@ public class IMUserRole implements Serializable {
     /**
      * key
      */
-    private Integer id;
-
+    @TableId(value = "id", type = IdType.UUID)
+    private String id;
     /**
      * 用户id
      */

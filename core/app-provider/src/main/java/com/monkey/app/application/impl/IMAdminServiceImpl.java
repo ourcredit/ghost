@@ -34,9 +34,4 @@ public class IMAdminServiceImpl extends ServiceImpl<IMAdminMapper, IMAdmin> impl
     public List<IMRole> getUserRoles(Integer userId) {
         return baseMapper.getUserRoles(userId);
     }
-
-    @Override
-    public List<IMRole> getAllRoles() {
-        return baseMapper.getAllRoles();
-    }
 }

@@ -34,8 +34,8 @@ public class IMRolePermission implements Serializable {
     /**
      * key
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "id", type = IdType.UUID)
+    private String id;
 
     /**
      * 角色id

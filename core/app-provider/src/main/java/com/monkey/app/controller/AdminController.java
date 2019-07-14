@@ -132,7 +132,7 @@ public class AdminController {
     public Result<Object> user(@PathVariable Integer id) throws Exception {
         IMAdmin admin = _adminService.getById(id);
         AdminDto adto = new AdminDto();
-        List<IMRole> allRoles = _adminService.getAllRoles();
+        List<IMRole> allRoles = _roleService.list(new QueryWrapper<>());
         List<RoleDto> alls = new ArrayList<>();
         for (IMRole r : allRoles
                 ) {
@@ -201,10 +201,6 @@ public class AdminController {
         } else {
             admin = _adminService.getById(adminInput.getId());
             if (admin == null) return Result.NotFound();
-            String pwd = DigestUtils.md5Hex(adminInput.getPwd()).toLowerCase();
-            if (admin.getPwd() != pwd) {
-                admin.setPwd(pwd);
-            }
         }
         Boolean bo = _adminService.saveOrUpdate(admin);
         if (adminInput.getRoleIds() != null && !adminInput.getRoleIds().isEmpty()) {

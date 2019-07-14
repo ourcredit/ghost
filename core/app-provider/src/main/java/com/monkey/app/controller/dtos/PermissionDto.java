@@ -2,20 +2,20 @@ package com.monkey.app.controller.dtos;
 
 public class PermissionDto {
     public  PermissionDto(){}
-    public  PermissionDto(Integer id,String permission,String showName){
+    public  PermissionDto(String id,String permission,String showName){
         this.id=id;
         this.permission=permission;
         this.shouName=showName;
     }
-    private Integer id;
+    private String id;
     private String permission;
     private String shouName;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

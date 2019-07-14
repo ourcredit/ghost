@@ -19,5 +19,4 @@ public interface IIMAdminService extends IService<IMAdmin> {
     List<String> getUserPermission(Integer userId);
 
     List<IMRole> getUserRoles(Integer userId);
-    List<IMRole> getAllRoles();
 }
