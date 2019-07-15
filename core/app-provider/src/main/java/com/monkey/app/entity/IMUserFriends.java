@@ -1,9 +1,7 @@
 package com.monkey.app.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -55,7 +53,7 @@ public class IMUserFriends implements Serializable {
     private Integer lv;
 
     private LocalDateTime updated;
-
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime created;
 
 

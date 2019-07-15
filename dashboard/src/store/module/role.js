@@ -1,27 +1,32 @@
 import {
-  adminList,
-  updateAdmin,
-  deladmin,
-  user,
+  delrole,
+  roleList,
+  updateRole,
+  role
 } from '@/api/admin'
 export default {
   state: {
     list: [],
-    admin: {},
+    role: {},
     roles: [],
+    allPermissions: [],
+    hasPermissions: [],
     index: 1,
     size: 10,
     totalCount: 0
   },
   mutations: {
-    setAdminList(state, list) {
+    setRoleList(state, list) {
       state.list = list
     },
     setRoles(state, roles) {
       state.roles = roles
     },
-    setAdmin(state, admin) {
-      state.admin = admin;
+    setAllPermissions(state, all) {
+      state.allPermissions = all
+    },
+    setHasPermissions(state, has) {
+      state.hasPermissions = has
     },
     setRole(state, role) {
       state.role = role;
@@ -40,7 +45,7 @@ export default {
   },
   actions: {
     // 获取用户列表
-    admin_list({
+    role_list({
       commit
     }, {
       index,
@@ -48,13 +53,13 @@ export default {
       where
     }) {
       return new Promise((resolve, reject) => {
-        adminList({
+        roleList({
           index,
           size,
           where
         }).then(res => {
           const data = res.data.data
-          commit('setAdminList', data.records);
+          commit('setRoleList', data.records);
           commit('setTotalCount', data.total);
           resolve()
         }).catch(err => {
@@ -62,27 +67,28 @@ export default {
         })
       })
     },
-    admin_user({
+    role_role({
       commit
     }, id) {
       return new Promise((resolve, reject) => {
-        user(id).then(res => {
+        role(id).then(res => {
           const data = res.data.data
-          commit('setRoles', data.roles);
-          commit('setAdmin', data);
+          commit('setAllPermissions', data.allPermissions);
+          commit('setHasPermissions', data.hasPermissions);
+          commit('setRole', data);
           resolve()
         }).catch(err => {
           reject(err)
         });
       })
     },
-    admin_updateAdmin({
+    role_updateRole({
       commit
     }, ww) {
       debugger;
       return new Promise((resolve, reject) => {
-        updateAdmin(ww).then(res => {
-          commit('setAdmin', {});
+        updateRole(ww).then(res => {
+          commit('setRole', {});
           resolve()
         }).catch(err => {
           reject(err)

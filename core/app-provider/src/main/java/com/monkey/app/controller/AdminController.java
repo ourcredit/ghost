@@ -1,5 +1,7 @@
 package com.monkey.app.controller;
 
+import ListCom.CollectionHelper;
+import ListCom.IMatch;
 import annotation.CurrentUser;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -124,6 +126,25 @@ public class AdminController {
     public Result<IPage<IMRole>> roles(@RequestBody PageFilterInputDto page) throws Exception {
         Wrapper filter = WrapperUtil.toWrapper(page);
         IPage<IMRole> res = _roleService.page(WrapperUtil.toPage(page), filter);
+        List<Integer> temp = new ArrayList<>();
+        res.getRecords().forEach(w -> temp.add(w.getId()));
+        List r = _rolePermissionService.list(new QueryWrapper<IMRolePermission>().in("roleId", temp));
+        for (IMRole role : res.getRecords()
+                ) {
+            List<IMRolePermission> t = CollectionHelper.findAll(r, new IMatch<IMRolePermission>() {
+                @Override
+                public boolean match(IMRolePermission b) {
+                    return b.getRoleId() == role.getId();
+                }
+            });
+            String tempStr="";
+            for (IMRolePermission rp: t
+                 ) {
+                tempStr+=rp.getShouName();
+            }
+            role.setPermissions(tempStr);
+        }
+
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
     }
 
@@ -169,7 +190,7 @@ public class AdminController {
 
         List<IMRolePermission> all = _rolePermissionService.list(new QueryWrapper<>());
 
-        if(role!=null){
+        if (role != null) {
             adto.setRoleName(role.getRoleName());
             adto.setDisplayName(role.getDisplayName());
             adto.setId(role.getId());
@@ -179,7 +200,7 @@ public class AdminController {
         for (IMRolePermission rp : all
                 ) {
             a1.add(new PermissionDto(rp.getId(), rp.getPermission(), rp.getShouName()));
-            if (role!=null&& rp.getRoleId() == role.getId()) {
+            if (role != null && rp.getRoleId() == role.getId()) {
                 a2.add(new PermissionDto(rp.getId(), rp.getPermission(), rp.getShouName()));
             }
         }

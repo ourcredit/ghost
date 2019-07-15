@@ -6,6 +6,7 @@ import app from './module/app'
 import contact from './module/contact'
 import dash from './module/dash'
 import admin from './module/admin'
+import role from './module/role'
 
 Vue.use(Vuex)
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     app,
     contact,
     dash,
-    admin
+    admin,
+    role
   }
 })

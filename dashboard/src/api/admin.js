@@ -19,45 +19,48 @@ export const roleList = (data) => {
 
 export const user = (id) => {
   return axios.request({
-    url: '/app/api/admin/user/'+id,
+    url: '/app/api/admin/user/' + id,
     method: 'get'
   })
 }
 export const role = (id) => {
   return axios.request({
-    url: '/app/api/admin/role/'+id,
+    url: '/app/api/admin/role/' + id,
     method: 'get'
   })
 }
-export const updateAdmin = dto => {
+export const updateAdmin = data => {
+  debugger;
+  console.log("params：")
+  console.log(data);
   return axios.request({
     url: '/app/api/admin/updateadmin',
-    data:dto,
+    data,
     method: 'post'
   })
 }
-export const updateRole = dto => {
-    return axios.request({
-      url: '/app/api/admin/updaterole',
-      data:dto,
-      method: 'post'
-    })
-  }
+export const updateRole = data => {
+  return axios.request({
+    url: '/app/api/admin/updaterole',
+    data,
+    method: 'post'
+  })
+}
 export const deladmin = adminId => {
-    return axios.request({
-      url: '/app/api/admin/deladmin',
-      method: 'get',
-      params: {
-        adminId
-      }
-    })
-  }
-  export const delrole = roleId => {
-    return axios.request({
-      url: '/app/api/admin/delrole',
-      method: 'get',
-      params: {
-        roleId
-      }
-    })
-  }
+  return axios.request({
+    url: '/app/api/admin/deladmin',
+    method: 'get',
+    params: {
+      adminId
+    }
+  })
+}
+export const delrole = roleId => {
+  return axios.request({
+    url: '/app/api/admin/delrole',
+    method: 'get',
+    params: {
+      roleId
+    }
+  })
+}

@@ -1,5 +1,4 @@
 import Mock from 'mockjs'
-import { login, logout } from './login'
 import { getTableData, getDragList, uploadImage, getOrgData, getTreeSelectData } from './data'
 import { getMessageInit, getContentByMsgId, hasRead, removeReaded, restoreTrash, messageCount } from './user'
 

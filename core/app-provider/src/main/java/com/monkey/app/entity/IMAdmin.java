@@ -1,9 +1,6 @@
 package com.monkey.app.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -49,6 +46,7 @@ public class IMAdmin implements Serializable {
     /**
      * 创建时间´
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime created;
     @TableField("createrUser")
     private String createrUser;

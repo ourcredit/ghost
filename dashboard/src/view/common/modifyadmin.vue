@@ -3,10 +3,10 @@
     <Modal title="编辑用户" :value="value" @on-ok="save" @on-visible-change="visibleChange">
       <Form ref="adminForm" label-position="top" :rules="adminRule" :model="admin">
         <FormItem label="用户名" prop="uname">
-          <Input v-model="admin.uname" :maxlength="32" :minlength="2" />
+          <Input v-model="admin.uname"  />
         </FormItem>
         <FormItem v-if="!admin.id" label="密码" prop="pwd">
-          <Input type="password" v-model="admin.pwd" :maxlength="32" :minlength="2" />
+          <Input type="password" v-model="admin.pwd" />
         </FormItem>
         <FormItem label="角色">
           <Select v-model="admin.roleIds" multiple>
@@ -49,8 +49,7 @@
     },
     computed: {
       admin() {
-        let t = this.$store.state.admin.admin;
-        return t;
+        return this.$store.state.admin.admin;
       },
       roles() {
         return this.$store.state.admin.roles;
@@ -58,12 +57,15 @@
     },
     methods: {
       save() {
+        let _=this;
         this.$refs.adminForm.validate(valid => {
           if (valid) {
-            this.$store.dispatch("admin_updateAdmin", this.admin);
+            debugger;
+             let admin= Object.assign({}, _.admin);
+            this.$store.dispatch("admin_updateAdmin",admin);
             this.$refs.adminForm.resetFields();
             this.$emit("save-success");
-            this.$emit("input", false);
+             this.$emit("input", false);
           }
         })
       },

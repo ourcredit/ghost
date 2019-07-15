@@ -108,7 +108,7 @@
           size: this.currentSize,
           where: this.filter
         };
-        console.log(params)
+        console.log(this.type)
         this.$store.dispatch(`${this.type}_list`,params);
       },
       clearCurrentRow() {
