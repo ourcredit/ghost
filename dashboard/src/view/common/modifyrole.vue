@@ -63,11 +63,10 @@
         let _=this;
         this.$refs.roleForm.validate(valid => {
           if (valid) {
-            debugger;
             console.log(_.role);
            let role= Object.assign({}, _.role);
-            this.$store.dispatch("role_updateRole", role);
             this.$refs.roleForm.resetFields();
+            this.$store.dispatch("role_updateRole", role);
             this.$emit("save-success");
              this.$emit("input", false);
           }

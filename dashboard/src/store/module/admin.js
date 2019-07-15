@@ -26,19 +26,25 @@ export default {
     setRole(state, role) {
       state.role = role;
     },
-    setIndex(state, index) {
+    setAdminIndex(state, index) {
       state.index = index
     },
-    setSize(state, size) {
+    setAdminSize(state, size) {
       state.size = size
     },
-    setTotalCount(state, totalCount) {
+    setAdminTotalCount(state, totalCount) {
       state.totalCount = totalCount
     },
   },
   getters: {
   },
   actions: {
+    admin_index({commit},index){
+      commit('setAdminIndex', index);
+    },
+    admin_size({commit},size){
+      commit('setAdminSize', size);
+    },
     // 获取用户列表
     admin_list({
       commit
@@ -55,7 +61,7 @@ export default {
         }).then(res => {
           const data = res.data.data
           commit('setAdminList', data.records);
-          commit('setTotalCount', data.total);
+          commit('setAdminTotalCount', data.total);
           resolve()
         }).catch(err => {
           reject(err)
@@ -79,7 +85,6 @@ export default {
     admin_updateAdmin({
       commit
     }, ww) {
-      debugger;
       return new Promise((resolve, reject) => {
         updateAdmin(ww).then(res => {
           commit('setAdmin', {});

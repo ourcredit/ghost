@@ -31,13 +31,13 @@ export default {
     setRole(state, role) {
       state.role = role;
     },
-    setIndex(state, index) {
+    setRoleIndex(state, index) {
       state.index = index
     },
-    setSize(state, size) {
+    setRoleSize(state, size) {
       state.size = size
     },
-    setTotalCount(state, totalCount) {
+    setRoleTotalCount(state, totalCount) {
       state.totalCount = totalCount
     },
   },
@@ -60,7 +60,7 @@ export default {
         }).then(res => {
           const data = res.data.data
           commit('setRoleList', data.records);
-          commit('setTotalCount', data.total);
+          commit('setRoleTotalCount', data.total);
           resolve()
         }).catch(err => {
           reject(err)
@@ -85,7 +85,6 @@ export default {
     role_updateRole({
       commit
     }, ww) {
-      debugger;
       return new Promise((resolve, reject) => {
         updateRole(ww).then(res => {
           commit('setRole', {});

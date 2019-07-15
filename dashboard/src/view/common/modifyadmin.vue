@@ -60,7 +60,6 @@
         let _=this;
         this.$refs.adminForm.validate(valid => {
           if (valid) {
-            debugger;
              let admin= Object.assign({}, _.admin);
             this.$store.dispatch("admin_updateAdmin",admin);
             this.$refs.adminForm.resetFields();

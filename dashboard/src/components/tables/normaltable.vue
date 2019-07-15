@@ -10,8 +10,8 @@
       @on-row-dblclick="onRowDblclick" @on-expand="onExpand">
     </Table>
     <Row>
-    <Page v-if="pageable" @on-change="initTableData" :total="total" :current="currentIndex" :page-size="size" show-total show-sizer
-        show-elevator />
+      <Page @on-change="pageIndex" @on-page-size-change="pageSize" v-if="pageable"
+        :total="total" :current="currentIndex" :page-size="currentSize" show-total show-sizer show-elevator />
     </Row>
   </div>
 </template>
@@ -45,9 +45,9 @@
         type: Boolean,
         default: true
       },
-      filter:{
-        type:Object,
-        default:{}
+      filter: {
+        type: Object,
+        default: {}
       },
       border: {
         type: Boolean,
@@ -98,9 +98,13 @@
       }
     },
     methods: {
-      setDefaultSearchKey() {
-        this.searchKey = this.columns[0].key !== 'handle' ? this.columns[0].key : (this.columns.length > 1 ? this
-          .columns[1].key : '')
+      pageIndex(e) {
+        this.$store.dispatch(`${this.type}_index`, e);
+        this.initTableData();
+      },
+      pageSize(e) {
+       this.$store.dispatch(`${this.type}_size`, e);
+        this.initTableData();
       },
       initTableData() {
         let params = {
@@ -109,7 +113,7 @@
           where: this.filter
         };
         console.log(this.type)
-        this.$store.dispatch(`${this.type}_list`,params);
+        this.$store.dispatch(`${this.type}_list`, params);
       },
       clearCurrentRow() {
         this.$refs.talbesMain.clearCurrentRow()
@@ -160,16 +164,12 @@
       }
     },
     watch: {
-      columns(columns) {
-        this.setDefaultSearchKey()
-      },
       value(val) {
         this.handleTableData()
         if (this.searchable) this.handleSearch()
       }
     },
     mounted() {
-      this.setDefaultSearchKey()
       this.initTableData()
     }
   }

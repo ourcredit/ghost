@@ -106,8 +106,8 @@
     methods: {
       //搜索
       searchSome() {
-        this.$refs.tablesAdmin.initTableData();
         this.userModify = false;
+        this.$refs.tablesAdmin.initTableData();
       },
       close() {
         this.userModify = false;
@@ -120,7 +120,9 @@
         this.userModify = true;
       }
     },
-    mounted() {},
+    mounted() {
+        this.searchSome();
+    },
   }
 
 </script>

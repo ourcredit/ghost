@@ -11,6 +11,7 @@ import com.monkey.app.application.IIMRolePermissionService;
 import com.monkey.app.application.IIMRoleService;
 import com.monkey.app.application.IIMUserRoleService;
 import com.monkey.app.common.JavaBeanUtil;
+import com.monkey.app.common.PermissionConstant;
 import com.monkey.app.controller.dtos.AdminDto;
 import com.monkey.app.controller.dtos.PermissionDto;
 import com.monkey.app.controller.dtos.RoleDto;
@@ -140,7 +141,7 @@ public class AdminController {
             String tempStr="";
             for (IMRolePermission rp: t
                  ) {
-                tempStr+=rp.getShouName();
+                tempStr+=rp.getShouName()+" ";
             }
             role.setPermissions(tempStr);
         }
@@ -195,20 +196,17 @@ public class AdminController {
             adto.setDisplayName(role.getDisplayName());
             adto.setId(role.getId());
         }
-        List<PermissionDto> a1 = new ArrayList<>();
         List<PermissionDto> a2 = new ArrayList<>();
         for (IMRolePermission rp : all
                 ) {
-            a1.add(new PermissionDto(rp.getId(), rp.getPermission(), rp.getShouName()));
             if (role != null && rp.getRoleId() == role.getId()) {
                 a2.add(new PermissionDto(rp.getId(), rp.getPermission(), rp.getShouName()));
             }
         }
-        adto.setAllPermissions(a1);
+        adto.setAllPermissions(PermissionConstant.permissions);
         adto.setHasPermissions(a2);
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, adto);
     }
-
     /*更新用户*/
     @RequestMapping(value = "/updateadmin", method = RequestMethod.POST)
     public Result<Object> updateadmin(@RequestBody AdminDto adminInput, @CurrentUser IMAdmin current) throws Exception {

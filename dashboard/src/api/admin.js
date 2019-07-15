@@ -30,7 +30,6 @@ export const role = (id) => {
   })
 }
 export const updateAdmin = data => {
-  debugger;
   console.log("params：")
   console.log(data);
   return axios.request({
