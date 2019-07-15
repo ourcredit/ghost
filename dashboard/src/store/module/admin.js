@@ -23,9 +23,6 @@ export default {
     setAdmin(state, admin) {
       state.admin = admin;
     },
-    setRole(state, role) {
-      state.role = role;
-    },
     setAdminIndex(state, index) {
       state.index = index
     },

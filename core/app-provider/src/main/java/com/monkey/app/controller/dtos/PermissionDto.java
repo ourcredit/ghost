@@ -1,7 +1,6 @@
 package com.monkey.app.controller.dtos;
 
 public class PermissionDto {
-    public  PermissionDto(){}
     public  PermissionDto(String permission,String showName){
         this.permission=permission;
         this.shouName=showName;

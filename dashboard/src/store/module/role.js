@@ -7,7 +7,7 @@ import {
 export default {
   state: {
     list: [],
-    role: {},
+    role: { permissionIds:[]},
     roles: [],
     allPermissions: [],
     hasPermissions: [],
@@ -18,9 +18,6 @@ export default {
   mutations: {
     setRoleList(state, list) {
       state.list = list
-    },
-    setRoles(state, roles) {
-      state.roles = roles
     },
     setAllPermissions(state, all) {
       state.allPermissions = all

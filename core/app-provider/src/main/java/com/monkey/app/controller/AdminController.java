@@ -132,12 +132,7 @@ public class AdminController {
         List r = _rolePermissionService.list(new QueryWrapper<IMRolePermission>().in("roleId", temp));
         for (IMRole role : res.getRecords()
                 ) {
-            List<IMRolePermission> t = CollectionHelper.findAll(r, new IMatch<IMRolePermission>() {
-                @Override
-                public boolean match(IMRolePermission b) {
-                    return b.getRoleId() == role.getId();
-                }
-            });
+            List<IMRolePermission> t = CollectionHelper.findAll(r, (IMatch<IMRolePermission>) b -> b.getRoleId() == role.getId());
             String tempStr="";
             for (IMRolePermission rp: t
                  ) {
@@ -255,7 +250,8 @@ public class AdminController {
             if (b) {
                 List<IMRolePermission> list = new ArrayList<>();
                 for (String i : roleInput.getPermissionIds()) {
-                    list.add(new IMRolePermission(role.getId(), i));
+                  PermissionDto pd=  CollectionHelper.find(PermissionConstant.permissions, permissionDto -> permissionDto.getPermission()==i);
+                    list.add(new IMRolePermission(role.getId(), i,pd.getShouName()));
                 }
                 _rolePermissionService.saveBatch(list);
             }

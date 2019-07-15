@@ -3,15 +3,17 @@
     <Modal title="编辑用户" :value="value" @on-ok="save" @on-visible-change="visibleChange">
       <Form ref="roleForm" label-position="top" :rules="roleRule" :model="role">
         <FormItem label="角色名" prop="roleName">
-          <Input v-model="role.roleName"  />
+          <Input v-model="role.roleName" />
         </FormItem>
         <FormItem label="显示名" prop="pwd">
           <Input v-model="role.displayName" />
         </FormItem>
         <FormItem label="权限">
-          <Select v-model="role.permissionIds" multiple>
-            <Option v-for="item in allPermissions" :value="item.permission" :key="item.permission">{{ item.shouName }}</Option>
-          </Select>
+          <CheckboxGroup v-model="role.hasPermissions">
+            <Checkbox v-for="item in allPermissions" :key="item.permission" :label="item.permission">
+              <span>{{item.shouName}}</span>
+            </Checkbox>
+          </CheckboxGroup>
         </FormItem>
 
       </Form>
@@ -60,15 +62,17 @@
     },
     methods: {
       save() {
-        let _=this;
+        let _ = this;
         this.$refs.roleForm.validate(valid => {
           if (valid) {
             console.log(_.role);
-           let role= Object.assign({}, _.role);
+            let role = Object.assign({}, _.role);
+            role.permissionIds=role.hasPermissions;
+            role.hasPermissions=[];
             this.$refs.roleForm.resetFields();
             this.$store.dispatch("role_updateRole", role);
             this.$emit("save-success");
-             this.$emit("input", false);
+            this.$emit("input", false);
           }
         })
       },

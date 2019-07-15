@@ -23,9 +23,10 @@ import lombok.experimental.Accessors;
 public class IMRolePermission implements Serializable {
 
     public IMRolePermission(){}
-    public IMRolePermission(Integer roleId,String permission){
+    public IMRolePermission(Integer roleId,String permission,String showName){
         this.roleId=roleId;
         this.permission=permission;
+        this.shouName=showName;
     }
     private static final long serialVersionUID = 1L;
 
