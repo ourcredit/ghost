@@ -76,7 +76,7 @@ public class AdminController {
         _adminService.updateById(admin);
 
         returnUsers.remove("password");
-        returnData.put("token", JWTUtil.sign(admin.getUname(), admin.getId(), "88888", "123456789"));
+        returnData.put("token", JWTUtil.sign(admin.getUname(), admin.getId(), 1, "123456789"));
         returnData.put("ipAddress", JWTUtil.getIpAddress(req));
         returnData.put("loginTime", haslogin);
         returnData.put("hasLoginTime", DateUtil.deffTime(haslogin, LocalDateTime.now()));
@@ -101,7 +101,7 @@ public class AdminController {
         Map<String, Object> returnUsers = JavaBeanUtil.convertBeanToMap(admin);
         returnUsers.remove("password");
         LocalDateTime haslogin = admin.getUpdated();
-        returnData.put("token", JWTUtil.sign(admin.getUname(), admin.getId(), "88888", "123456789"));
+        returnData.put("token", JWTUtil.sign(admin.getUname(), admin.getId(), 1, "123456789"));
         returnData.put("ipAddress", JWTUtil.getIpAddress(req));
         returnData.put("loginTime", haslogin);
         returnData.put("hasLoginTime", DateUtil.deffTime(haslogin, LocalDateTime.now()));

@@ -90,26 +90,22 @@ public class ApiController {
         return returnResult;
     }
     @RequestMapping(value = "addFriend", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult addFriend(HttpServletRequest req, HttpServletResponse rsp) {
+    public ApiResult addFriend(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
         List<Map<String, Object>> returnFriendsList = new LinkedList<>();
         List<Map<String, Object>> userDepartList = new LinkedList<>();
         List<Map<String, Object>> friendsList = new LinkedList<>();
-        IMUser myinfo = controllerUtil.checkToken(req);
-        if (myinfo == null) {
-            returnResult.setCode(ApiResult.ERROR);
-            returnResult.setData(returnData);
-            returnResult.setMessage("token验证失败!");
-            return returnResult;
+        if (user == null) {
+         return ApiResult.AuthError();
         }
         int friduid = controllerUtil.getIntParameter(req, "friuid", 0);
-        IMUserFriends imUserFriends = iimUserFriendsService.getOne(new QueryWrapper<IMUserFriends>().eq("uid", friduid).eq("friuid", myinfo.getId()));
+        IMUserFriends imUserFriends = iimUserFriendsService.getOne(new QueryWrapper<IMUserFriends>().eq("uid", friduid).eq("friuid", user.getId()));
         if (imUserFriends == null || imUserFriends.getId() <= 0) {
             IMUserFriends addFriend = new IMUserFriends();
             addFriend.setUid(friduid);
-            addFriend.setFriuid(myinfo.getId());
-            addFriend.setFriName(myinfo.getNickname());
+            addFriend.setFriuid(user.getId());
+            addFriend.setFriName(user.getNickname());
             addFriend.setGroupId(1);
             addFriend.setMessage("已通过好友请求!");
             addFriend.setStatus(22);
@@ -149,24 +145,14 @@ public class ApiController {
 
 
     @RequestMapping(value = "agreeFriend", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult agreeFriend(HttpServletRequest req, HttpServletResponse rsp) {
-
+    public ApiResult agreeFriend(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
         ApiResult returnResult = new ApiResult();
-        Map<String, Object> returnData = new HashMap<>();
-        List<Map<String, Object>> returnFriendsList = new LinkedList<>();
-        List<Map<String, Object>> userDepartList = new LinkedList<>();
-        List<Map<String, Object>> friendsList = new LinkedList<>();
-        IMUser myinfo = controllerUtil.checkToken(req);
-        if (myinfo == null) {
-            returnResult.setCode(ApiResult.ERROR);
-            returnResult.setData(returnData);
-            returnResult.setMessage("token验证失败!");
-            return returnResult;
+        if (user == null) {
+          return ApiResult.AuthError();
         }
-
         int friduid = controllerUtil.getIntParameter(req, "friuid", 0);
 
-        IMUserFriends imUserFriends = iimUserFriendsService.getOne(new QueryWrapper<IMUserFriends>().eq("uid", myinfo.getId()).eq("friuid", friduid));
+        IMUserFriends imUserFriends = iimUserFriendsService.getOne(new QueryWrapper<IMUserFriends>().eq("uid", user.getId()).eq("friuid", friduid));
         if (imUserFriends == null || imUserFriends.getId() <= 0) {
             returnResult.setCode(201);
             returnResult.setData(null);
@@ -189,8 +175,8 @@ public class ApiController {
                 //给对方加上自已的好友记录
                 IMUserFriends addFriend = new IMUserFriends();
                 addFriend.setUid(friduid);
-                addFriend.setFriuid(myinfo.getId());
-                addFriend.setFriName(myinfo.getNickname());
+                addFriend.setFriuid(user.getId());
+                addFriend.setFriName(user.getNickname());
                 addFriend.setGroupId(1);
                 addFriend.setMessage("已通过好友请求!");
                 addFriend.setStatus(1);
@@ -202,29 +188,23 @@ public class ApiController {
                 returnResult.setData(null);
                 returnResult.setMessage("请求成功!");
                 return returnResult;
-
             }
         }
     }
 
     @RequestMapping(value = "getFriends", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult getFriends(HttpServletRequest req, HttpServletResponse rsp) {
+    public ApiResult getFriends(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
 
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
-        List<Map<String, Object>> returnFriendsList = new LinkedList<>();
-        List<Map<String, Object>> userDepartList = new LinkedList<>();
+        List<Map<String, Object>> returnFriendsList;
+        List<Map<String, Object>> userDepartList;
         List<Map<String, Object>> friendsList = new LinkedList<>();
-        IMUser myinfo = controllerUtil.checkToken(req);
-        if (myinfo == null) {
-            returnResult.setCode(ApiResult.ERROR);
-            returnResult.setData(returnData);
-            returnResult.setMessage("token验证失败!");
-            return returnResult;
+        if (user == null) {
+          return ApiResult.AuthError();
         }
-
-        returnFriendsList = iimUserFriendsService.getMyFriends(myinfo.getId());
-        userDepartList = iimDepartService.getMyAllDepart(myinfo.getId());
+        returnFriendsList = iimUserFriendsService.getMyFriends(user.getId());
+        userDepartList = iimDepartService.getMyAllDepart(user.getId());
         for (Map<String, Object> userMap : returnFriendsList) {
             for (Map<String, Object> departMap : userDepartList) {
                 if (userMap.get("departmentId").toString().equals(departMap.get("departId").toString())) {
@@ -233,10 +213,8 @@ public class ApiController {
                 }
             }
         }
-
         returnData.put("friendlist", friendsList);
         returnData.put("grouplist", userDepartList);
-
         returnResult.setCode(ApiResult.SUCCESS);
         returnResult.setData(returnData);
         returnResult.setMessage("查询成功!");
@@ -245,21 +223,14 @@ public class ApiController {
 
 
     @RequestMapping(value = "getNewFriends", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult getNewFriends(HttpServletRequest req, HttpServletResponse rsp) {
+    public ApiResult getNewFriends(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
 
         ApiResult returnResult = new ApiResult();
-        Map<String, Object> returnData = new HashMap<>();
-        List<Map<String, Object>> returnFriendsList = new LinkedList<>();
-
-        IMUser myinfo = controllerUtil.checkToken(req);
-        if (myinfo == null) {
-            returnResult.setCode(ApiResult.ERROR);
-            returnResult.setData(returnData);
-            returnResult.setMessage("token验证失败!");
-            return returnResult;
+        List<Map<String, Object>> returnFriendsList;
+        if (user == null) {
+          return  ApiResult.AuthError();
         }
-
-        returnFriendsList = iimUserFriendsService.getMyNewFriends(myinfo.getId());
+        returnFriendsList = iimUserFriendsService.getMyNewFriends(user.getId());
         returnResult.setCode(ApiResult.SUCCESS);
         returnResult.setData(returnFriendsList);
         returnResult.setMessage("查询成功!");
@@ -267,19 +238,12 @@ public class ApiController {
     }
 
     @RequestMapping(value = "getGroupMembers", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult getGroupMembers(HttpServletRequest req, HttpServletResponse rsp) {
-
+    public ApiResult getGroupMembers(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
-
-        IMUser myinfo = controllerUtil.checkToken(req);
-        if (myinfo == null) {
-            returnResult.setCode(ApiResult.ERROR);
-            returnResult.setData(returnData);
-            returnResult.setMessage("token验证失败!");
-            return returnResult;
+        if (user == null) {
+         return  ApiResult.AuthError();
         }
-
         int groupId = controllerUtil.getIntParameter(req, "groupid", 0);
         List<Map<String, Object>> groupmemberlist = iimGroupMemberService.getGroupMemberInfoById(groupId);
         returnData.put("memberlist", groupmemberlist);
@@ -292,23 +256,18 @@ public class ApiController {
 
 
     @RequestMapping(value = "getGroupList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult getGroupList(HttpServletRequest req, HttpServletResponse rsp) {
+    public ApiResult getGroupList(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
 
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
         List<Map<String, Object>> returnGrouplist = new LinkedList<>();
-        IMUser myinfo = controllerUtil.checkToken(req);
-
-        if (myinfo == null) {
-            returnResult.setCode(ApiResult.ERROR);
-            returnResult.setData(returnData);
-            returnResult.setMessage("token验证失败!");
-            return returnResult;
+        if (user == null) {
+           return  ApiResult.AuthError();
         }
 
 
         //群信息列表。
-        List<Map<String, Object>> grouplist = iimGroupService.getMyGroupList(myinfo.getId());
+        List<Map<String, Object>> grouplist = iimGroupService.getMyGroupList(user.getId());
         List<String> ids = new LinkedList<>();
         for (Map<String, Object> gmap : grouplist) {
             if (Integer.parseInt(gmap.get("type").toString()) < 3) {
@@ -342,22 +301,13 @@ public class ApiController {
 
 
     @RequestMapping(value = "getGroupInfo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult getGroupInfo(HttpServletRequest req, HttpServletResponse rsp) {
-
+    public ApiResult getGroupInfo(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
         List<Map<String, Object>> returnGrouplist = new LinkedList<>();
-        IMUser myinfo = controllerUtil.checkToken(req);
-
-
-        if (myinfo == null) {
-            returnResult.setCode(ApiResult.ERROR);
-            returnResult.setData(returnData);
-            returnResult.setMessage("token验证失败!");
-            return returnResult;
+        if (user == null) {
+           return  ApiResult.AuthError();
         }
-
-
         String groupIds = controllerUtil.getStringParameter(req, "groupIds", "");
 
         //群信息列表。
@@ -387,20 +337,11 @@ public class ApiController {
 
 
     @RequestMapping(value = "getChatRoomList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult getChatRoomList(HttpServletRequest req, HttpServletResponse rsp) {
-
+    public ApiResult getChatRoomList(@CurrentUser IMUser user) {
         ApiResult returnResult = new ApiResult();
-        Map<String, Object> returnData = new HashMap<>();
-        Map<String, Double> geodata = new HashMap<>();
-        IMUser myinfo = controllerUtil.checkToken(req);
-        if (myinfo == null) {
-            returnResult.setCode(ApiResult.ERROR);
-            returnResult.setData(returnData);
-            returnResult.setMessage("token验证失败!");
-            return returnResult;
+        if (user == null||user.getId()==null) {
+          return  ApiResult.AuthError();
         }
-
-
         Map<String, Object> groups = iimGroupService.getMap(new QueryWrapper<IMGroup>().eq("type", 3).eq("status", 0));
         returnResult.setCode(ApiResult.SUCCESS);
         returnResult.setData(groups);
@@ -411,18 +352,10 @@ public class ApiController {
 
     @RequestMapping(value = "getNearByUser", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public ApiResult getNearByUser(HttpServletRequest req, HttpServletResponse rsp) {
-
         ApiResult returnResult = new ApiResult();
-        Map<String, Object> returnData = new HashMap<>();
-        Map<String, Double> geodata = new HashMap<>();
-
-
         IMUser myinfo = controllerUtil.checkToken(req);
         if (myinfo == null) {
-            returnResult.setCode(ApiResult.ERROR);
-            returnResult.setData(returnData);
-            returnResult.setMessage("token验证失败!");
-            return returnResult;
+            return  ApiResult.AuthError();
         }
 
         int page = controllerUtil.getIntParameter(req, "page", 1);
@@ -609,7 +542,7 @@ public class ApiController {
         returnUsers.put("peerId", users.getId());
         returnUsers.remove("password");
 
-        returnData.put("token", JWTUtil.sign(users.getUsername(), users.getId(), users.getAppId(), users.getSalt()));
+        returnData.put("token", JWTUtil.sign(users.getUsername(), users.getId(), 2, users.getSalt()));
         returnData.put("userinfo", returnUsers);
         returnData.put("serverinfo", serverinfo);
         returnData.put("bqmmplugin", bmqq_plugin);
@@ -625,10 +558,7 @@ public class ApiController {
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
         if (user == null) {
-            returnResult.setCode(ApiResult.ERROR);
-            returnResult.setData(returnData);
-            returnResult.setMessage("token验证失败!");
-            return returnResult;
+           return  ApiResult.AuthError();
         }
         String friuid = req.getParameter("friuids");
         List<Map<String, Object>> userslist = iimUserService.getUsersInfo(friuid);

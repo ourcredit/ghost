@@ -23,9 +23,11 @@ import tools.JWTUtil;
 public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentResolver {
     @Autowired
     IIMAdminService _adminService;
+    @Autowired
+    IIMUserService _userService;
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().isAssignableFrom(IMAdmin.class)
+        return ( parameter.getParameterType().isAssignableFrom(IMAdmin.class)||parameter.getParameterType().isAssignableFrom(IMUser.class))
                 && parameter.hasParameterAnnotation(CurrentUser.class);
     }
     @Override
@@ -35,10 +37,19 @@ public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentR
                                   WebDataBinderFactory binderFactory) throws Exception {
        String token= webRequest.getHeader("Authorization");
         Integer userId= JWTUtil.getUserId(token);
-        IMAdmin user = _adminService.getOne(new QueryWrapper<IMAdmin>().eq("id", userId));
-        if (user == null) {
-            throw new Exception("获取用户信息失败");
+        Integer type= JWTUtil.getType(token);
+        if(type==1){
+            IMAdmin user = _adminService.getOne(new QueryWrapper<IMAdmin>().eq("id", userId));
+            if (user == null) {
+                throw new Exception("获取用户信息失败");
+            }
+            return user;
+        }else {
+            IMUser user = _userService.getOne(new QueryWrapper<IMUser>().eq("id", userId));
+            if (user == null) {
+                throw new Exception("获取用户信息失败");
+            }
+            return user;
         }
-        return user;
     }
 }

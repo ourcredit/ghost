@@ -2,6 +2,8 @@ package com.monkey.app.entity;
 
 import lombok.Data;
 
+import java.util.HashMap;
+
 @Data
 public class ApiResult {
 	    public static final int SUCCESS = 200;
@@ -43,6 +45,13 @@ public class ApiResult {
 		}
 
 	    
-	    
+	    public static ApiResult AuthError(){
+			ApiResult ar=new ApiResult();
+			ar.setCode(ApiResult.ERROR);
+			ar.setData( new HashMap<String,Object>());
+			ar.setMessage("token验证失败!");
+			return ar;
+		}
+
 	    
 }

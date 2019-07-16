@@ -18,13 +18,13 @@ public class JWTUtil {
      * @param secret 用户的密码
      * @return 是否正确
      */
-    public static boolean verify(String token, String username,Integer userId,String appId, String secret) {
+    public static boolean verify(String token, String username,Integer userId,Integer type, String secret) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             JWTVerifier verifier = JWT.require(algorithm)
                     .withClaim("username", username)
                     .withClaim("userId", userId)
-                    .withClaim("appId", appId)
+                    .withClaim("type", type)
                     .build();
              verifier.verify(token);
             return true;
@@ -36,10 +36,10 @@ public class JWTUtil {
      * 获得token中的信息无需secret解密也能获得
      * @return token中包含的用户名
      */
-    public static String getAppId(String token) {
+    public static Integer getType(String token) {
         try {
             DecodedJWT jwt = JWT.decode(token);
-            return jwt.getClaim("appId").asString();
+            return jwt.getClaim("type").asInt();
         } catch (JWTDecodeException e) {
             return null;
         }
@@ -106,11 +106,11 @@ public class JWTUtil {
      * 生成签名,5min后过期
      * @param username 用户名
      * @param userId 用户id
-     * @param appId 租户名
+     * @param type token类型 1 管理员 2 用户
      * @param secret 用户的密码
      * @return 加密的token
      */
-    public static String sign(String username,Integer userId,String appId, String secret) {
+    public static String sign(String username,Integer userId,Integer type, String secret) {
         try {
             Date date = new Date(System.currentTimeMillis()+EXPIRE_TIME);
             Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -118,7 +118,7 @@ public class JWTUtil {
             return JWT.create()
                     .withClaim("username", username)
                     .withClaim("userId", userId)
-                    .withClaim("appId", appId)
+                    .withClaim("type", type)
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (UnsupportedEncodingException e) {
