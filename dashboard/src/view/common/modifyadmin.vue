@@ -3,7 +3,7 @@
     <Modal title="编辑用户" :value="value" @on-ok="save" @on-visible-change="visibleChange">
       <Form ref="adminForm" label-position="top" :rules="adminRule" :model="admin">
         <FormItem label="用户名" prop="uname">
-          <Input v-model="admin.uname"  />
+          <Input v-model="admin.uname" />
         </FormItem>
         <FormItem v-if="!admin.id" label="密码" prop="pwd">
           <Input type="password" v-model="admin.pwd" />
@@ -57,14 +57,20 @@
     },
     methods: {
       save() {
-        let _=this;
+        let _ = this;
         this.$refs.adminForm.validate(valid => {
           if (valid) {
-             let admin= Object.assign({}, _.admin);
-            this.$store.dispatch("admin_updateAdmin",admin);
-            this.$refs.adminForm.resetFields();
-            this.$emit("save-success");
-             this.$emit("input", false);
+            let admin = Object.assign({}, _.admin);
+            this.$store.dispatch("admin_updateAdmin", admin).then(r => {
+              this.$refs.adminForm.resetFields();
+              this.$emit("save-success");
+              this.$emit("input", false);
+            }).catch(e=>{
+               this.$refs.adminForm.resetFields();
+              this.$emit("save-success");
+              this.$emit("input", false);
+            });
+
           }
         })
       },

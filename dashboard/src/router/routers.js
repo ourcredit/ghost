@@ -1,6 +1,4 @@
 import Main from '@/components/main'
-import parentView from '@/components/parent-view'
-
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
  * meta: {
@@ -39,6 +37,7 @@ export default [{
       path: '/home',
       name: 'home',
       meta: {
+        access:["index"],
         hideInMenu: false,
         title: '首页',
         notCache: true,
@@ -51,6 +50,7 @@ export default [{
     path: '/user',
     name: 'user',
     meta: {
+      access:["user"],
       hideInBread: true
     },
     component: Main,

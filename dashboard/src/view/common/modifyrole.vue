@@ -49,7 +49,7 @@
         }
       }
     },
-    
+
     computed: {
       role() {
         return this.$store.state.role.role;
@@ -68,12 +68,14 @@
           if (valid) {
             console.log(_.role);
             let role = Object.assign({}, _.role);
-            role.permissionIds=role.hasPermissions;
-            role.hasPermissions=[];
+            role.permissionIds = role.hasPermissions;
+           delete role.hasPermissions;
+           delete role.allPermissions;
             this.$refs.roleForm.resetFields();
-            this.$store.dispatch("role_updateRole", role);
-            this.$emit("save-success");
-            this.$emit("input", false);
+            this.$store.dispatch("role_updateRole", role).then(r => {
+              this.$emit("save-success");
+              this.$emit("input", false);
+            });
           }
         })
       },

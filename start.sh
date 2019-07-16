@@ -64,10 +64,16 @@ function full() {
     start gateway-0.0.1.jar
     start app-provider-0.0.1.jar
     start app-customer-0.0.1.jar
-    #start account-provider-0.0.1.jar
-    #start account-customer-0.0.1.jar
+    start account-provider-0.0.1.jar
+    start account-customer-0.0.1.jar
 }
-
+function killall() {
+    stop gateway-0.0.1.jar
+    stop app-provider-0.0.1.jar
+    stop app-customer-0.0.1.jar
+    stop account-provider-0.0.1.jar
+    stop account-customer-0.0.1.jar
+}
 function cpfile() {
    # rm -rf /repository/build/*.jar
     mv /repository/build/application/account-customer/target/account-customer-0.0.1.jar  /repository/build/
@@ -76,15 +82,18 @@ function cpfile() {
     mv /repository/build/control/gateway/target/gateway-0.0.1.jar  /repository/build/
     mv /repository/build/core/account-provider/target/account-provider-0.0.1.jar  /repository/build/
     mv /repository/build/core/app-provider/target/app-provider-0.0.1.jar  /repository/build/
-   
+
 }
-cpfile 
+cpfile
 case $1 in
 	full)
-		full 
+		full
+		;;
+   kill)
+		killall
 		;;
 	*)
 		echo "Usage: "
-		echo "  ./start.sh (full|other)"
+		echo "  ./start.sh (full|kill|other)"
 		;;
 esac

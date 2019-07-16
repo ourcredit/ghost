@@ -121,7 +121,6 @@
       }
     },
     mounted() {
-        this.searchSome();
     },
   }
 

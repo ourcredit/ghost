@@ -250,8 +250,9 @@ public class AdminController {
             if (b) {
                 List<IMRolePermission> list = new ArrayList<>();
                 for (String i : roleInput.getPermissionIds()) {
-                  PermissionDto pd=  CollectionHelper.find(PermissionConstant.permissions, permissionDto -> permissionDto.getPermission()==i);
-                    list.add(new IMRolePermission(role.getId(), i,pd.getShouName()));
+
+                  PermissionDto pd=  CollectionHelper.find(PermissionConstant.permissions, permissionDto -> permissionDto.getPermission().equals(i));
+                    list.add(new IMRolePermission(role.getId(), i,pd!=null?pd.getShouName():""));
                 }
                 _rolePermissionService.saveBatch(list);
             }
@@ -274,9 +275,14 @@ public class AdminController {
     }
 
     /*修改密码*/
-    @RequestMapping(value = "/password", method = RequestMethod.POST)
-    public Result<Boolean> password(@PathVariable Integer roleId) throws Exception {
-        Boolean b = _roleService.removeById(roleId);
-        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, b);
+    @RequestMapping(value = "/password/{adminId}/{old}/{new}", method = RequestMethod.POST)
+    public Result<Object> password(@PathVariable Integer adminId, @PathVariable String old,@PathVariable String ne) throws Exception {
+        IMAdmin admin = _adminService.getById(adminId);
+        if(admin==null)return  Result.NotFound();
+         old = DigestUtils.md5Hex(old).toLowerCase();
+       if(!admin.getPwd().equals(old))return  Result.Success("原密码错误",false);
+        admin.setPwd(DigestUtils.md5Hex(ne).toLowerCase());
+        _adminService.updateById(admin);
+        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, true);
     }
 }
