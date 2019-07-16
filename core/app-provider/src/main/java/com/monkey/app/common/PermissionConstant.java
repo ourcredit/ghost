@@ -11,6 +11,7 @@ public  class PermissionConstant {
         add(new PermissionDto("user","人员管理"));
         add(new PermissionDto("role","角色管理"));
         add(new PermissionDto("system","系统管理"));
+        add(new PermissionDto("test","www"));
         add(new PermissionDto("统计","统计"));
     }};
 }
