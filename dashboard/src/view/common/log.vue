@@ -4,22 +4,18 @@
       <Form slot="filter" ref="queryForm" :label-width="65" label-position="left" inline>
         <Row :gutter="4">
           <Col span="21">
-          <FormItem label="用户名:">
+          <FormItem label="关键词:">
             <Input clearable v-model="filter.uname" placeholder="搜索关键词" />
           </FormItem>
           </Col>
           <Col span="3">
           <Button @click="searchSome" class="search-btn" type="primary">
             <Icon type="search" />&nbsp;&nbsp;搜索</Button>
-          <Button @click="create" class="search-btn" type="primary">
-            <Icon type="search" />&nbsp;&nbsp;创建</Button>
           </Col>
         </Row>
       </Form>
     </div>
-    <AdminTable :filter="filter" ref="tablesAdmin" searchable :type="'admin'" :columns="Ac"></AdminTable>
-    <modify :value="userModify" @close="close" @save-success="searchSome"></modify>
-    <pwd :value="pwdModify" @close="close" @save-success="searchSome"></pwd>
+    <Tables :filter="filter" ref="tablesAdmin" searchable :type="'admin'" :columns="Ac"></Tables>
   </div>
 </template>
 
@@ -28,24 +24,32 @@
   import modify from './modifyadmin.vue'
   import pwd from './pwd.vue'
   export default {
-    name: 'admin',
+    name: 'log',
     data() {
       return {
         filter: {},
-        userModify: false,
-        pwdModify: false,
         Ac: [{
-            title: '用户名',
+            title: '模块',
             key: 'uname',
             sortable: false
           },
           {
-            title: '创建人',
+            title: '方法',
             key: 'createrUser',
             sortable: false
           },
           {
-            title: '创建时间',
+            title: '请求地址',
+            key: 'createrUser',
+            sortable: false
+          },
+            {
+            title: '接口描述',
+            key: 'createrUser',
+            sortable: false
+          },
+          {
+            title: '请求时间',
             key: 'created',
             editable: true
           },
@@ -56,35 +60,6 @@
             align: 'center',
             render: (h, params) => {
               return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.getUser(params.row.id);
-                    }
-                  }
-                }, '编辑'),
-                h('Button', {
-                  props: {
-                    type: 'warning',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                         this.$store.dispatch("admin_user", params.row.id);
-                     this.pwdModify=true;
-                    }
-                  }
-                }, '修改密码'),
                 h('Poptip', {
                   props: {
                     confirm: true,
@@ -114,9 +89,7 @@
       }
     },
     components: {
-      AdminTable: Tables,
-      modify,
-      pwd
+       Tables
     },
     methods: {
       //搜索

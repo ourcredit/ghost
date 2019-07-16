@@ -8,7 +8,7 @@
        <Role />
       </TabPane>
       <TabPane label="日志管理" name="c">
-       cccc
+       <Log/>
       </TabPane>
     </Tabs>
   </div>
@@ -18,6 +18,7 @@
   import Tables from '@/components/tables/normaltable'
   import Role from './role'
   import Admin from './admin'
+  import Log from './log'
   export default {
     name: 'userlist',
     data() {
@@ -26,7 +27,8 @@
     },
     components: {
      Admin,
-     Role
+     Role,
+     Log
     },
     methods: {
     },

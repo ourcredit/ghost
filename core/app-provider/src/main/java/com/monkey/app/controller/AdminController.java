@@ -275,7 +275,7 @@ public class AdminController {
     }
 
     /*修改密码*/
-    @RequestMapping(value = "/password/{adminId}/{old}/{new}", method = RequestMethod.POST)
+    @RequestMapping(value = "/password/{adminId}/{old}/{new}", method = RequestMethod.GET)
     public Result<Object> password(@PathVariable Integer adminId, @PathVariable String old,@PathVariable String ne) throws Exception {
         IMAdmin admin = _adminService.getById(adminId);
         if(admin==null)return  Result.NotFound();

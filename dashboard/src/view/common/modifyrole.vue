@@ -9,7 +9,7 @@
           <Input v-model="role.displayName" />
         </FormItem>
         <FormItem label="权限">
-          <CheckboxGroup v-model="role.hasPermissions">
+          <CheckboxGroup v-model="permissionIds">
             <Checkbox v-for="item in allPermissions" :key="item.permission" :label="item.permission">
               <span>{{item.shouName}}</span>
             </Checkbox>
@@ -40,6 +40,7 @@
     },
     data() {
       return {
+        permissionIds:[],
         roleRule: {
           roleName: [{
             required: true,
@@ -54,12 +55,16 @@
       role() {
         return this.$store.state.role.role;
       },
+      temp(){
+        let t= this.$store.state.role.hasPermissions;
+         t.forEach((item, index) => {
+          this.permissionIds.push(item.permission);
+        })
+        return [];
+      },
       allPermissions() {
         return this.$store.state.role.allPermissions;
       },
-      hasPermissions() {
-        return this.$store.state.role.hasPermissions;
-      }
     },
     methods: {
       save() {
@@ -68,9 +73,9 @@
           if (valid) {
             console.log(_.role);
             let role = Object.assign({}, _.role);
-            role.permissionIds = role.hasPermissions;
-           delete role.hasPermissions;
-           delete role.allPermissions;
+            role.permissionIds =this.permissionIds;
+            delete role.hasPermissions;
+            delete role.allPermissions;
             this.$refs.roleForm.resetFields();
             this.$store.dispatch("role_updateRole", role).then(r => {
               this.$emit("save-success");

@@ -90,6 +90,15 @@ export default {
           reject(err)
         });
       })
+    },
+    role_delrole({commit},id){
+      return new Promise((resolve, reject) => {
+        delrole(id).then(res => {
+          resolve()
+        }).catch(err => {
+          reject(err)
+        });
+      })
     }
   }
 }

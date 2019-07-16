@@ -3,6 +3,7 @@ import {
   updateAdmin,
   deladmin,
   user,
+  password
 } from '@/api/admin'
 export default {
   state: {
@@ -33,13 +34,16 @@ export default {
       state.totalCount = totalCount
     },
   },
-  getters: {
-  },
+  getters: {},
   actions: {
-    admin_index({commit},index){
+    admin_index({
+      commit
+    }, index) {
       commit('setAdminIndex', index);
     },
-    admin_size({commit},size){
+    admin_size({
+      commit
+    }, size) {
       commit('setAdminSize', size);
     },
     // 获取用户列表
@@ -85,6 +89,25 @@ export default {
       return new Promise((resolve, reject) => {
         updateAdmin(ww).then(res => {
           commit('setAdmin', {});
+          resolve()
+        }).catch(err => {
+          reject(err)
+        });
+      })
+    },
+    admin_deladmin({commit},id){
+      console.log("del");
+      return new Promise((resolve, reject) => {
+        deladmin(id).then(res => {
+          resolve()
+        }).catch(err => {
+          reject(err)
+        });
+      })
+    },
+    admin_password({commit},{id,old,ne}){
+      return new Promise((resolve, reject) => {
+        password(id,old,ne).then(res => {
           resolve()
         }).catch(err => {
           reject(err)

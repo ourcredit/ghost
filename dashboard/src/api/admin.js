@@ -47,19 +47,19 @@ export const updateRole = data => {
 }
 export const deladmin = adminId => {
   return axios.request({
-    url: '/app/api/admin/deladmin',
-    method: 'get',
-    params: {
-      adminId
-    }
+    url: '/app/api/admin/deladmin/'+adminId,
+    method: 'get'
   })
 }
 export const delrole = roleId => {
   return axios.request({
-    url: '/app/api/admin/delrole',
-    method: 'get',
-    params: {
-      roleId
-    }
+    url: '/app/api/admin/delrole/'+roleId,
+    method: 'get'
+  })
+}
+export const password = (id,old,ne) => {
+  return axios.request({
+    url: `/app/api/admin/password/${id}/${old}/${ne}`,
+    method: 'get'
   })
 }

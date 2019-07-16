@@ -64,18 +64,27 @@
                     }
                   }
                 }, '编辑'),
-                h('Button', {
+              h('Poptip', {
                   props: {
+                    confirm: true,
+                    title: '你确定要删除吗?',
                     type: 'error',
                     size: 'small'
                   },
-
                   on: {
-                    click: () => {
-                      console.log("2");
+                    'on-ok': () => {
+                      console.log(1);
+                      this.handleDelete(params);
                     }
                   }
-                }, '删除')
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    }
+                  }, '删除')
+                ])
               ]);
             }
           }
@@ -87,6 +96,12 @@
       modify
     },
     methods: {
+       handleDelete(params) {
+        console.log(params);
+         this.$store.dispatch("role_delrole", params.row.id).then(r=>{
+           this.searchSome();
+         });
+      },
       //搜索
       searchSome() {
         this.$refs.tablesRole.initTableData();
