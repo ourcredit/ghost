@@ -443,10 +443,6 @@ public class ApiController {
 
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
-        ServerInfoEntity serverinfo = new ServerInfoEntity();
-        Map<String, Object> bmqq_plugin = new HashMap<>();
-
-        String appId  = controllerUtil.getStringParameter(req,"appId","88888");
         int outid = controllerUtil.getIntParameter(req, "outid", 0);
         String username = controllerUtil.getStringParameter(req, "username", "0");
         String password = controllerUtil.getStringParameter(req, "password", "0");
@@ -462,7 +458,7 @@ public class ApiController {
             return returnResult;
         }
 
-        IMUser users = iimUserService.getOne(new QueryWrapper<IMUser>().eq("appId", appId).eq("username", username));
+        IMUser users = iimUserService.getOne(new QueryWrapper<IMUser>().eq("username", username));
         if (users != null && users.getId() > 0) {
             returnResult.setCode(ApiResult.ERROR);
             returnResult.setData(returnData);
@@ -471,7 +467,6 @@ public class ApiController {
         }
 
         users = new IMUser();
-        users.setAppId(appId);
         users.setAvatar("http://d.lanrentuku.com/down/png/1807/if-family/if_daughter_3231126.png");
         users.setOutId(outid);
         users.setUsername(username);
@@ -502,15 +497,14 @@ public class ApiController {
         return returnResult;
     }
     @RequestMapping(value = "checkLogin", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult checkLogin(HttpServletRequest req, HttpServletResponse rsp) {
+    public ApiResult checkLogin(HttpServletRequest req) {
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
         ServerInfoEntity serverinfo = new ServerInfoEntity();
         Map<String, Object> bmqq_plugin = new HashMap<>();
-        String appid = req.getParameter("appId");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        IMUser users = iimUserService.getOne(new QueryWrapper<IMUser>().eq("appId", appid).eq("username", username));
+        IMUser users = iimUserService.getOne(new QueryWrapper<IMUser>().eq("username", username));
         if (users == null || users.getId() == 0) {
             returnResult.setCode(ApiResult.ERROR);
             returnResult.setData(returnData);
@@ -536,12 +530,9 @@ public class ApiController {
         }
         bmqq_plugin.put("appid", bqmmplugin_appid);
         bmqq_plugin.put("appsecret", bqmmplugin_appsecret);
-
-
         Map<String, Object> returnUsers = JavaBeanUtil.convertBeanToMap(users);
         returnUsers.put("peerId", users.getId());
         returnUsers.remove("password");
-
         returnData.put("token", JWTUtil.sign(users.getUsername(), users.getId(), 2, users.getSalt()));
         returnData.put("userinfo", returnUsers);
         returnData.put("serverinfo", serverinfo);

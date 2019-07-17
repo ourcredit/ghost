@@ -40,15 +40,8 @@ public class OrgCodeInterceptor implements HandlerInterceptor {
             return false;
         }
         OrgCodeHolder.putOrgCode(tenantName);
-        String appId = httpServletRequest.getHeader("appId");
         CurrentTenant current=new CurrentTenant();
-        if(appId.isEmpty()){
-            current.setAppId("88888");
-        }else {
-            current.setAppId(appId);
-        }
         if(oauth!=null&& !oauth.isEmpty()){
-            current.setAppId(JWTUtil.getUserName(oauth));
             current.setUserId(JWTUtil.getUserId(oauth));
             current.setUserName(JWTUtil.getUserName(oauth));
             ApplicationContext.getInstance().setCurrent(current);
