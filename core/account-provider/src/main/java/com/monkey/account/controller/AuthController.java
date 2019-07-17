@@ -34,7 +34,7 @@ public class AuthController {
         if(res==null)return Result.NotFound();
         if(!res.getPassword().equals(input.getPassword()))return new Result<>(-1,"用户名或密码错误",null);
         //  if(res.getIs_active()!=1)return new Result<>(-1,"用户状态被禁用",null);
-        String token=  JWTUtil.sign(res.getUserName(),res.getId(),res.getUserName(), JwtTokenConstant.Secret);
+        String token=  JWTUtil.sign(res.getUserName(),res.getId(),1, JwtTokenConstant.Secret);
         TokenDto t=new TokenDto(res.getId(),token,res.getUserName(),res.getUserName());
         return new Result<>(1, "成功", t);
     }
