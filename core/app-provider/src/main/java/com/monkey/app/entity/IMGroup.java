@@ -43,7 +43,16 @@ public class IMGroup implements Serializable {
      * 创建者用户id
      */
     private Integer creator;
-
+    /**
+     * 创建者用户姓名
+     */
+    @TableField(exist = false)
+    private String creatorName;
+    /**
+     * 创建者用户姓名
+     */
+    @TableField(exist = false)
+    private String record;
     /**
      * 群组类型，1-固定;2-临时群
      */

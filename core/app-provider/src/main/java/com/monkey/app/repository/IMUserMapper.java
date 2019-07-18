@@ -1,7 +1,9 @@
 package com.monkey.app.repository;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.monkey.app.entity.IMUser;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -57,5 +59,5 @@ public interface IMUserMapper extends BaseMapper<IMUser>
 
 
     List<Map<String, Object>> getUsersInfo(String[] array);
-
+    IPage<IMUser> getGroupMembers(@Param("page") Page page, @Param("groupId") Integer groupId);
 }

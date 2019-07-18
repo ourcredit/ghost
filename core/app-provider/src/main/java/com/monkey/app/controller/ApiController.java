@@ -564,16 +564,14 @@ public class ApiController {
         return returnResult;
     }
     @RequestMapping(value = "getSrvInfo", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    public ApiResult getSrvInfo(HttpServletRequest req, HttpServletResponse rsp) {
+    public ApiResult getSrvInfo() {
 
         ApiResult returnResult = new ApiResult();
-        Map<String, Object> returnData = new HashMap<>();
         ServerInfoEntity serverinfo = new ServerInfoEntity();
-
         //*********从redis中获取 负载量小的 聊天服务器************
         //***************************************************
-        Map<Object, Object> serverlistmap = new HashMap<>();
-        String selectServerInfo = "";
+        Map<Object, Object> serverlistmap;
+        String selectServerInfo;
         serverlistmap = redisHelper.hmget("msg_srv_list");
         if (serverlistmap != null && serverlistmap.size() > 0) {
             serverlistmap = javaBeanUtil.sortMapByValue(serverlistmap);
@@ -582,7 +580,6 @@ public class ApiController {
             serverinfo.setServer_ip2(selectServerInfo.split("\\|")[1]);
             serverinfo.setServer_port(Integer.parseInt(selectServerInfo.split("\\|")[2]));
         }
-
         serverinfo.setMsfsPrior(files_msfsprior);
         serverinfo.setMsfsBackup(files_msfspriorbackup);
         returnResult.setCode(ApiResult.SUCCESS);

@@ -1,5 +1,6 @@
 package com.monkey.app.application.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.app.application.IIMUserFriendsService;
@@ -50,5 +51,8 @@ public class IMUserServiceImpl extends ServiceImpl<IMUserMapper, IMUser> impleme
     public List<Map<String, Object>> getUsersInfo(String ids) {
         return baseMapper.getUsersInfo(ids.split("\\,"));
     }
-
+    @Override
+    public IPage<IMUser> getGroupMembers(Page page, Integer groupId) {
+        return baseMapper.getGroupMembers(page,groupId);
+    }
 }

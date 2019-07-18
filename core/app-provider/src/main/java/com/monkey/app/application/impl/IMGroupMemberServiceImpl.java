@@ -1,8 +1,11 @@
 package com.monkey.app.application.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.app.application.IIMGroupMemberService;
 import com.monkey.app.entity.IMGroupMember;
+import com.monkey.app.entity.IMUser;
 import com.monkey.app.repository.IMGroupMemberMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -30,4 +33,7 @@ public class IMGroupMemberServiceImpl extends ServiceImpl<IMGroupMemberMapper, I
     public List<Map<String, Object>> getGroupMemberInfoById(Integer id) {
         return baseMapper.getGroupMemberInfoById(id);
     }
+
+
+
 }

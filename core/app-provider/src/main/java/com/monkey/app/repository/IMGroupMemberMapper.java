@@ -1,7 +1,9 @@
 package com.monkey.app.repository;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.monkey.app.entity.IMGroupMember;
+import com.monkey.app.entity.IMUser;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;

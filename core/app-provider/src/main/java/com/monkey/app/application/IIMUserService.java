@@ -1,5 +1,6 @@
 package com.monkey.app.application;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.monkey.app.entity.IMUser;
@@ -21,5 +22,6 @@ public interface IIMUserService extends IService<IMUser> {
     List<Map<String, Object>> selectUser2();
     Page<IMUser> getAllUserBypage(Page<IMUser> page);
     List<Map<String, Object>> getUsersInfo(String ids);
+    IPage<IMUser> getGroupMembers(Page page,Integer groupId);
 
 }
