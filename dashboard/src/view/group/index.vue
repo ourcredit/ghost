@@ -19,15 +19,14 @@
           </Row>
         </Form>
       </div>
-      <Tables :filter="filter" ref="tablesMain" searchable :type="'contact'" :columns="columns"></Tables>
+      <Tables :filter="filter" ref="tablesMain" searchable :type="'group'" :columns="columns"></Tables>
     </Row>
   </div>
 </template>
-
 <script>
   import Tables from '@/components/tables/normaltable'
   export default {
-    name: 'userlist',
+    name: 'group',
     data() {
       return {
         filter: {},

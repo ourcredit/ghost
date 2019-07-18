@@ -53,6 +53,8 @@ public class IMGroup implements Serializable {
      */
     @TableField(exist = false)
     private String record;
+    @TableField(exist = false)
+    private IMUser createrModel;
     /**
      * 群组类型，1-固定;2-临时群
      */

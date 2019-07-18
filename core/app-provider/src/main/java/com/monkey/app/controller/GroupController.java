@@ -36,44 +36,60 @@ public class GroupController {
     IMGroupMemberServiceImpl _groupMemberService;
     @Autowired
     IMUserServiceImpl _userService;
+
     /*用户列表*/
-    @RequestMapping(value = "/groups", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public Result<IPage<IMGroup>> groups(@RequestBody PageFilterInputDto page) throws Exception {
         Wrapper filter = WrapperUtil.toWrapper(page);
         IPage<IMGroup> res = _groupService.page(WrapperUtil.toPage(page), filter);
-        if(!res.getRecords().isEmpty()){
-            List<Integer> arr=new ArrayList();
-            res.getRecords().forEach(w->arr.add(w.getId()));
-            for (IMGroup g:res.getRecords()
-                 ) {
+        if (!res.getRecords().isEmpty()) {
+            List<Integer> arr = new ArrayList();
+            res.getRecords().forEach(w -> arr.add(w.getId()));
+            for (IMGroup g : res.getRecords()
+                    ) {
 
             }
         }
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
     }
+
+    /*用户列表*/
+    @RequestMapping(value = "/{groupId}", method = RequestMethod.GET)
+    public Result<Object> group(@PathVariable Integer groupId) throws Exception {
+        IMGroup res = _groupService.getById(groupId);
+        if (res == null) return Result.NotFound();
+        IMUser creater = _userService.getOne(new QueryWrapper<IMUser>().eq("id", res.getCreator()));
+        if (creater != null) {
+            res.setCreaterModel(creater);
+        }
+        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
+    }
+
     /*获取群组下用户列表*/
-    @RequestMapping(value = "/groupmember", method = RequestMethod.POST)
+    @RequestMapping(value = "/members", method = RequestMethod.POST)
     public Result<IPage<IMUser>> groupmember(@RequestBody PageFilterInputDto page) throws Exception {
         Wrapper filter = WrapperUtil.toWrapper(page);
-      String groupId=  page.getWhere().get("groupId").toString();
+        String groupId = page.getWhere().get("groupId").toString();
 
-        IPage<IMUser> res = _userService.getGroupMembers(WrapperUtil.toPage(page),  Integer.parseInt(groupId));
+        IPage<IMUser> res = _userService.getGroupMembers(WrapperUtil.toPage(page), Integer.parseInt(groupId));
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
     }
+
     /*获取群组聊天记录*/
-    @RequestMapping(value = "/grouprecord", method = RequestMethod.POST)
+    @RequestMapping(value = "/record", method = RequestMethod.POST)
     public Result<IPage<IMUser>> grouprecord(@RequestBody PageFilterInputDto page) throws Exception {
-        String groupId=  page.getWhere().get("groupId").toString();
-        IPage<IMUser> res = _userService.getGroupMembers(WrapperUtil.toPage(page),  Integer.parseInt(groupId));
+        String groupId = page.getWhere().get("groupId").toString();
+        IPage<IMUser> res = _userService.getGroupMembers(WrapperUtil.toPage(page), Integer.parseInt(groupId));
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
     }
+
     /*删除群组*/
     @RequestMapping(value = "/delgroup/{groupId}", method = RequestMethod.GET)
     public Result<Boolean> delgroup(@PathVariable Integer groupId) throws Exception {
 
         Boolean b = _groupService.removeById(groupId);
-        if(b){
-         _groupMemberService.remove(new QueryWrapper<IMGroupMember>().eq("groupId",groupId));
+        if (b) {
+            _groupMemberService.remove(new QueryWrapper<IMGroupMember>().eq("groupId", groupId));
         }
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, b);
     }
