@@ -29,25 +29,27 @@
     name: 'group',
     data() {
       return {
-        filter: {},
+        filter: {
+          secret: 1
+        },
         columns: [{
-            title: '群记录',
-            key: 'username',
+            title: '群名称',
+            key: 'name',
             sortable: false
           },
           {
             title: '所有者',
-            key: 'nickname',
+            key: 'creatorName',
             editable: false
           },
           {
             title: '最后发言时间',
-            key: 'phone',
+            key: 'lastChated',
             editable: false
           },
           {
             title: '创建时间',
-            key: 'email',
+            key: 'created',
             editable: true
           },
 
@@ -68,7 +70,12 @@
                   },
                   on: {
                     click: () => {
-                      console.log("1");
+                      this.$store.dispatch("group_group", params.row.id).then(r => {
+                        this.$router.push({
+                          name: 'g_detail'
+                        })
+                      })
+
                     }
                   }
                 }, '详情'),
@@ -77,7 +84,7 @@
                     type: 'error',
                     size: 'small'
                   },
-                    style: {
+                  style: {
                     marginRight: '5px'
                   },
                   on: {
@@ -86,18 +93,27 @@
                     }
                   }
                 }, '群记录'),
-                h('Button', {
+                h('Poptip', {
                   props: {
+                    confirm: true,
+                    title: '你确定要删除吗?',
                     type: 'error',
                     size: 'small'
                   },
-                  
                   on: {
-                    click: () => {
-                      console.log("2");
+                    'on-ok': () => {
+                      console.log(1);
+                      this.handleDelete(params);
                     }
                   }
-                }, '删除')
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    }
+                  }, '删除')
+                ])
               ]);
             }
           }
@@ -108,6 +124,12 @@
       Tables
     },
     methods: {
+      handleDelete(params) {
+        console.log(params);
+        this.$store.dispatch("group_delgroup", params.row.id).then(r => {
+          this.searchSome();
+        });
+      },
       //搜索
       searchSome() {
         this.$refs.tablesMain.initTableData();

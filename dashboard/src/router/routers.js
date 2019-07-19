@@ -104,8 +104,8 @@ export default [{
         component: () => import('@/view/user/grouplist')
       },
       {
-        path: '/groupdetail',
-        name: '用户群组记录详情',
+        path: '/u_g_detail',
+        name: 'u_g_detail',
         meta: {
           icon: 'ios-hammer',
           title: '用户群组记录详情',
@@ -181,7 +181,7 @@ export default [{
     },
     children: [{
         path: '/',
-        name: '群组管理',
+        name: 'gm_group',
         meta: {
           icon: '_qq',
           title: '群组管理'
@@ -189,18 +189,18 @@ export default [{
         component: () => import('@/view/group/index')
       },
       {
-        path: '/groupdetail',
-        name: '群组详情',
+        path: '/g_detail',
+        name: 'g_detail',
         meta: {
           icon: '_qq',
           title: '群组详情',
           hideInMenu: true
         },
-        component: () => import('@/view/group/group')
+        component: () => import('@/view/group/detail')
       },
       {
         path: '/detail',
-        name: '群组聊天记录',
+        name: 'grouprecord',
         meta: {
           icon: '_qq',
           title: '群组聊天记录',
@@ -212,14 +212,14 @@ export default [{
   },
   {
     path: '/public',
-    name: 'publicgroup',
+    name: 'pb_group',
     component: Main,
     meta: {
       hideInBread: true
     },
     children: [{
       path: '/',
-      name: '公共频道管理',
+      name: 'pm_group',
       meta: {
         icon: '_qq',
         title: '公共频道管理'
@@ -228,13 +228,13 @@ export default [{
     },
     {
       path: '/publicgroup',
-      name: '公共频道详情',
+      name: 'p_detail',
       meta: {
         icon: '_qq',
         title: '公共频道详情',
         hideInMenu:true
       },
-      component: () => import('@/view/publicgroup/group.vue')
+      component: () => import('@/view/publicgroup/detail.vue')
     },
     {
       path: '/publicdetail',
@@ -244,7 +244,7 @@ export default [{
         title: '公共频道记录',
         hideInMenu:true
       },
-      component: () => import('@/view/publicgroup/detail.vue')
+      component: () => import('@/view/publicgroup/group.vue')
     }]
   },
   {

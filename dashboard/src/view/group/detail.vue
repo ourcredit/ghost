@@ -1,120 +1,147 @@
+<style lang="less">
+  @import './detail.less';
+
+</style>
 <template>
   <div>
+
     <Row :gutter="20">
-      <div salt="search" class="search-con search-con-top">
-        <Form slot="filter" ref="queryForm" :label-width="65" label-position="left" inline>
-          <Row :gutter="4">
-            <Col span="21">
-            <FormItem label="群组名称:">
-              <Input clearable v-model="filter.nickname" placeholder="搜索关键词" />
-            </FormItem>
-            <FormItem label="所有者:">
-              <Input clearable v-model="filter.email" placeholder="搜索关键词" />
-            </FormItem>
-            </Col>
-            <Col span="3">
-            <Button @click="searchSome" class="search-btn" type="primary">
-              <Icon type="search" />&nbsp;&nbsp;搜索</Button>
-            </Col>
+      <Card>
+        <p slot="title">
+          <Icon type="ios-film-outline"></Icon>
+          基本信息:
+        </p>
+        <div class="demo-avatar">
+          <table id="tttt">
+            <tr>
+              <td>群名称</td>
+              <td>{{group.name}}</td>
+              <td>成立时间</td>
+              <td>{{group.created}}</td>
+            </tr>
+            <tr>
+              <td>群人数</td>
+              <td>{{group.userCnt}}</td>
+              <td>群主昵称</td>
+              <td>{{group.createrModel.nickname}}</td>
+            </tr>
+            <tr>
+              <td>用户账号</td>
+              <td>{{group.createrModel.phone}}</td>
+              <td>手机号码</td>
+              <td>{{group.createrModel.phone}}</td>
+            </tr>
+            <tr>
+              <td>电子邮箱</td>
+              <td>{{group.createrModel.email}}</td>
+              <td>注册时间</td>
+              <td>{{group.createrModel.created}}</td>
+            </tr>
+            <tr>
+              <td>群公告</td>
+              <td colspan="3">www</td>
+            </tr>
+          </table>
+        </div>
+      </Card>
+      <Card>
+        <p slot="title">
+          <Icon type="ios-film-outline"></Icon>
+          群成员:
+        </p>
+        <div class="demo-avatar">
+          <tables ref="tables" v-model="list" :columns="columns" />
+          <Row>
+            <Page @on-change="pageIndex" @on-page-size-change="pageSize"  :total="total"
+              :current="currentIndex" :page-size="currentSize" show-total show-sizer show-elevator />
           </Row>
-        </Form>
-      </div>
-      <Tables :filter="filter" ref="tablesMain" searchable :type="'contact'" :columns="columns"></Tables>
+        </div>
+      </Card>
     </Row>
   </div>
 </template>
 
 <script>
-  import Tables from '@/components/tables/normaltable'
+  import Tables from '_c/tables'
+  import '@/components/tables/index.less'
   export default {
     name: 'userlist',
     data() {
       return {
         filter: {},
         columns: [{
-            title: '群记录',
+            title: '用户名',
             key: 'username',
             sortable: false
           },
           {
-            title: '所有者',
+            title: '昵称',
             key: 'nickname',
             editable: false
           },
           {
-            title: '最后发言时间',
-            key: 'phone',
-            editable: false
-          },
-          {
-            title: '创建时间',
+            title: '注册时间',
             key: 'email',
             editable: true
-          },
-
-          {
-            title: '操作',
-            key: 'action',
-            width: 300,
-            align: 'center',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      console.log("1");
-                    }
-                  }
-                }, '详情'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                    style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      console.log("2");
-                    }
-                  }
-                }, '群记录'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  
-                  on: {
-                    click: () => {
-                      console.log("2");
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
           }
-        ],
+        ]
       }
     },
     components: {
       Tables
     },
+    computed: {
+      group() {
+        let group = this.$store.state.group.group;
+        if (!group || !group.id) {
+          this.$router.push({
+            name: 'gm_group'
+          });
+        }
+        return group;
+      },
+      list() {
+        return this.$store.state.group.list;
+      },
+      total() {
+        return this.$store.state.group.totalCount;
+      },
+      currentIndex() {
+        return this.$store.state.group.index;
+      },
+      currentSize() {
+        return this.$store.state.group.size;
+      },
+    },
     methods: {
-      //搜索
-      searchSome() {
-        this.$refs.tablesMain.initTableData();
+      pageIndex(e) {
+        this.$store.dispatch(`${this.type}_index`, e);
+        this.initTableData();
+      },
+      pageSize(e) {
+        this.$store.dispatch(`${this.type}_size`, e);
+        this.initTableData();
+      },
+      initTableData() {
+        this.filter.groupId=this.group.id;
+        let params = {
+          index: this.currentIndex,
+          size: this.currentSize,
+          where: this.filter
+        };
+        console.log(this.type)
+        this.$store.dispatch(`group_member_list`, params);
       }
     },
-    mounted() {},
+    mounted() {
+      let group = this.$store.state.group.group;
+      if (!group || !group.id) {
+        this.$router.push({
+          name: 'gm_group'
+        });
+      }
+      this.initTableData();
+    },
   }
 
 </script>

@@ -1,5 +1,6 @@
 package com.monkey.app.controller;
 
+import ListCom.CollectionHelper;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -44,10 +45,15 @@ public class GroupController {
         IPage<IMGroup> res = _groupService.page(WrapperUtil.toPage(page), filter);
         if (!res.getRecords().isEmpty()) {
             List<Integer> arr = new ArrayList();
-            res.getRecords().forEach(w -> arr.add(w.getId()));
+            res.getRecords().forEach(w -> arr.add(w.getCreator()));
+            List<IMUser> creators=_userService.list(new QueryWrapper<IMUser>().in("",arr));
             for (IMGroup g : res.getRecords()
                     ) {
-
+             IMUser us=   CollectionHelper.find(creators,w->w.getId()==g.getCreator());
+             if(us!=null){
+                 g.setCreatorName(us.getNickname());
+                 g.setCreaterModel(us);
+             }
             }
         }
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
@@ -58,9 +64,9 @@ public class GroupController {
     public Result<Object> group(@PathVariable Integer groupId) throws Exception {
         IMGroup res = _groupService.getById(groupId);
         if (res == null) return Result.NotFound();
-        IMUser creater = _userService.getOne(new QueryWrapper<IMUser>().eq("id", res.getCreator()));
-        if (creater != null) {
-            res.setCreaterModel(creater);
+        IMUser creator = _userService.getOne(new QueryWrapper<IMUser>().eq("id", res.getCreator()));
+        if (creator != null) {
+            res.setCreaterModel(creator);
         }
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
     }
@@ -68,9 +74,7 @@ public class GroupController {
     /*获取群组下用户列表*/
     @RequestMapping(value = "/members", method = RequestMethod.POST)
     public Result<IPage<IMUser>> groupmember(@RequestBody PageFilterInputDto page) throws Exception {
-        Wrapper filter = WrapperUtil.toWrapper(page);
         String groupId = page.getWhere().get("groupId").toString();
-
         IPage<IMUser> res = _userService.getGroupMembers(WrapperUtil.toPage(page), Integer.parseInt(groupId));
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
     }
