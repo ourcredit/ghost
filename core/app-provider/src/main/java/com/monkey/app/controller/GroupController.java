@@ -46,7 +46,7 @@ public class GroupController {
         if (!res.getRecords().isEmpty()) {
             List<Integer> arr = new ArrayList();
             res.getRecords().forEach(w -> arr.add(w.getCreator()));
-            List<IMUser> creators=_userService.list(new QueryWrapper<IMUser>().in("",arr));
+            List<IMUser> creators=_userService.list(new QueryWrapper<IMUser>().in("id",arr));
             for (IMGroup g : res.getRecords()
                     ) {
              IMUser us=   CollectionHelper.find(creators,w->w.getId()==g.getCreator());
