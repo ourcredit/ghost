@@ -48,6 +48,11 @@ public class IMUser extends baseEntity implements Serializable {
     @TableField("country")
     private String  country;
     /**
+     * 城市
+     */
+    @TableField("city")
+    private String  city;
+    /**
      * 用户名
      */
     private String username;
@@ -135,6 +140,17 @@ public class IMUser extends baseEntity implements Serializable {
 
     @TableField("Latitude")
     private Float Latitude;
+    ///手机状态
+    @TableField("phone_state")
+    private String phoneState;
+    //ip地址
+    @TableField("ip_address")
+    private String ipAddress;
+    //app版本
+    @TableField("app_version")
+    private String appVersion;
+
+
 
 
 }

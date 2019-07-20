@@ -1,8 +1,8 @@
-package com.monkey.app.entity.service.impl;
+package com.monkey.app.application.impl;
 
-import com.monkey.app.entity.entity.IMUserExtend;
-import com.monkey.app.entity.mapper.IMUserExtendMapper;
-import com.monkey.app.entity.service.IIMUserExtendService;
+import com.monkey.app.entity.IMUserExtend;
+import com.monkey.app.repository.IMUserExtendMapper;
+import com.monkey.app.application.IIMUserExtendService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

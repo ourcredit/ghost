@@ -13,10 +13,12 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ctrip.framework.apollo.core.utils.StringUtils;
 import com.monkey.app.application.*;
+import com.monkey.app.application.impl.IMUserExtendServiceImpl;
 import com.monkey.app.common.ControllerUtil;
 import com.monkey.app.common.JavaBeanUtil;
 import com.monkey.app.entity.*;
 import com.monkey.app.config.RedisCacheHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import tools.AddressUtil;
 import tools.DateUtil;
 import tools.JWTUtil;
 
@@ -63,6 +66,9 @@ public class ApiController {
     @Resource
     @Qualifier(value = "imUserService")
     private IIMUserService iimUserService;
+
+   @Autowired
+    IMUserExtendServiceImpl extendService;
     @Resource
     @Qualifier(value = "imUserGeoDataService")
     private IIMUserGeoDataService iimUserGeoDataService;
@@ -89,15 +95,16 @@ public class ApiController {
         returnResult.setMessage("helloworld!");
         return returnResult;
     }
+
     @RequestMapping(value = "addFriend", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult addFriend(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
+    public ApiResult addFriend(HttpServletRequest req, HttpServletResponse rsp, @CurrentUser IMUser user) {
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
         List<Map<String, Object>> returnFriendsList = new LinkedList<>();
         List<Map<String, Object>> userDepartList = new LinkedList<>();
         List<Map<String, Object>> friendsList = new LinkedList<>();
         if (user == null) {
-         return ApiResult.AuthError();
+            return ApiResult.AuthError();
         }
         int friduid = controllerUtil.getIntParameter(req, "friuid", 0);
         IMUserFriends imUserFriends = iimUserFriendsService.getOne(new QueryWrapper<IMUserFriends>().eq("uid", friduid).eq("friuid", user.getId()));
@@ -126,7 +133,7 @@ public class ApiController {
                 returnResult.setMessage("已经是好友!");
                 return returnResult;
             } else {
-                if (DateUtil.GetDateSecond(LocalDateTime.now()) - DateUtil.GetDateSecond(imUserFriends.getUpdated())   > 1000 * 60 * 60 * 24) {
+                if (DateUtil.GetDateSecond(LocalDateTime.now()) - DateUtil.GetDateSecond(imUserFriends.getUpdated()) > 1000 * 60 * 60 * 24) {
                     imUserFriends.setMessage("请求加为好友");
                     imUserFriends.setStatus(2);
                     imUserFriends.setUpdated(LocalDateTime.now());
@@ -145,10 +152,10 @@ public class ApiController {
 
 
     @RequestMapping(value = "agreeFriend", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult agreeFriend(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
+    public ApiResult agreeFriend(HttpServletRequest req, HttpServletResponse rsp, @CurrentUser IMUser user) {
         ApiResult returnResult = new ApiResult();
         if (user == null) {
-          return ApiResult.AuthError();
+            return ApiResult.AuthError();
         }
         int friduid = controllerUtil.getIntParameter(req, "friuid", 0);
 
@@ -193,7 +200,7 @@ public class ApiController {
     }
 
     @RequestMapping(value = "getFriends", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult getFriends(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
+    public ApiResult getFriends(HttpServletRequest req, HttpServletResponse rsp, @CurrentUser IMUser user) {
 
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
@@ -201,7 +208,7 @@ public class ApiController {
         List<Map<String, Object>> userDepartList;
         List<Map<String, Object>> friendsList = new LinkedList<>();
         if (user == null) {
-          return ApiResult.AuthError();
+            return ApiResult.AuthError();
         }
         returnFriendsList = iimUserFriendsService.getMyFriends(user.getId());
         userDepartList = iimDepartService.getMyAllDepart(user.getId());
@@ -223,12 +230,12 @@ public class ApiController {
 
 
     @RequestMapping(value = "getNewFriends", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult getNewFriends(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
+    public ApiResult getNewFriends(HttpServletRequest req, HttpServletResponse rsp, @CurrentUser IMUser user) {
 
         ApiResult returnResult = new ApiResult();
         List<Map<String, Object>> returnFriendsList;
         if (user == null) {
-          return  ApiResult.AuthError();
+            return ApiResult.AuthError();
         }
         returnFriendsList = iimUserFriendsService.getMyNewFriends(user.getId());
         returnResult.setCode(ApiResult.SUCCESS);
@@ -238,11 +245,11 @@ public class ApiController {
     }
 
     @RequestMapping(value = "getGroupMembers", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult getGroupMembers(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
+    public ApiResult getGroupMembers(HttpServletRequest req, HttpServletResponse rsp, @CurrentUser IMUser user) {
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
         if (user == null) {
-         return  ApiResult.AuthError();
+            return ApiResult.AuthError();
         }
         int groupId = controllerUtil.getIntParameter(req, "groupid", 0);
         List<Map<String, Object>> groupmemberlist = iimGroupMemberService.getGroupMemberInfoById(groupId);
@@ -256,13 +263,13 @@ public class ApiController {
 
 
     @RequestMapping(value = "getGroupList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult getGroupList(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
+    public ApiResult getGroupList(HttpServletRequest req, HttpServletResponse rsp, @CurrentUser IMUser user) {
 
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
         List<Map<String, Object>> returnGrouplist = new LinkedList<>();
         if (user == null) {
-           return  ApiResult.AuthError();
+            return ApiResult.AuthError();
         }
 
 
@@ -301,12 +308,12 @@ public class ApiController {
 
 
     @RequestMapping(value = "getGroupInfo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult getGroupInfo(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
+    public ApiResult getGroupInfo(HttpServletRequest req, HttpServletResponse rsp, @CurrentUser IMUser user) {
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
         List<Map<String, Object>> returnGrouplist = new LinkedList<>();
         if (user == null) {
-           return  ApiResult.AuthError();
+            return ApiResult.AuthError();
         }
         String groupIds = controllerUtil.getStringParameter(req, "groupIds", "");
 
@@ -339,8 +346,8 @@ public class ApiController {
     @RequestMapping(value = "getChatRoomList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public ApiResult getChatRoomList(@CurrentUser IMUser user) {
         ApiResult returnResult = new ApiResult();
-        if (user == null||user.getId()==null) {
-          return  ApiResult.AuthError();
+        if (user == null || user.getId() == null) {
+            return ApiResult.AuthError();
         }
         Map<String, Object> groups = iimGroupService.getMap(new QueryWrapper<IMGroup>().eq("type", 3).eq("status", 0));
         returnResult.setCode(ApiResult.SUCCESS);
@@ -355,7 +362,7 @@ public class ApiController {
         ApiResult returnResult = new ApiResult();
         IMUser myinfo = controllerUtil.checkToken(req);
         if (myinfo == null) {
-            return  ApiResult.AuthError();
+            return ApiResult.AuthError();
         }
 
         int page = controllerUtil.getIntParameter(req, "page", 1);
@@ -379,7 +386,7 @@ public class ApiController {
 
         //流程:先从数据库查找缓存。看有没有缓存数据，如果有的话，直接读取缓存数据进行查分页查找。没有缓存数据时，用redis geo里面进行搜索
         IMUserGeoData imUserGeoData2 = iimUserGeoDataService.getOne(new QueryWrapper<IMUserGeoData>().eq("uid", myinfo.getId()));
-        if (imUserGeoData2 != null && imUserGeoData2.getId() > 0 &&DateUtil.GetDateSecond(imUserGeoData2.getUpdated() ) > 0 && ((DateUtil.timestamp() - DateUtil.GetDateSecond(imUserGeoData2.getUpdated())) < 60 * 10)) {
+        if (imUserGeoData2 != null && imUserGeoData2.getId() > 0 && DateUtil.GetDateSecond(imUserGeoData2.getUpdated()) > 0 && ((DateUtil.timestamp() - DateUtil.GetDateSecond(imUserGeoData2.getUpdated())) < 60 * 10)) {
             geojson = imUserGeoData2.getData();
             geoBeanList = JSON.parseArray(geojson, GeoBean.class);
         } else {
@@ -448,7 +455,9 @@ public class ApiController {
         String password = controllerUtil.getStringParameter(req, "password", "0");
         String code = controllerUtil.getStringParameter(req, "code", "0");
         String nickname = controllerUtil.getStringParameter(req, "nickname", "");
-        String country = controllerUtil.getStringParameter(req, "country", "");
+        String state = controllerUtil.getStringParameter(req, "phonestate", "");//手机信息
+        String latitude = controllerUtil.getStringParameter(req, "latitude", "0");//经纬度
+        String longitude = controllerUtil.getStringParameter(req, "longitude", "0");//经纬度
         int salt = new Random().nextInt(8888) + 1000;
 
         if (username.length() != 11) {
@@ -478,8 +487,16 @@ public class ApiController {
             nickname = "ghost_" + salt;
         }
         users.setNickname(nickname);
-        if(country.equals("")){
-            country="中国";
+        Map<String, Object> map = AddressUtil.getAddress(longitude, latitude);
+        String country="";
+        String city="";
+        if (map.get("status").toString().equals("0")) {
+            Map<String, Object> temp=(Map<String, Object>) map.get("result");
+            Map<String, Object> temp1=(Map<String, Object>) temp.get("addressComponent");
+            country= temp1.get("country").toString();
+            city=temp1.get("city").toString();
+            users.setCountry(country);
+            users.setCity(city);
         }
         users.setRealname(nickname);
         users.setApiToken(controllerUtil.getRandomString(32));
@@ -488,15 +505,19 @@ public class ApiController {
         users.setSex(1);
         users.setDomain("0");
         users.setPhone(username);
+        users.setLatitude(Float.parseFloat(latitude));
+        users.setLongitude(Float.parseFloat(longitude));
         users.setDepartId(1);
         users.setStatus(0);
+        users.setPhoneState(state);
+        users.setAppVersion("0.0.1");
         iimUserService.save(users);
-
         returnResult.setCode(ApiResult.SUCCESS);
         returnResult.setData(null);
         returnResult.setMessage("注册成功!");
         return returnResult;
     }
+
     @RequestMapping(value = "checkLogin", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public ApiResult checkLogin(HttpServletRequest req) {
         ApiResult returnResult = new ApiResult();
@@ -505,6 +526,9 @@ public class ApiController {
         Map<String, Object> bmqq_plugin = new HashMap<>();
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        String state = controllerUtil.getStringParameter(req, "phonestate", "");//手机信息
+        String latitude = controllerUtil.getStringParameter(req, "latitude", "0");//经纬度
+        String longitude = controllerUtil.getStringParameter(req, "longitude", "0");//经纬度
         IMUser users = iimUserService.getOne(new QueryWrapper<IMUser>().eq("username", username));
         if (users == null || users.getId() == 0) {
             returnResult.setCode(ApiResult.ERROR);
@@ -538,7 +562,34 @@ public class ApiController {
         returnData.put("userinfo", returnUsers);
         returnData.put("serverinfo", serverinfo);
         returnData.put("bqmmplugin", bmqq_plugin);
+
+        String ip = JWTUtil.getIpAddress(req);
+        users.setIpAddress(ip);
+        users.setPhoneState(state);
+        users.setUpdated(LocalDateTime.now());
+        String country="";
+        String city="";
+        if (!latitude.equals("0") && !longitude.equals("0")) {
+            users.setLatitude(Float.parseFloat(latitude));
+            users.setLongitude(Float.parseFloat(longitude));
+
+            Map map=AddressUtil.getAddress(longitude,latitude);
+            if (map.get("status").toString().equals("0")) {
+                Map<String, Object> temp=(Map<String, Object>) map.get("result");
+                Map<String, Object> temp1=(Map<String, Object>) temp.get("addressComponent");
+                country= temp1.get("country").toString();
+                city=temp1.get("city").toString();
+                users.setCountry(country);
+                users.setCity(city);
+            }
+        }
         iimUserService.updateById(users);
+        List<IMUserExtend> arr = new ArrayList<>();
+
+        arr.add(new IMUserExtend(2, users.getId(), users.getUsername(), users.getNickname(), ip, "", LocalDateTime.now()));
+        arr.add(new IMUserExtend(7, users.getId(), ip, country, city, latitude + "," + longitude, LocalDateTime.now()));
+        extendService.saveBatch(arr);
+        //TODO 写入 ip地址 记录表
         returnResult.setCode(ApiResult.SUCCESS);
         returnResult.setData(returnData);
         returnResult.setMessage("登录成功!");
@@ -550,7 +601,7 @@ public class ApiController {
         ApiResult returnResult = new ApiResult();
         Map<String, Object> returnData = new HashMap<>();
         if (user == null) {
-           return  ApiResult.AuthError();
+            return ApiResult.AuthError();
         }
         String friuid = req.getParameter("friuids");
         List<Map<String, Object>> userslist = iimUserService.getUsersInfo(friuid);
@@ -564,6 +615,7 @@ public class ApiController {
         returnResult.setMessage("查询成功!");
         return returnResult;
     }
+
     @RequestMapping(value = "getSrvInfo", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     public ApiResult getSrvInfo() {
 

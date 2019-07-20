@@ -1,6 +1,6 @@
-package com.monkey.app.entity.service;
+package com.monkey.app.application;
 
-import com.monkey.app.entity.entity.IMUserExtend;
+import com.monkey.app.entity.IMUserExtend;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

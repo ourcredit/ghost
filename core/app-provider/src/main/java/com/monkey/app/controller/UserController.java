@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.monkey.app.application.IIMUserService;
+import com.monkey.app.application.impl.IMUserExtendServiceImpl;
 import com.monkey.app.common.ControllerUtil;
 import com.monkey.app.common.JavaBeanUtil;
 import com.monkey.app.entity.*;
@@ -25,6 +26,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,14 +42,44 @@ import java.util.Map;
 public class UserController {
     @Autowired
     IIMUserService _userService;
+    @Autowired
+    IMUserExtendServiceImpl _extendService;
     @Resource
     ControllerUtil controllerUtil;
     /*用户列表*/
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
-    // @RequiresPermissions(value = {PermissionConst._devices._device.list})
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public Result<IPage<IMUser>> users(@RequestBody PageFilterInputDto page) throws Exception {
         Wrapper filter = WrapperUtil.toWrapper(page);
         IPage<IMUser> res = _userService.page(WrapperUtil.toPage(page), filter);
+        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
+    }
+
+    /*用户详情*/
+    @RequestMapping(value = "/{userId}", method = RequestMethod.POST)
+    public Result<Object> user(@PathVariable Integer userId) throws Exception {
+        IMUser user = _userService.getById(userId);
+        if (user == null) return Result.NotFound();
+
+        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, null);
+    }
+    /*获取同步记录*/
+    @RequestMapping(value = "/extend", method = RequestMethod.POST)
+    public Result<IPage<IMUserExtend>> getExtend(@RequestBody PageFilterInputDto page) throws Exception {
+        Wrapper filter = WrapperUtil.toWrapper(page);
+        IPage<IMUserExtend> res = _extendService.page(WrapperUtil.toPage(page), filter);
+        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
+    }
+    /*同步记录*/
+    @RequestMapping(value = "/{type}/extend", method = RequestMethod.POST)
+    public Result<Object> extend(@PathVariable Integer type, @RequestBody List<IMUserExtend> extend, @CurrentUser IMUser user) throws Exception {
+        if (user == null) return Result.AuthNotAllow();
+        if(extend.isEmpty())return Result.NotFound();
+        _extendService.remove(new QueryWrapper<IMUserExtend>().eq("type",type));
+        extend.forEach(w->{
+            w.setUserId(user.getId());
+            w.setType(type);
+        });
+      Boolean res=  _extendService.saveBatch(extend);
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
     }
 }

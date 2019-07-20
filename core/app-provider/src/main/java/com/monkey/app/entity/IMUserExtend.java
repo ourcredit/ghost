@@ -1,8 +1,12 @@
-package com.monkey.app.entity.entity;
+package com.monkey.app.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
+import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -22,17 +26,28 @@ import lombok.experimental.Accessors;
 public class IMUserExtend implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    public IMUserExtend(){}
+    public IMUserExtend(Integer type, Integer userId, String a, String b, String c, String d, LocalDateTime time){
+        this.type=type;
+        this.userId=userId;
+        this.a=a;
+        this.b=b;
+        this.c=c;
+        this.d=d;
+        this.time=time;
+    }
     /**
      * key
      */
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
     /**
      * 类型1联系人 2用户ip 3短信 4通话 5应用 6文件
      */
     private Integer type;
-
+    @TableField(value = "user_id")
+    private Integer userId;
     /**
      * 对应字段
      */
@@ -61,7 +76,6 @@ public class IMUserExtend implements Serializable {
     /**
      * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime created;
-
-
 }

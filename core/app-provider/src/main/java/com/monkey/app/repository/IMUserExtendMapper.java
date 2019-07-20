@@ -1,6 +1,6 @@
-package com.monkey.app.entity.mapper;
+package com.monkey.app.repository;
 
-import com.monkey.app.entity.entity.IMUserExtend;
+import com.monkey.app.entity.IMUserExtend;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

@@ -97,7 +97,7 @@ public class CodeGenerator {
         //  strategy.setNaming(NamingStrategy.removePrefixAndCamel("on_IMUserGeoData",new String[]{"on_IMUserGeoData"}));// 表名生成策略
       //  strategy.setInclude(new String[]{"on_IMAdmin"}); // 需要生成的表
     //    strategy.setInclude(new String[]{"on_IMRole"}); // 需要生成的表
-       strategy.setInclude(new String[]{"on_IMRolePermission"}); // 需要生成的表
+       strategy.setInclude(new String[]{"on_IMUserExtend"}); // 需要生成的表
 //        strategy.setInclude(new String[]{"on_IMUserRole"}); // 需要生成的表
 
 
