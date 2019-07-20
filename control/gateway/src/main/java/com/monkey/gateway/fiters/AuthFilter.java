@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import constant.ApiConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,9 @@ public class AuthFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        return !ctx.getRequest().getRequestURI().contains("login");
+        Boolean a=ctx.getRequest().getRequestURI().contains("login");
+        Boolean b=ctx.getRequest().getRequestURI().contains("v2");
+        return !a&&!b;
     }
 
     @Override

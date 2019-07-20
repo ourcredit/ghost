@@ -29,10 +29,13 @@ public class OrgCodeInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) {
+        if(httpServletRequest.getRequestURI().contains("swagger")){
+            return  true;
+        }
         String tenantName = httpServletRequest.getHeader(orgCodeHeaderName);
         String oauth = httpServletRequest.getHeader(oauthName);
         if (tenantName == null) {
-            LOGGER.error("未获取到租户编码" + orgCodeHeaderName);
+            LOGGER.error("未获取到租户编码-------" + orgCodeHeaderName);
             return false;
         }
         if (!validOrgCodes.contains(tenantName)) {
