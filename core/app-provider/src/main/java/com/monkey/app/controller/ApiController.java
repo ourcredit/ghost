@@ -482,6 +482,7 @@ public class ApiController {
             country="中国";
         }
         users.setRealname(nickname);
+        users.setApiToken(controllerUtil.getRandomString(32));
         users.setCreated(LocalDateTime.now());
         users.setUpdated(LocalDateTime.now());
         users.setSex(1);
