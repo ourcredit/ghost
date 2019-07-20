@@ -4,9 +4,6 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
-import java.util.Date;
-
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
