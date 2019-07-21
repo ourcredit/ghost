@@ -59,7 +59,7 @@ public class UserController {
     public Result<Object> user(@PathVariable Integer userId) throws Exception {
         IMUser user = _userService.getById(userId);
         if (user == null) return Result.NotFound();
-        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, null);
+        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, user);
     }
     /*获取同步记录*/
     @RequestMapping(value = "/extend", method = RequestMethod.POST)

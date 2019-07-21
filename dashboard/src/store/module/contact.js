@@ -59,7 +59,7 @@ import {
         })
       },
       // 获取详情
-      contact_user ({ commit },id) {
+      contact_user({ commit },id) {
         return new Promise((resolve, reject) => {
           user(id).then(res => {
             const data = res.data.data
