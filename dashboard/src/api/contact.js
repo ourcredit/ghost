@@ -6,17 +6,14 @@ export const users = ({ index, size,where }) => {
     where
   }
   return axios.request({
-    url: '/app/api/user/list',
+    url: '/app/api/user',
     data:params,
     method: 'post'
   })
 }
 export const user = (key) => {
   return axios.request({
-    url: '/app/api/user',
-    params: {
-      key
-    },
+    url: '/app/api/user/'+key,
     method: 'get'
   })
 }

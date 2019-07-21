@@ -1,15 +1,7 @@
 import {
     users,
-    user,
-    edit,
-    remove,
-    appUseState,
-    recordInfo,
-    groupInfo,
-    publicGroup,
-    friendInvate
+    user
   } from '@/api/contact'
-  import { setToken, getToken } from '@/libs/util'
   
   export default {
     state: {
@@ -20,10 +12,10 @@ import {
       totalCount:0
     },
     mutations: {
-      setIndex (state, index) {
+      setContactIndex (state, index) {
         state.index = index
       },
-      setSize (state, size) {
+      setContactSize (state, size) {
         state.size = size
       },
       setTotalCount (state, totalCount) {
@@ -32,15 +24,23 @@ import {
       setUserList (state, list) {
         state.list = list
       },
-      setUser (state, user) {
+      setContactUser (state, user) {
         state.user = user
       }
     },
     getters: {
-        userList: state => state.list,
-        user: state => state.user,
     },
     actions: {
+      contact_index({
+        commit
+      }, index) {
+        commit('setContactIndex', index);
+      },
+      contact_size({
+        commit
+      }, size) {
+        commit('setContactSize', size);
+      },
       // 获取用户列表
       contact_list ({ commit }, { index, size,where }) {
         return new Promise((resolve, reject) => {
@@ -52,6 +52,18 @@ import {
           
             commit('setUserList', data.records);
             commit('setTotalCount', data.total);
+            resolve()
+          }).catch(err => {
+            reject(err)
+          })
+        })
+      },
+      // 获取详情
+      contact_user ({ commit },id) {
+        return new Promise((resolve, reject) => {
+          user(id).then(res => {
+            const data = res.data.data
+            commit('setContactUser', data);
             resolve()
           }).catch(err => {
             reject(err)

@@ -100,8 +100,9 @@
                   },
                   on: {
                     click: () => {
-                      console.log(1);
-                      this.$router.push('/user/detail');
+                      this.$store.dispatch("contact_user", params.row.id).then(r => {
+                        this.$router.push('/user/detail');
+                      })
                     }
                   }
                 }, '用户详情'),
@@ -110,7 +111,7 @@
                     type: 'error',
                     size: 'small'
                   },
-                   style: {
+                  style: {
                     marginRight: '5px'
                   },
                   on: {
@@ -124,7 +125,7 @@
                     type: 'error',
                     size: 'small'
                   },
-                   style: {
+                  style: {
                     marginRight: '5px'
                   },
                   on: {
@@ -138,7 +139,7 @@
                     type: 'error',
                     size: 'small'
                   },
-                   style: {
+                  style: {
                     marginRight: '5px'
                   },
                   on: {
@@ -152,7 +153,7 @@
                     type: 'error',
                     size: 'small'
                   },
-                   style: {
+                  style: {
                     marginRight: '5px'
                   },
                   on: {
@@ -166,7 +167,7 @@
                     type: 'error',
                     size: 'small'
                   },
-                   style: {
+                  style: {
                     marginRight: '5px'
                   },
                   on: {

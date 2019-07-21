@@ -55,11 +55,10 @@ public class UserController {
     }
 
     /*用户详情*/
-    @RequestMapping(value = "/{userId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public Result<Object> user(@PathVariable Integer userId) throws Exception {
         IMUser user = _userService.getById(userId);
         if (user == null) return Result.NotFound();
-
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, null);
     }
     /*获取同步记录*/

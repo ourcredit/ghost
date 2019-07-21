@@ -123,7 +123,7 @@
 <script>
   import Tables from '@/components/tables/normaltable'
   export default {
-    name: 'userlist',
+    name: 'contactuser',
     data() {
       return {
       }
