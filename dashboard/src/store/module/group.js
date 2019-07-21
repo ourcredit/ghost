@@ -19,6 +19,9 @@ export default {
     setGroupList(state, list) {
       state.list = list
     },
+    setMemberList(state, list) {
+      state.members = list
+    },
     setGroup(state, group) {
       state.group = group;
     },
@@ -122,7 +125,7 @@ export default {
           where
         }).then(res => {
           const data = res.data.data
-          commit('setGroupList', data.records);
+          commit('setMemberList', data.records);
           commit('setGroupTotalCount', data.total);
           resolve()
         }).catch(err => {

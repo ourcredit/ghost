@@ -39,7 +39,7 @@
 <script>
   import Tables from '@/components/tables/normaltable'
   export default {
-    name: 'userlist',
+    name: 'recordlist',
     data() {
       return {
         filter: {},

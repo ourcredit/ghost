@@ -1,5 +1,9 @@
 import axios from '@/libs/api.request'
-export const users = ({ index, size,where }) => {
+export const users = ({
+  index,
+  size,
+  where
+}) => {
   const params = {
     index,
     size,
@@ -7,13 +11,13 @@ export const users = ({ index, size,where }) => {
   }
   return axios.request({
     url: '/app/api/user',
-    data:params,
+    data: params,
     method: 'post'
   })
 }
 export const user = (key) => {
   return axios.request({
-    url: '/app/api/user/'+key,
+    url: '/app/api/user/' + key,
     method: 'get'
   })
 }
@@ -21,16 +25,22 @@ export const user = (key) => {
 export const edit = (user) => {
   return axios.request({
     url: '/app/api/user/edit',
-    data:user,
+    data: user,
     method: 'post'
   })
 }
-
+export const extend = (data) => {
+  return axios.request({
+    url: '/app/api/user/extend',
+    data,
+    method: 'post'
+  })
+}
 export const remove = (key) => {
   return axios.request({
     url: 'message/count',
-    params:{
-        key
+    params: {
+      key
     },
     method: 'get'
   })

@@ -56,7 +56,7 @@ export default [{
     component: Main,
     children: [{
         path: '',
-        name: '用户管理',
+        name: 'um_user',
         meta: {
           icon: 'ios-hammer',
           title: '用户管理'
@@ -65,7 +65,7 @@ export default [{
       },
       {
         path: 'detail',
-        name: '用户详情',
+        name: 'ud_user',
         meta: {
           icon: 'ios-hammer',
           title: '用户详情',

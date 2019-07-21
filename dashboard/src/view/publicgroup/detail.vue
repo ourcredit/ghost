@@ -19,23 +19,23 @@
               <td>成立时间</td>
               <td>{{group.created}}</td>
             </tr>
-            <tr>
+           <tr>
               <td>群人数</td>
               <td>{{group.userCnt}}</td>
               <td>群主昵称</td>
-              <td>{{group.createrModel.nickname}}</td>
+              <td>{{group.createrModel==null?'':group.createrModel.nickname}}</td>
             </tr>
             <tr>
               <td>用户账号</td>
-              <td>{{group.createrModel.phone}}</td>
+              <td>{{group.createrModel==null?'':group.createrModel.phone}}</td>
               <td>手机号码</td>
-              <td>{{group.createrModel.phone}}</td>
+              <td>{{group.createrModel==null?'':group.createrModel.phone}}</td>
             </tr>
             <tr>
               <td>电子邮箱</td>
-              <td>{{group.createrModel.email}}</td>
+              <td>{{group.createrModel==null?'':group.createrModel.email}}</td>
               <td>注册时间</td>
-              <td>{{group.createrModel.created}}</td>
+              <td>{{group.createrModel==null?'':group.createrModel.created}}</td>
             </tr>
             <tr>
               <td>群公告</td>
@@ -100,7 +100,7 @@
         return group;
       },
       list() {
-        return this.$store.state.group.list;
+        return this.$store.state.group.members;
       },
       total() {
         return this.$store.state.group.totalCount;
