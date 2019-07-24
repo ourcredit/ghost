@@ -72,6 +72,9 @@
       currentSize() {
         return this.$store.state.contact.size;
       },
+      user(){
+        return this.$store.state.contact.user;
+      }
     },
     methods: {
       pageIndex(e) {
@@ -83,6 +86,9 @@
         this.initTableData();
       },
       initTableData() {
+        this.filter=  Object.assign({
+          user_id: this.user.id
+        }, this.filter);
         let params = {
           index: this.currentIndex,
           size: this.currentSize,

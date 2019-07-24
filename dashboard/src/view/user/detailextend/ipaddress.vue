@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <Row :gutter="20">
@@ -10,8 +9,8 @@
         <div class="demo-avatar">
           <tables ref="tables" v-model="list" :columns="columns" />
           <Row>
-            <Page @on-change="pageIndex" @on-page-size-change="pageSize"  :total="total"
-              :current="currentIndex" :page-size="currentSize" show-total show-sizer show-elevator />
+            <Page @on-change="pageIndex" @on-page-size-change="pageSize" :total="total" :current="currentIndex"
+              :page-size="currentSize" show-total show-sizer show-elevator />
           </Row>
         </div>
       </Card>
@@ -23,7 +22,7 @@
   import Tables from '_c/tables'
   export default {
     name: 'contactuser',
-      props: {
+    props: {
       type: {
         type: String,
         default () {
@@ -33,7 +32,9 @@
     },
     data() {
       return {
-        filter: {type:2 },
+        filter: {
+          type: 2
+        },
         columns: [{
             title: '用户名',
             key: 'a',
@@ -48,7 +49,7 @@
             title: 'ip',
             key: 'c',
             sortable: false
-          },{
+          }, {
             title: '登陆时间',
             key: 'time',
             sortable: false
@@ -72,6 +73,9 @@
       currentSize() {
         return this.$store.state.contact.size;
       },
+      user() {
+        return this.$store.state.contact.user;
+      }
     },
     methods: {
       pageIndex(e) {
@@ -83,6 +87,9 @@
         this.initTableData();
       },
       initTableData() {
+      this.filter=  Object.assign({
+          user_id: this.user.id
+        }, this.filter);
         let params = {
           index: this.currentIndex,
           size: this.currentSize,
