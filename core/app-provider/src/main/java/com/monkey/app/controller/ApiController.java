@@ -358,13 +358,11 @@ public class ApiController {
 
 
     @RequestMapping(value = "getNearByUser", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ApiResult getNearByUser(HttpServletRequest req, HttpServletResponse rsp) {
+    public ApiResult getNearByUser(HttpServletRequest req, HttpServletResponse rsp,@CurrentUser IMUser user) {
         ApiResult returnResult = new ApiResult();
-        IMUser myinfo = controllerUtil.checkToken(req);
-        if (myinfo == null) {
+        if (user == null) {
             return ApiResult.AuthError();
         }
-
         int page = controllerUtil.getIntParameter(req, "page", 1);
         int pagesize = controllerUtil.getIntParameter(req, "pagesize", 20);
         double lng = controllerUtil.getDoubleParameter(req, "lng", 0);
@@ -379,13 +377,13 @@ public class ApiController {
         redisHelper.cacheGeo("hunan22", 113.37322, 23.126153, "3", 13600 * 1000);
         redisHelper.cacheGeo("hunan22", 113.37322, 23.126153, "4", 13600 * 1000);
 
-        redisHelper.cacheGeo("hunan22", lng, lat, myinfo.getId().toString(), 13600 * 10000);
+        redisHelper.cacheGeo("hunan22", lng, lat, user.getId().toString(), 13600 * 10000);
 
         String geojson = "";
 
 
         //流程:先从数据库查找缓存。看有没有缓存数据，如果有的话，直接读取缓存数据进行查分页查找。没有缓存数据时，用redis geo里面进行搜索
-        IMUserGeoData imUserGeoData2 = iimUserGeoDataService.getOne(new QueryWrapper<IMUserGeoData>().eq("uid", myinfo.getId()));
+        IMUserGeoData imUserGeoData2 = iimUserGeoDataService.getOne(new QueryWrapper<IMUserGeoData>().eq("uid", user.getId()));
         if (imUserGeoData2 != null && imUserGeoData2.getId() > 0 && DateUtil.GetDateSecond(imUserGeoData2.getUpdated()) > 0 && ((DateUtil.timestamp() - DateUtil.GetDateSecond(imUserGeoData2.getUpdated())) < 60 * 10)) {
             geojson = imUserGeoData2.getData();
             geoBeanList = JSON.parseArray(geojson, GeoBean.class);
@@ -405,7 +403,7 @@ public class ApiController {
         if (imUserGeoData2 == null || imUserGeoData2.getUid() <= 0) {
             IMUserGeoData imUserGeoData = new IMUserGeoData();
             imUserGeoData.setId(null);
-            imUserGeoData.setUid(myinfo.getId());
+            imUserGeoData.setUid(user.getId());
             imUserGeoData.setData(geojson);
             imUserGeoData.setStatus(1);
             imUserGeoData.setLat(lat);
@@ -418,7 +416,7 @@ public class ApiController {
         pageGeoList = javaBeanUtil.sublist(geoBeanList, page, pagesize);
         List<String> userids = new LinkedList<>();
         for (GeoBean geoBean : pageGeoList) {
-            if (!geoBean.getKey().equals(myinfo.getId())) {//把自已排除
+            if (!geoBean.getKey().equals(user.getId())) {//把自已排除
                 userids.add(geoBean.getKey());
             }
         }
@@ -438,13 +436,11 @@ public class ApiController {
                 }
             }
         }
-
         returnResult.setCode(ApiResult.SUCCESS);
         returnResult.setData(returndatalist);
         returnResult.setMessage("查询成功!");
         return returnResult;
     }
-
     @RequestMapping(value = "reg", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public ApiResult reg(HttpServletRequest req, HttpServletResponse rsp) {
 
