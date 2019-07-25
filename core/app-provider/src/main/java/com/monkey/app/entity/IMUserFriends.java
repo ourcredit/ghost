@@ -47,7 +47,8 @@ public class IMUserFriends implements Serializable {
     private String message;
 
     private Integer status;
-
+    @TableField(exist = false)
+    private String lastedMessage;
     private Integer role;
 
     private Integer lv;

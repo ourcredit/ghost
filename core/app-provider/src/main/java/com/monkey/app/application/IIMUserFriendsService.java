@@ -19,5 +19,5 @@ public interface IIMUserFriendsService extends IService<IMUserFriends> {
 
     List<Map<String, Object>> getMyNewFriends(Integer id);
     List<Map<String, Object>> getMyFriends(Integer id);
-    
+    String getNearRecord(String table, Integer rid);
 }

@@ -31,4 +31,9 @@ public class IMUserFriendsServiceImpl extends ServiceImpl<IMUserFriendsMapper, I
     public List<Map<String, Object>> getMyFriends(Integer id) {
         return baseMapper.getMyFriends(id);
     }
+
+    @Override
+    public String getNearRecord(String table, Integer rid) {
+        return baseMapper.getNearRecord(table,rid);
+    }
 }
