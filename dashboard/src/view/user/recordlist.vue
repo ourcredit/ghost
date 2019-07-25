@@ -6,22 +6,22 @@
           <Row :gutter="4">
             <Col span="21">
             <FormItem label="昵称:">
-              <Input clearable v-model="filter.nickname" placeholder="搜索关键词"/>
+              <Input clearable v-model="filter.nickname" placeholder="搜索关键词" />
             </FormItem>
             <FormItem label="邮箱:">
-              <Input clearable v-model="filter.email" placeholder="搜索关键词"/>
+              <Input clearable v-model="filter.email" placeholder="搜索关键词" />
             </FormItem>
             <FormItem label="电话:">
-              <Input clearable v-model="filter.mobile" placeholder="搜索关键词"/>
+              <Input clearable v-model="filter.mobile" placeholder="搜索关键词" />
             </FormItem>
             <FormItem label="注册国家:">
-              <Input clearable v-model="filter.country" placeholder="搜索关键词"/>
+              <Input clearable v-model="filter.country" placeholder="搜索关键词" />
             </FormItem>
             <FormItem label="登录时间:">
-              <Input clearable v-model="filter.logindate" placeholder="搜索关键词"/>
+              <Input clearable v-model="filter.logindate" placeholder="搜索关键词" />
             </FormItem>
             <FormItem label="注册时间:">
-              <Input clearable v-model="filter.registerdate" placeholder="搜索关键词"/>
+              <Input clearable v-model="filter.registerdate" placeholder="搜索关键词" />
             </FormItem>
             </Col>
             <Col span="3">
@@ -44,135 +44,50 @@
       return {
         filter: {},
         columns: [{
-            title: 'id',
-            key: 'id',
-            sortable: false,
-            width: "90px"
-          },
-          {
-            title: '用户名',
+            title: '消息记录',
             key: 'username',
             sortable: false
           },
           {
-            title: '昵称',
+            title: '最后消息时间',
             key: 'nickname',
             editable: false
           },
           {
-            title: '手机',
-            key: 'phone',
-            editable: false
-          },
-          {
-            title: '邮箱',
-            key: 'email',
-            editable: true
-          },
-          {
-            title: '注册国家',
-            key: 'country',
-            editable: true
-          },
-          {
-            title: '最后登录时间',
-            key: 'updated',
-            editable: true
-          },
-          {
-            title: '创建时间',
-            key: 'created'
-          },
-           {
-                        title: 'Action',
-                        key: 'action',
-                        width: 150,
-                        align: 'center',
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                          console.log("1");
-                                        }
-                                    }
-                                }, '用户详情'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            console.log("2");
-                                        }
-                                    }
-                                }, '聊天记录'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            console.log("2");
-                                        }
-                                    }
-                                }, '群组'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            console.log("2");
-                                        }
-                                    }
-                                }, '公共频道'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            console.log("2");
-                                        }
-                                    }
-                                }, '好友请求'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            console.log("2");
-                                        }
-                                    }
-                                }, 'app使用情况'),
-                                h('Button', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            console.log("2");
-                                        }
-                                    }
-                                }, '删除')
-                            ]);
-                        }
+            title: '操作',
+            key: 'action',
+            width: 400,
+            align: 'center',
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      console.log("1");
                     }
+                  }
+                }, '好友信息'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      console.log("2");
+                    }
+                  }
+                }, '聊天记录')
+              ]);
+            }
+          }
         ],
       }
     },

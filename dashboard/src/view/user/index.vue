@@ -108,7 +108,7 @@
                 }, '用户详情'),
                 h('Button', {
                   props: {
-                    type: 'error',
+                    type: 'primary',
                     size: 'small'
                   },
                   style: {
@@ -116,13 +116,13 @@
                   },
                   on: {
                     click: () => {
-                      console.log("2");
+                    this.$router.push({name:"rd_list"});
                     }
                   }
                 }, '聊天记录'),
                 h('Button', {
                   props: {
-                    type: 'error',
+                    type: 'primary',
                     size: 'small'
                   },
                   style: {
@@ -136,7 +136,7 @@
                 }, '群组'),
                 h('Button', {
                   props: {
-                    type: 'error',
+                    type: 'primary',
                     size: 'small'
                   },
                   style: {
@@ -150,7 +150,7 @@
                 }, '公共频道'),
                 h('Button', {
                   props: {
-                    type: 'error',
+                    type: 'primary',
                     size: 'small'
                   },
                   style: {
@@ -164,7 +164,7 @@
                 }, '好友请求'),
                 h('Button', {
                   props: {
-                    type: 'error',
+                    type: 'primary',
                     size: 'small'
                   },
                   style: {

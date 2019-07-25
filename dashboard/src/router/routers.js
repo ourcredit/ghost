@@ -75,7 +75,7 @@ export default [{
       },
       {
         path: '/recordlist',
-        name: '用户聊天记录',
+        name: 'rd_list',
         meta: {
           icon: 'ios-hammer',
           title: '用户聊天记录',
