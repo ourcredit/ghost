@@ -8,6 +8,7 @@ import dash from './module/dash'
 import admin from './module/admin'
 import role from './module/role'
 import group from './module/group'
+import friend from './module/friend'
 
 Vue.use(Vuex)
 
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     dash,
     admin,
     role,
-    group
+    group,
+    friend
   }
 })

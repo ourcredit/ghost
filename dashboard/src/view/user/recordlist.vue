@@ -31,7 +31,7 @@
           </Row>
         </Form>
       </div>
-      <Tables :filter="filter" ref="tablesMain" searchable :type="'contact'" :columns="columns"></Tables>
+      <Tables :filter="filter" ref="tablesMain" searchable :type="'friend'" :columns="columns"></Tables>
     </Row>
   </div>
 </template>

@@ -43,9 +43,9 @@ public class FriendController {
 
     /*获取当前用户好友的聊天记录*/
     @ApiOperation(value = "获取当前好友的列表以及最新消息记录", tags = {"标签干啥用的"}, notes = "注意current用户字段忽略")
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    public Result<IPage<IMUser>> friends(@RequestBody PageFilterInputDto page, @CurrentUser IMUser current) throws Exception {
-        List<IMUserFriends> list = _friendService.list(new QueryWrapper<IMUserFriends>().eq("status", 1).eq("friuid", current.getId()));
+    @RequestMapping(value = "/{uid}", method = RequestMethod.POST)
+    public Result<IPage<IMUser>> friends(@RequestBody PageFilterInputDto page,@PathVariable Integer uid) throws Exception {
+        List<IMUserFriends> list = _friendService.list(new QueryWrapper<IMUserFriends>().eq("status", 1).eq("friuid", uid));
         List<Integer> ids = new ArrayList<>();
         list.forEach(w -> ids.add(w.getUid()));
         QueryWrapper qw = WrapperUtil.toWrapper(page);
@@ -54,7 +54,7 @@ public class FriendController {
         if (!res.getRecords().isEmpty()) {
             for (IMUser g : res.getRecords()
                     ) {
-                String content = _friendService.getNearRecord(g.getId(), current.getId());
+                String content = _friendService.getNearRecord(g.getId(),uid);
                 g.setLastedMessage(content);
             }
         }
@@ -63,9 +63,9 @@ public class FriendController {
 
     /*获取好友详情*/
     @ApiOperation(value = "获取好友详情")
-    @RequestMapping(value = "/{fid}", method = RequestMethod.GET)
-    public Result<Object> friend(@PathVariable Integer fid, @CurrentUser IMUser current) throws Exception {
-        IMUserFriends temp = _friendService.getOne(new QueryWrapper<IMUserFriends>().eq("uid", current.getId()).eq("friuid", fid));
+    @RequestMapping(value = "/{uid}/{fid}", method = RequestMethod.GET)
+    public Result<Object> friend(@PathVariable Integer uid, @PathVariable Integer fid) throws Exception {
+        IMUserFriends temp = _friendService.getOne(new QueryWrapper<IMUserFriends>().eq("uid", uid).eq("friuid", fid));
         if (temp == null) {
             return new Result<>(RequestConstant.SUCCESSCODE, "当前用户与您并非好友关系", null);
         }
@@ -78,9 +78,10 @@ public class FriendController {
 
     /*获取好友聊天记录*/
     @ApiOperation(value = "获取好友聊天记录列表")
-    @RequestMapping(value = "/{fid}/content", method = RequestMethod.GET)
-    public Result<Object> contents(@PathVariable Integer fid, @RequestBody PageFilterInputDto page, @CurrentUser IMUser current) throws Exception {
-        IMUserFriends temp = _friendService.getOne(new QueryWrapper<IMUserFriends>().eq("uid", current.getId()).eq("friuid", fid));
+    @RequestMapping(value = "/{uid}/{fid}/content", method = RequestMethod.GET)
+    public Result<Object> contents(@PathVariable Integer uid, @PathVariable Integer fid, @RequestBody PageFilterInputDto page) throws Exception {
+        IMUser current=_userService.getById(uid);
+        IMUserFriends temp = _friendService.getOne(new QueryWrapper<IMUserFriends>().eq("uid", uid).eq("friuid", fid));
         if (temp == null) {
             return new Result<>(RequestConstant.SUCCESSCODE, "当前用户与您并非好友关系", null);
         }
@@ -88,11 +89,11 @@ public class FriendController {
         if (user == null) {
             return Result.NotFound();
         }
-        IPage<Map<String, Object>> res = _friendService.getRecordsByUserId(WrapperUtil.toPage(page), current.getId(), user.getId());
+        IPage<Map<String, Object>> res = _friendService.getRecordsByUserId(WrapperUtil.toPage(page),uid, user.getId());
         for (Map map : res.getRecords()
                 ) {
             String fromid = map.get("fromid").toString();
-            if (current.getId().toString().equals(fromid)) {
+            if (uid.toString().equals(fromid)) {
                 map.put("fromName", current.getNickname());
                 map.put("fromavator", current.getAvatar());
                 map.put("toName", user.getNickname());
