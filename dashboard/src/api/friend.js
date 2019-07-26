@@ -1,22 +1,22 @@
 import axios from '@/libs/api.request'
 
 
-export const friends = (data) => {
+export const friends = (id,data) => {
   return axios.request({
-    url: '/app/api/friend',
+    url: `/app/api/friend/${id}`,
     data,
     method: 'post'
   })
 }
-export const friend = (id) => {
+export const friend = (fromid,toid) => {
   return axios.request({
-    url: '/app/api/friend/' + id,
+    url: `/app/api/friend/${fromid}/${toid}`,
     method: 'get'
   })
 }
-export const content = (id,data) => {
+export const content = (fromid,toid,data) => {
   return axios.request({
-    url: `/app/api/friend/${id}/content`,
+    url: `/app/api/friend/${fromid}/${toid}/content`,
     data,
     method: 'post'
   })
