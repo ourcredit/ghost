@@ -61,7 +61,8 @@ public class IMUser extends baseEntity implements Serializable {
      * 密码
      */
     private String password;
-
+    @TableField(exist = false)
+    private String lastedMessage;
     /**
      * 混淆码
      */

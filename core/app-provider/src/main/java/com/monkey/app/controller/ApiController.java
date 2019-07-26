@@ -99,10 +99,6 @@ public class ApiController {
     @RequestMapping(value = "addFriend", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public ApiResult addFriend(HttpServletRequest req, HttpServletResponse rsp, @CurrentUser IMUser user) {
         ApiResult returnResult = new ApiResult();
-        Map<String, Object> returnData = new HashMap<>();
-        List<Map<String, Object>> returnFriendsList = new LinkedList<>();
-        List<Map<String, Object>> userDepartList = new LinkedList<>();
-        List<Map<String, Object>> friendsList = new LinkedList<>();
         if (user == null) {
             return ApiResult.AuthError();
         }
@@ -113,6 +109,7 @@ public class ApiController {
             addFriend.setUid(friduid);
             addFriend.setFriuid(user.getId());
             addFriend.setFriName(user.getNickname());
+            addFriend.setFriAvatar(user.getAvatar());
             addFriend.setGroupId(1);
             addFriend.setMessage("已通过好友请求!");
             addFriend.setStatus(22);

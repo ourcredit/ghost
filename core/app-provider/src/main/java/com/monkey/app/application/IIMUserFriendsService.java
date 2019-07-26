@@ -1,5 +1,6 @@
 package com.monkey.app.application;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.monkey.app.entity.IMUserFriends;
 
@@ -19,5 +20,6 @@ public interface IIMUserFriendsService extends IService<IMUserFriends> {
 
     List<Map<String, Object>> getMyNewFriends(Integer id);
     List<Map<String, Object>> getMyFriends(Integer id);
-    String getNearRecord(String table, Integer rid);
+    String getNearRecord(Integer fromid,Integer toid);
+    IPage<Map<String,Object>> getRecordsByUserId(IPage page, Integer fromid, Integer toid);
 }

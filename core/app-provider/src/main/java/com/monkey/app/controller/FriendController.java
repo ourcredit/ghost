@@ -13,9 +13,15 @@ import com.monkey.app.entity.IMUserFriends;
 import com.monkey.app.entity.WrapperUtil;
 import constant.RequestConstant;
 import input.PageFilterInputDto;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import result.Result;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -28,6 +34,7 @@ import result.Result;
  */
 @RestController
 @RequestMapping(value = "/api/friend")
+@Api(value = "好友Controller", tags = {"好友相关方法"})
 public class FriendController {
     @Autowired
     IIMUserFriendsService _friendService;
@@ -35,18 +42,19 @@ public class FriendController {
     IMUserServiceImpl _userService;
 
     /*获取当前用户好友的聊天记录*/
+    @ApiOperation(value = "获取当前好友的列表以及最新消息记录", tags = {"标签干啥用的"}, notes = "注意current用户字段忽略")
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public Result<IPage<IMUserFriends>> friends(@RequestBody PageFilterInputDto page, @CurrentUser IMUser current) throws Exception {
-        Wrapper filter = WrapperUtil.toWrapper(page);
-        QueryWrapper qw = (QueryWrapper) filter;
-        qw.eq("uid", current.getId());
-        IPage<IMUserFriends> res = _friendService.page(WrapperUtil.toPage(page), qw);
+    public Result<IPage<IMUser>> friends(@RequestBody PageFilterInputDto page, @CurrentUser IMUser current) throws Exception {
+        List<IMUserFriends> list = _friendService.list(new QueryWrapper<IMUserFriends>().eq("status", 1).eq("friuid", current.getId()));
+        List<Integer> ids = new ArrayList<>();
+        list.forEach(w -> ids.add(w.getUid()));
+        QueryWrapper qw = WrapperUtil.toWrapper(page);
+        qw.in("id", ids);
+        IPage<IMUser> res = _userService.page(WrapperUtil.toPage(page), qw);
         if (!res.getRecords().isEmpty()) {
-            for (IMUserFriends g : res.getRecords()
+            for (IMUser g : res.getRecords()
                     ) {
-                Integer relationId = g.getUid() + g.getFriuid();
-                String tableName = "on_IMMessage_" + relationId % 8;
-                String content = _friendService.getNearRecord(tableName, relationId);
+                String content = _friendService.getNearRecord(g.getId(), current.getId());
                 g.setLastedMessage(content);
             }
         }
@@ -54,6 +62,7 @@ public class FriendController {
     }
 
     /*获取好友详情*/
+    @ApiOperation(value = "获取好友详情")
     @RequestMapping(value = "/{fid}", method = RequestMethod.GET)
     public Result<Object> friend(@PathVariable Integer fid, @CurrentUser IMUser current) throws Exception {
         IMUserFriends temp = _friendService.getOne(new QueryWrapper<IMUserFriends>().eq("uid", current.getId()).eq("friuid", fid));
@@ -66,9 +75,11 @@ public class FriendController {
         }
         return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, user);
     }
-    /*获取好友详情*/
+
+    /*获取好友聊天记录*/
+    @ApiOperation(value = "获取好友聊天记录列表")
     @RequestMapping(value = "/{fid}/content", method = RequestMethod.GET)
-    public Result<Object> contents(@PathVariable Integer fid,@RequestBody PageFilterInputDto page, @CurrentUser IMUser current) throws Exception {
+    public Result<Object> contents(@PathVariable Integer fid, @RequestBody PageFilterInputDto page, @CurrentUser IMUser current) throws Exception {
         IMUserFriends temp = _friendService.getOne(new QueryWrapper<IMUserFriends>().eq("uid", current.getId()).eq("friuid", fid));
         if (temp == null) {
             return new Result<>(RequestConstant.SUCCESSCODE, "当前用户与您并非好友关系", null);
@@ -77,7 +88,22 @@ public class FriendController {
         if (user == null) {
             return Result.NotFound();
         }
-
-        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, user);
+        IPage<Map<String, Object>> res = _friendService.getRecordsByUserId(WrapperUtil.toPage(page), current.getId(), user.getId());
+        for (Map map : res.getRecords()
+                ) {
+            String fromid = map.get("fromid").toString();
+            if (current.getId().toString().equals(fromid)) {
+                map.put("fromName", current.getNickname());
+                map.put("fromavator", current.getAvatar());
+                map.put("toName", user.getNickname());
+                map.put("toAvator", user.getAvatar());
+            } else {
+                map.put("fromName", user.getNickname());
+                map.put("fromavator", user.getAvatar());
+                map.put("toName", current.getNickname());
+                map.put("toAvator", current.getAvatar());
+            }
+        }
+        return new Result<>(RequestConstant.SUCCESSCODE, RequestConstant.SUCCESSMSG, res);
     }
 }

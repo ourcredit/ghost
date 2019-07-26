@@ -1,5 +1,6 @@
 package com.monkey.app.application.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.app.application.IIMUserFriendsService;
 import com.monkey.app.entity.IMUserFriends;
@@ -33,7 +34,16 @@ public class IMUserFriendsServiceImpl extends ServiceImpl<IMUserFriendsMapper, I
     }
 
     @Override
-    public String getNearRecord(String table, Integer rid) {
-        return baseMapper.getNearRecord(table,rid);
+    public String getNearRecord(Integer fromid,Integer toid) {
+        Integer relationId = fromid+toid;
+        String tableName = "on_IMMessage_" + relationId % 8;
+        return baseMapper.getNearRecord(tableName,fromid,toid,relationId);
+    }
+
+    @Override
+    public IPage<Map<String, Object>> getRecordsByUserId(IPage page, Integer fromid, Integer toid) {
+        Integer relationId = fromid+toid;
+        String tableName = "on_IMMessage_" + relationId % 8;
+        return  baseMapper.getRecordsByUserId(page,tableName,fromid,toid,relationId);
     }
 }
