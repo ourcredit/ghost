@@ -60,7 +60,7 @@ public class IMAudio implements Serializable {
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime created;
+    private Integer created;
 
 
 }

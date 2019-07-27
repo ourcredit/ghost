@@ -46,8 +46,8 @@ public class IMUserGeoData implements Serializable {
      * 创建时间´
      */
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime created;
-    private LocalDateTime updated;
+    private Integer created;
+    private Integer updated;
 
 
 }

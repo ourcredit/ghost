@@ -45,9 +45,9 @@ public class IMTransmitFile implements Serializable {
 
     private Integer status;
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime created;
+    private Integer created;
 
-    private LocalDateTime updated;
+    private Integer updated;
 
 
 }

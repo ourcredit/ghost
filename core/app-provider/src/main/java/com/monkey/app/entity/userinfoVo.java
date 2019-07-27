@@ -114,12 +114,12 @@ public class userinfoVo extends baseEntity implements Serializable {
     /**
      * 更新时间
      */
-    private LocalDateTime updated;
+    private Integer updated;
 
     /**
      * 创建时间
      */
-    private LocalDateTime created;
+    private Integer created;
 
     private String dataSign;
 

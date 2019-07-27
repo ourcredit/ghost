@@ -126,13 +126,13 @@ public class IMUser extends baseEntity implements Serializable {
     /**
      * 更新时间
      */
-    private LocalDateTime updated;
+    private Integer updated;
 
     /**
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime created;
+    private Integer created;
 
     private String dataSign;
 

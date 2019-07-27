@@ -18,7 +18,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         Object creationTime = getFieldValByName("created",metaObject);
         //  Object tenantId = getFieldValByName("tenantId",metaObject);
         if (null == creationTime) {
-            metaObject.setValue("created", LocalDateTime.now());
+            metaObject.setValue("created", DateUtil.timestamp2());
         }
 //        Object creatorUserId = metaObject.getValue("creatorUserId");
 //        //获取当前登录用户

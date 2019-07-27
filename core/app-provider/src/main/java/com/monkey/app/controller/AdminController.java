@@ -71,15 +71,15 @@ public class AdminController {
             return new Result<>(RequestConstant.ERRORCODE, "密码错误", null);
         }
         Map<String, Object> returnUsers = JavaBeanUtil.convertBeanToMap(admin);
-        LocalDateTime haslogin = admin.getUpdated();
-        admin.setUpdated(LocalDateTime.now());
+        Integer haslogin = admin.getUpdated();
+        admin.setUpdated(DateUtil.timestamp2());
         _adminService.updateById(admin);
 
         returnUsers.remove("password");
         returnData.put("token", JWTUtil.sign(admin.getUname(), admin.getId(), 1, "123456789"));
         returnData.put("ipAddress", JWTUtil.getIpAddress(req));
         returnData.put("loginTime", haslogin);
-        returnData.put("hasLoginTime", DateUtil.deffTime(haslogin, LocalDateTime.now()));
+        returnData.put("hasLoginTime",DateUtil.timestamp2()-haslogin);
         returnData.put("userinfo", returnUsers);
         List res = _adminService.getUserPermission(admin.getId());
         returnData.put("access", res);
@@ -100,11 +100,11 @@ public class AdminController {
         }
         Map<String, Object> returnUsers = JavaBeanUtil.convertBeanToMap(admin);
         returnUsers.remove("password");
-        LocalDateTime haslogin = admin.getUpdated();
+        Integer haslogin = admin.getUpdated();
         returnData.put("token", JWTUtil.sign(admin.getUname(), admin.getId(), 1, "123456789"));
         returnData.put("ipAddress", JWTUtil.getIpAddress(req));
         returnData.put("loginTime", haslogin);
-        returnData.put("hasLoginTime", DateUtil.deffTime(haslogin, LocalDateTime.now()));
+        returnData.put("hasLoginTime", DateUtil.timestamp2()-haslogin);
         returnData.put("userinfo", returnUsers);
         List res = _adminService.getUserPermission(admin.getId());
         returnData.put("access", res);
