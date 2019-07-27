@@ -30,7 +30,7 @@ CREATE TABLE `on_IMAdmin`  (
   `updated` bigint(20) NULL DEFAULT NULL COMMENT '更新时间´',
   `createrUser` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for on_IMAudio
@@ -103,7 +103,7 @@ CREATE TABLE `on_IMGroup`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_name`(`name`(191)) USING BTREE,
   INDEX `idx_creator`(`creator`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = 'IM群信息' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = 'IM群信息' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for on_IMGroupMember
@@ -121,7 +121,7 @@ CREATE TABLE `on_IMGroupMember`  (
   INDEX `idx_groupId_userId_status`(`groupId`, `userId`, `status`) USING BTREE,
   INDEX `idx_userId_status_updated`(`userId`, `status`, `updated`) USING BTREE,
   INDEX `idx_groupId_updated`(`groupId`, `updated`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户和群的关系表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户和群的关系表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for on_IMGroupMessage_0
@@ -318,7 +318,7 @@ CREATE TABLE `on_IMMessage_1`  (
   INDEX `idx_relateId_status_created`(`relateId`, `status`, `created`) USING BTREE,
   INDEX `idx_relateId_status_msgId_created`(`relateId`, `status`, `msgId`, `created`) USING BTREE,
   INDEX `idx_fromId_toId_created`(`fromId`, `toId`, `status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for on_IMMessage_2
@@ -340,7 +340,7 @@ CREATE TABLE `on_IMMessage_2`  (
   INDEX `idx_relateId_status_created`(`relateId`, `status`, `created`) USING BTREE,
   INDEX `idx_relateId_status_msgId_created`(`relateId`, `status`, `msgId`, `created`) USING BTREE,
   INDEX `idx_fromId_toId_created`(`fromId`, `toId`, `status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for on_IMMessage_3
@@ -467,7 +467,7 @@ CREATE TABLE `on_IMRecentSession`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_userId_peerId_status_updated`(`userId`, `peerId`, `status`, `updated`) USING BTREE,
   INDEX `idx_userId_peerId_type`(`userId`, `peerId`, `type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for on_IMRole
@@ -480,7 +480,7 @@ CREATE TABLE `on_IMRole`  (
   `created` bigint(20) NULL DEFAULT NULL COMMENT '创建时间´',
   `updated` bigint(20) NULL DEFAULT NULL COMMENT '更新时间´',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for on_IMRolePermission
@@ -550,7 +550,7 @@ CREATE TABLE `on_IMUser`  (
   INDEX `idx_domain`(`domain`) USING BTREE,
   INDEX `idx_name`(`username`) USING BTREE,
   INDEX `idx_phone`(`phone`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for on_IMUserExtend
@@ -588,7 +588,7 @@ CREATE TABLE `on_IMUserFriends`  (
   `updated` bigint(20) NULL DEFAULT NULL,
   `created` bigint(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for on_IMUserGeoData
@@ -606,7 +606,7 @@ CREATE TABLE `on_IMUserGeoData`  (
   `updated` bigint(20) NOT NULL,
   `created` bigint(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT =1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for on_IMUserRole

@@ -37,7 +37,7 @@ export default [{
       path: '/home',
       name: 'home',
       meta: {
-        access:["index"],
+       // access:["index"],
         hideInMenu: false,
         title: '首页',
         notCache: true,
@@ -50,7 +50,7 @@ export default [{
     path: '/user',
     name: 'user',
     meta: {
-      access:["user"],
+     // access:["user"],
       hideInBread: true
     },
     component: Main,
